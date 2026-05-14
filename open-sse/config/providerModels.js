@@ -134,8 +134,8 @@ export const PROVIDER_MODELS = {
     { id: "qwen3-coder-next", name: "Qwen3 Coder Next", strip: ["image", "audio"] },
     { id: "glm-5", name: "GLM 5" },
     { id: "minimax-m2.5", name: "MiniMax M2.5" },
-    { id: "claude-sonnet-4.6", name: "Claude Sonnet 4.6" },
-    { id: "claude-opus-4.7", name: "Claude Opus 4.7" },
+    { id: "claude-sonnet-4-6", name: "Claude Sonnet 4.6" },
+    { id: "claude-opus-4-7", name: "Claude Opus 4.7" },
   ],
   cu: [  // Cursor IDE
     { id: "default", name: "Auto (Server Picks)" },

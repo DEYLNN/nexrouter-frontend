@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.6.0] - 2026-05-14
+## [0.5.1] - 2026-05-14
 
 ### Features
 - Fix changelog click + add auto-changelog GitHub Action

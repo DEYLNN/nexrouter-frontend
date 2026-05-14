@@ -41,9 +41,9 @@ def main():
     pkg = json.loads(pkg_path.read_text())
     current = pkg["version"]
     
-    # Bump minor
+    # Bump patch
     major, minor, patch = current.split(".")
-    new_version = f"{major}.{int(minor) + 1}.0"
+    new_version = f"{major}.{minor}.{int(patch) + 1}"
     
     # Get commits
     commits = get_commits_since_last_tag()

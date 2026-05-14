@@ -16,6 +16,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
 
   const isAzure = provider === "azure";
   const isCloudflareAi = provider === "cloudflare-ai";
+  const isMimoSgp = provider === "xiaomi-mimo-plan-sgp";
 
   const [formData, setFormData] = useState({
     name: "",
@@ -31,6 +32,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
     organization: "",
   });
   const [cloudflareData, setCloudflareData] = useState({ accountId: "" });
+  const [mimoData, setMimoData] = useState({ platformCookie: "" });
   const [validating, setValidating] = useState(false);
   const [validationResult, setValidationResult] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -52,6 +54,9 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
     }
     if (isCloudflareAi) {
       return { accountId: cloudflareData.accountId };
+    }
+    if (isMimoSgp && mimoData.platformCookie.trim()) {
+      return { platformCookie: mimoData.platformCookie.trim() };
     }
     return undefined;
   };
@@ -268,6 +273,20 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
             />
             <p className="text-xs text-text-muted mt-2">
               Find your Account ID in the right sidebar of <a href="https://dash.cloudflare.com" target="_blank" rel="noopener noreferrer" className="text-primary underline">dash.cloudflare.com</a>
+            </p>
+          </div>
+        )}
+        {isMimoSgp && (
+          <div className="bg-sidebar/50 p-4 rounded-lg border border-accent/20">
+            <h3 className="font-semibold mb-3 text-sm">MiMo Plan SGP — Platform Session</h3>
+            <Input
+              label="Platform Cookie (optional)"
+              value={mimoData.platformCookie}
+              onChange={(e) => setMimoData({ ...mimoData, platformCookie: e.target.value })}
+              placeholder="api-platform_serviceToken=... ; userId=... ; ..."
+            />
+            <p className="text-xs text-text-muted mt-2">
+              Session cookie from <a href="https://platform.xiaomimimo.com/console/plan-manage" target="_blank" rel="noopener noreferrer" className="text-primary underline">platform.xiaomimimo.com</a> for usage/quota tracking. Optional — chat works without it.
             </p>
           </div>
         )}

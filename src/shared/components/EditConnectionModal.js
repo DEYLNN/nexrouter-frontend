@@ -25,6 +25,7 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
     organization: "",
   });
   const [cloudflareData, setCloudflareData] = useState({ accountId: "" });
+  const [mimoData, setMimoData] = useState({ platformCookie: "" });
   const [codexData, setCodexData] = useState({ codexPlan: "paid", blockedModels: [] });
   const [testing, setTesting] = useState(false);
   const [testResult, setTestResult] = useState(null);
@@ -51,6 +52,9 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
       if (connection.provider === "cloudflare-ai" && connection.providerSpecificData) {
         setCloudflareData({ accountId: connection.providerSpecificData.accountId || "" });
       }
+      if (connection.provider === "xiaomi-mimo-plan-sgp" && connection.providerSpecificData) {
+        setMimoData({ platformCookie: connection.providerSpecificData.platformCookie || "" });
+      }
       if (connection.provider === "codex") {
         const psd = connection.providerSpecificData || {};
         setCodexData({
@@ -72,6 +76,7 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
   const isOAuth = connection?.authType === "oauth";
   const isAzure = connection?.provider === "azure";
   const isCloudflareAi = connection?.provider === "cloudflare-ai";
+  const isMimoSgp = connection?.provider === "xiaomi-mimo-plan-sgp";
   const isCodex = connection?.provider === "codex";
   const hasBlockedModels = connection ? BLOCKED_MODELS_PROVIDERS.includes(connection.provider) : false;
   const isCompatible = connection
@@ -119,6 +124,7 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
           apiKey: formData.apiKey,
           ...(isAzure ? { providerSpecificData: azureData } : {}),
           ...(isCloudflareAi ? { providerSpecificData: cloudflareData } : {}),
+          ...(connection?.provider === "xiaomi-mimo-plan-sgp" ? { providerSpecificData: mimoData } : {}),
         }),
       });
       const data = await res.json();
@@ -182,6 +188,12 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
       }
       if (isCloudflareAi) {
         updates.providerSpecificData = { accountId: cloudflareData.accountId };
+      }
+      if (isMimoSgp) {
+        updates.providerSpecificData = {
+          ...(connection.providerSpecificData || {}),
+          platformCookie: mimoData.platformCookie.trim() || undefined,
+        };
       }
       if (isCodex) {
         updates.providerSpecificData = {
@@ -339,6 +351,20 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
           </>
         )}
 
+        {isMimoSgp && (
+          <div className="bg-sidebar/50 p-4 rounded-lg border border-accent/20">
+            <h3 className="font-semibold mb-3 text-sm">MiMo Plan SGP — Platform Session</h3>
+            <Input
+              label="Platform Cookie (optional)"
+              value={mimoData.platformCookie}
+              onChange={(e) => setMimoData({ ...mimoData, platformCookie: e.target.value })}
+              placeholder="api-platform_serviceToken=... ; userId=... ; ..."
+            />
+            <p className="text-xs text-text-muted mt-2">
+              Session cookie from <a href="https://platform.xiaomimimo.com/console/plan-manage" target="_blank" rel="noopener noreferrer" className="text-primary underline">platform.xiaomimimo.com</a> for usage/quota tracking.
+            </p>
+          </div>
+        )}
         {isAzure && (
           <div className="bg-sidebar/50 p-4 rounded-lg border border-accent/20">
             <h3 className="font-semibold mb-3 text-sm">Azure OpenAI Configuration</h3>

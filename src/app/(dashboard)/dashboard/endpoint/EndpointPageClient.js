@@ -784,7 +784,7 @@ export default function APIPageClient({ machineId }) {
             onChange={() => handleRtkEnabled(!rtkEnabled)}
           />
         </div>
-        <div className="flex items-center justify-between pt-4 gap-4 flex-wrap">
+        <div className="flex items-start justify-between pt-4 gap-3 flex-wrap">
           <div className="min-w-0 flex-1">
             <p className="font-medium">
               Compress LLM output{" "}
@@ -800,10 +800,8 @@ export default function APIPageClient({ machineId }) {
             <p className="text-sm text-text-muted">
               Terse-style system prompt → ~65% fewer output tokens (up to 87%)
             </p>
-          </div>
-          <div className="flex items-center gap-3 shrink-0">
             {cavemanEnabled && (
-              <div className="flex items-center gap-1.5">
+              <div className="flex items-center gap-1.5 mt-3 flex-wrap">
                 {CAVEMAN_LEVELS.map((lvl) => (
                   <button
                     key={lvl.id}
@@ -820,6 +818,8 @@ export default function APIPageClient({ machineId }) {
                 ))}
               </div>
             )}
+          </div>
+          <div className="flex items-center gap-3 shrink-0 pt-0.5">
             <Toggle
               checked={cavemanEnabled}
               onChange={() => handleCavemanEnabled(!cavemanEnabled)}
@@ -1151,16 +1151,17 @@ export default function APIPageClient({ machineId }) {
 /** Reusable endpoint row component */
 function EndpointRow({ label, url, copyId, copied, onCopy, badge, actions }) {
   return (
-    <div className="flex items-center gap-2">
-      <span className={`text-xs font-mono px-1.5 py-0.5 rounded shrink-0 min-w-[88px] text-center ${
-          (badge === "CF" || badge === "TS") ? "bg-primary/10 text-primary" : "bg-surface-2 text-text-muted"
+    <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-surface-2/60 border border-border-subtle hover:border-border transition-colors">
+      <span className={`text-xs font-mono px-2 py-0.5 rounded-md shrink-0 min-w-[72px] text-center font-medium ${
+          (badge === "CF" || badge === "TS") ? "bg-primary/15 text-primary" : "bg-surface-3/80 text-text-muted"
         }`}>{label}</span>
-      <Input value={url} readOnly className="flex-1 font-mono text-sm" />
+      <code className="flex-1 font-mono text-sm text-text-main truncate select-all">{url}</code>
       <button
         onClick={() => onCopy(url, copyId)}
-        className="p-2 hover:bg-[rgba(255,255,255,0.05)] rounded text-text-muted hover:text-primary transition-colors shrink-0"
+        className="p-1.5 hover:bg-primary/10 rounded-md text-text-muted hover:text-primary transition-colors shrink-0"
+        title="Copy"
       >
-        <span className="material-symbols-outlined text-[18px]">{copied === copyId ? "check" : "content_copy"}</span>
+        <span className="material-symbols-outlined text-[16px]">{copied === copyId ? "check" : "content_copy"}</span>
       </button>
       {actions}
     </div>

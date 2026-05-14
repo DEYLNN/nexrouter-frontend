@@ -9,6 +9,9 @@ import Badge from "@/shared/components/Badge";
 import { isOpenAICompatibleProvider, isAnthropicCompatibleProvider } from "@/shared/constants/providers";
 import { getModelsByProviderId } from "open-sse/config/providerModels.js";
 
+// Providers that support per-account blocked model filtering
+const BLOCKED_MODELS_PROVIDERS = ["codex", "kiro", "canopywave"];
+
 export default function EditConnectionModal({ isOpen, connection, onSave, onClose }) {
   const [formData, setFormData] = useState({
     name: "",
@@ -54,6 +57,12 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
           codexPlan: psd.codexPlan || (psd.chatgptPlanType === "free" ? "free" : "paid"),
           blockedModels: Array.isArray(psd.blockedModels) ? psd.blockedModels : [],
         });
+      } else if (BLOCKED_MODELS_PROVIDERS.includes(connection.provider)) {
+        const psd = connection.providerSpecificData || {};
+        setCodexData((prev) => ({
+          ...prev,
+          blockedModels: Array.isArray(psd.blockedModels) ? psd.blockedModels : [],
+        }));
       }
       setTestResult(null);
       setValidationResult(null);
@@ -64,10 +73,14 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
   const isAzure = connection?.provider === "azure";
   const isCloudflareAi = connection?.provider === "cloudflare-ai";
   const isCodex = connection?.provider === "codex";
+  const hasBlockedModels = connection ? BLOCKED_MODELS_PROVIDERS.includes(connection.provider) : false;
   const isCompatible = connection
     ? (isOpenAICompatibleProvider(connection.provider) || isAnthropicCompatibleProvider(connection.provider))
     : false;
   const codexModels = isCodex ? getModelsByProviderId("codex").filter((m) => !m.type || m.type === "llm") : [];
+  const providerModels = hasBlockedModels && !isCodex
+    ? getModelsByProviderId(connection?.provider || "").filter((m) => !m.type || m.type === "llm")
+    : [];
   const defaultBlockedModels = [];
   const effectiveBlockedModels = new Set([...defaultBlockedModels, ...codexData.blockedModels]);
   const toggleBlockedModel = (modelId) => {
@@ -261,6 +274,36 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
                 </div>
                 <p className="text-xs text-text-muted">Default is allow all. Red badges are skipped by router for this account.</p>
               </div>
+            </div>
+          </div>
+        )}
+
+        {hasBlockedModels && !isCodex && (
+          <div className="rounded-lg border border-border bg-sidebar/50 p-4">
+            <h3 className="mb-3 text-sm font-semibold flex items-center gap-2">
+              <span className="material-symbols-outlined text-[16px] text-text-muted">block</span>
+              Blocked Models
+            </h3>
+            <div className="flex flex-col gap-2">
+              <div className="flex flex-wrap gap-2 rounded-xl border border-border bg-bg p-3">
+                {providerModels.length === 0 ? (
+                  <p className="text-xs text-text-muted">No models available for this provider.</p>
+                ) : providerModels.map((model) => {
+                  const blocked = effectiveBlockedModels.has(model.id);
+                  return (
+                    <button
+                      key={model.id}
+                      type="button"
+                      onClick={() => toggleBlockedModel(model.id)}
+                      className={`rounded-full border px-3 py-1 text-xs font-semibold transition-colors ${blocked ? "border-red-500/30 bg-red-500/10 text-red-600" : "border-border bg-surface text-text-muted hover:border-primary/40 hover:text-primary"}`}
+                      title="Toggle blocked model"
+                    >
+                      {model.name || model.id}
+                    </button>
+                  );
+                })}
+              </div>
+              <p className="text-xs text-text-muted">Red = blocked for this account. Default is allow all.</p>
             </div>
           </div>
         )}

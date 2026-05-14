@@ -318,64 +318,45 @@ export default function Sidebar({ onClose, forceExpanded }) {
           )}
         </nav>
 
-        {/* Footer */}
+        {/* Footer — Changelog + Version */}
         <div style={{
           padding: "10px 8px 14px",
           borderTop: "1px solid var(--theme-shell-border)",
           flexShrink: 0,
         }}>
           {!isCollapsed ? (
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "8px", padding: "0 4px" }}>
-              <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
-                <div style={{
-                  width: "26px", height: "26px", borderRadius: "50%",
-                  background: "linear-gradient(135deg, #3B82F6, #A855F7)",
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "var(--theme-shell-text)", fontSize: "11px", fontWeight: 700, flexShrink: 0,
-                }}>
-                  A
-                </div>
-                <div style={{ minWidth: 0 }}>
-                  <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--theme-shell-text)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    Admin
-                  </div>
-                  <div style={{ fontSize: "10px", color: "var(--theme-shell-text-subtle)" }}>
-                    Gateway
-                  </div>
-                </div>
+            <Link
+              href="/dashboard/changelog"
+              style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                gap: "8px", padding: "6px 8px", borderRadius: "8px",
+                textDecoration: "none", transition: "background 150ms ease",
+              }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--theme-shell-hover)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "7px", minWidth: 0 }}>
+                <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--theme-shell-text-subtle)", flexShrink: 0 }}>history</span>
+                <span style={{ fontSize: "12px", color: "var(--theme-shell-text-muted)", fontWeight: 500 }}>Changelog</span>
               </div>
-              <button
-                onClick={() => setShowShutdownModal(true)}
-                title="Shutdown"
-                style={{
-                  display: "flex", alignItems: "center", justifyContent: "center",
-                  width: "28px", height: "28px", borderRadius: "7px",
-                  background: "transparent", border: "none",
-                  color: "rgba(239,68,68,0.45)", cursor: "pointer",
-                  transition: "all 150ms ease", flexShrink: 0,
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = "rgba(239,68,68,0.08)"; e.currentTarget.style.color = "#ef4444"; }}
-                onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "rgba(239,68,68,0.45)"; }}
-              >
-                {I.power}
-              </button>
-            </div>
+              <span style={{ fontSize: "10px", color: "var(--theme-shell-text-subtle)", fontWeight: 600, flexShrink: 0 }}>
+                v{APP_CONFIG.version}
+              </span>
+            </Link>
           ) : (
-            <button
-              onClick={() => setShowShutdownModal(true)}
-              title="Shutdown"
+            <Link
+              href="/dashboard/changelog"
+              title={`Changelog v${APP_CONFIG.version}`}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
                 width: "100%", height: "32px", borderRadius: "7px",
-                background: "transparent", border: "none",
-                color: "rgba(239,68,68,0.4)", cursor: "pointer",
-                transition: "all 150ms ease",
+                textDecoration: "none", transition: "background 150ms ease",
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "rgba(239,68,68,0.08)"; e.currentTarget.style.color = "#ef4444"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "rgba(239,68,68,0.4)"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = "var(--theme-shell-hover)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; }}
             >
-              {I.power}
-            </button>
+              <span className="material-symbols-outlined" style={{ fontSize: "16px", color: "var(--theme-shell-text-subtle)" }}>history</span>
+            </Link>
           )}
         </div>
       </aside>

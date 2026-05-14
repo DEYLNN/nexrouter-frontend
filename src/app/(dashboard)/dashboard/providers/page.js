@@ -850,6 +850,9 @@ function AddOpenAICompatibleModal({ isOpen, onClose, onCreated }) {
           apiType: "chat",
           baseUrl: "https://api.openai.com/v1",
         });
+      } else {
+        // Show prefix conflict or other error to user
+        alert(data.error || "Failed to create provider");
       }
     } catch (error) {
       console.log("Error creating OpenAI Compatible node:", error);

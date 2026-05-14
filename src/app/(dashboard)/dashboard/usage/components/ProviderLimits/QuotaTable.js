@@ -3,6 +3,17 @@
 import { formatResetTime, calculatePercentage } from "./utils";
 
 /**
+ * Format large numbers compact: 1,234,567 → 1.2M, 56,692 → 56.7K
+ */
+function formatCompact(num) {
+  if (num == null || num === 0) return "0";
+  if (num >= 1e9) return (num / 1e9).toFixed(1).replace(/\.0$/, "") + "B";
+  if (num >= 1e6) return (num / 1e6).toFixed(1).replace(/\.0$/, "") + "M";
+  if (num >= 1e3) return (num / 1e3).toFixed(1).replace(/\.0$/, "") + "K";
+  return num.toLocaleString();
+}
+
+/**
  * Format reset time display (Today, 12:00 PM)
  */
 function formatResetTimeDisplay(resetTime) {
@@ -124,7 +135,7 @@ export default function QuotaTable({ quotas = [], compact = false }) {
                     {/* Numbers */}
                     <div className={`flex items-center justify-between ${compact ? "text-[10px]" : "text-xs"}`}>
                       <span className="text-text-muted">
-                        {quota.used.toLocaleString()} / {quota.total > 0 ? quota.total.toLocaleString() : "∞"}
+                        {formatCompact(quota.used)} / {quota.total > 0 ? formatCompact(quota.total) : "∞"}
                       </span>
                       <span className={`font-medium ${colors.text}`}>
                         {remaining}%

@@ -682,7 +682,10 @@ export default function ProviderLimits() {
                       </h3>
                       {(() => {
                         const isEmail = (v) => typeof v === "string" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
-                        const label = isEmail(conn.email) ? conn.email : (isEmail(conn.name) ? conn.name : conn.name);
+                        // For MiMo SGP, use profile email (masked) from platform API
+                        const mimoEmail = conn.provider === "xiaomi-mimo-plan-sgp" && quota?.raw?.profile?.data?.email
+                          ? quota.raw.profile.data.email : null;
+                        const label = mimoEmail || (isEmail(conn.email) ? conn.email : (isEmail(conn.name) ? conn.name : conn.name));
                         return label ? (
                           <p className="text-xs text-text-muted truncate">{label}</p>
                         ) : null;
@@ -784,23 +787,21 @@ export default function ProviderLimits() {
                 ) : (
                   <>
                     <QuotaTable quotas={quota?.quotas} compact />
-                    {/* MiMo SGP: show profile info from platform */}
-                    {conn.provider === "xiaomi-mimo-plan-sgp" && quota?.raw?.profile?.data && (
+                    {/* MiMo SGP: show ID + handle expired/error */}
+                    {conn.provider === "xiaomi-mimo-plan-sgp" && (
                       <div className="px-3 py-2 border-t border-[rgba(255,255,255,0.08)]">
-                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted">
-                          {quota.raw.profile.data.userId && (
-                            <span>ID: {quota.raw.profile.data.userId}</span>
-                          )}
-                          {quota.raw.profile.data.email && (
-                            <span>{quota.raw.profile.data.email}</span>
-                          )}
-                          {quota.raw.plan?.data?.planName && (
-                            <span className="text-primary">{quota.raw.plan.data.planName} plan</span>
-                          )}
-                          {quota.raw.plan?.data?.currentPeriodEnd && (
-                            <span>Renews: {quota.raw.plan.data.currentPeriodEnd}</span>
-                          )}
-                        </div>
+                        {quota?.raw?.profile?.data ? (
+                          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted">
+                            {quota.raw.profile.data.userId && (
+                              <span>ID: {quota.raw.profile.data.userId}</span>
+                            )}
+                            {quota.raw.plan?.data?.expired && (
+                              <span className="text-red-500">Plan expired</span>
+                            )}
+                          </div>
+                        ) : quota?.raw?.plan === null && !quota?.raw?.profile?.data ? (
+                          <p className="text-xs text-amber-500">Cookie expired — edit connection to update</p>
+                        ) : null}
                       </div>
                     )}
                   </>

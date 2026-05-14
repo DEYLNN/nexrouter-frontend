@@ -71,7 +71,13 @@ export default function ProviderLimits() {
       console.log(
         `[ProviderLimits] Fetching quota for ${provider} (${connectionId})`,
       );
-      const response = await fetch(`/api/usage/${connectionId}`);
+
+      // MiMo SGP uses custom endpoint with platform cookie
+      const isMimoSgp = provider === "xiaomi-mimo-plan-sgp";
+      const response = await fetch(isMimoSgp
+        ? `/api/providers/mimo-usage?id=${connectionId}`
+        : `/api/usage/${connectionId}`
+      );
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -111,7 +117,20 @@ export default function ProviderLimits() {
       const authExpired = provider === "codex" && /401|unauthorized|expired|temporary unavailable/i.test(data?.message || "");
 
       // Parse quota data using provider-specific parser
-      const parsedQuotas = parseQuotaData(provider, data);
+      let parsedQuotas;
+      if (isMimoSgp && data?.profile) {
+        // MiMo SGP: build quota from profile + plan data
+        const profile = data.profile;
+        const plan = data.plan;
+        parsedQuotas = [{
+          name: profile.planName || profile.plan || "MiMo Plan SGP",
+          used: plan?.usedTokens || plan?.used || 0,
+          total: plan?.totalTokens || plan?.total || 0,
+          resetAt: plan?.resetAt || null,
+        }];
+      } else {
+        parsedQuotas = parseQuotaData(provider, data);
+      }
 
       setQuotaData((prev) => ({
         ...prev,
@@ -763,7 +782,31 @@ export default function ProviderLimits() {
                     )}
                   </div>
                 ) : (
-                  <QuotaTable quotas={quota?.quotas} compact />
+                  <>
+                    <QuotaTable quotas={quota?.quotas} compact />
+                    {/* MiMo SGP: show profile info from platform */}
+                    {conn.provider === "xiaomi-mimo-plan-sgp" && quota?.raw?.profile && (
+                      <div className="px-3 py-2 border-t border-[rgba(255,255,255,0.08)]">
+                        <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted">
+                          {quota.raw.profile.userId && (
+                            <span>ID: {quota.raw.profile.userId}</span>
+                          )}
+                          {quota.raw.profile.email && (
+                            <span>{quota.raw.profile.email}</span>
+                          )}
+                          {quota.raw.profile.planName && (
+                            <span className="text-primary">{quota.raw.profile.planName}</span>
+                          )}
+                          {quota.raw.plan?.usedTokens != null && (
+                            <span>Used: {(quota.raw.plan.usedTokens / 1e6).toFixed(1)}M tokens</span>
+                          )}
+                          {quota.raw.plan?.totalTokens != null && (
+                            <span>Limit: {(quota.raw.plan.totalTokens / 1e6).toFixed(1)}M tokens</span>
+                          )}
+                        </div>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
             </Card>

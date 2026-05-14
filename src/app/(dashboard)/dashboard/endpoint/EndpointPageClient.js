@@ -43,6 +43,10 @@ export default function APIPageClient({ machineId }) {
   const [loading, setLoading] = useState(true);
   const [showAddModal, setShowAddModal] = useState(false);
   const [newKeyName, setNewKeyName] = useState("");
+  const [newKeyAllowedModels, setNewKeyAllowedModels] = useState([]); // [] = full access
+  const [availableModels, setAvailableModels] = useState([]);
+  const [modelSearchQuery, setModelSearchQuery] = useState("");
+  const [showModelSelector, setShowModelSelector] = useState(false);
   const [createdKey, setCreatedKey] = useState(null);
 
   const [requireApiKey, setRequireApiKey] = useState(false);
@@ -637,6 +641,14 @@ export default function APIPageClient({ machineId }) {
     }
   };
 
+  const fetchAvailableModels = async () => {
+    try {
+      const res = await fetch("/api/keys/available-models");
+      const data = await res.json();
+      if (res.ok) setAvailableModels(data.models || []);
+    } catch {}
+  };
+
   const handleCreateKey = async () => {
     if (!newKeyName.trim()) return;
 
@@ -644,7 +656,10 @@ export default function APIPageClient({ machineId }) {
       const res = await fetch("/api/keys", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: newKeyName }),
+        body: JSON.stringify({
+          name: newKeyName,
+          allowedModels: newKeyAllowedModels.length > 0 ? newKeyAllowedModels : null,
+        }),
       });
       const data = await res.json();
 
@@ -946,6 +961,63 @@ export default function APIPageClient({ machineId }) {
             onChange={(e) => setNewKeyName(e.target.value)}
             placeholder="Production Key"
           />
+
+          {/* Model Access */}
+          <div className="flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <label className="text-sm font-medium text-text-primary">Model Access</label>
+              <button
+                type="button"
+                onClick={() => {
+                  if (!showModelSelector) fetchAvailableModels();
+                  setShowModelSelector(v => !v);
+                  if (showModelSelector) { setNewKeyAllowedModels([]); setModelSearchQuery(""); }
+                }}
+                className={`text-xs px-2 py-1 rounded-lg border transition-colors ${showModelSelector ? "border-primary/40 bg-primary/10 text-primary" : "border-black/10 dark:border-white/10 text-text-muted hover:text-text-primary"}`}
+              >
+                {showModelSelector ? "Restricted" : "Full Access"}
+              </button>
+            </div>
+
+            {showModelSelector && (
+              <div className="flex flex-col gap-2 rounded-xl border border-black/10 dark:border-white/10 p-3 bg-surface-2/40">
+                <input
+                  type="text"
+                  value={modelSearchQuery}
+                  onChange={e => setModelSearchQuery(e.target.value)}
+                  placeholder="Search models..."
+                  className="w-full rounded-lg border border-black/10 dark:border-white/10 bg-transparent px-3 py-1.5 text-xs text-text-primary placeholder:text-text-muted focus:outline-none focus:ring-1 focus:ring-primary/40"
+                />
+                {newKeyAllowedModels.length > 0 && (
+                  <p className="text-[11px] text-primary">{newKeyAllowedModels.length} model{newKeyAllowedModels.length > 1 ? "s" : ""} selected</p>
+                )}
+                <div className="max-h-48 overflow-y-auto flex flex-col gap-0.5">
+                  {availableModels
+                    .filter(m => !modelSearchQuery || m.id.toLowerCase().includes(modelSearchQuery.toLowerCase()) || m.providerName.toLowerCase().includes(modelSearchQuery.toLowerCase()))
+                    .map(m => {
+                      const checked = newKeyAllowedModels.includes(m.id);
+                      return (
+                        <button
+                          key={m.id}
+                          type="button"
+                          onClick={() => setNewKeyAllowedModels(prev =>
+                            checked ? prev.filter(x => x !== m.id) : [...prev, m.id]
+                          )}
+                          className={`flex items-center gap-2 rounded-lg px-2 py-1.5 text-left text-xs transition-colors ${checked ? "bg-primary/10 text-primary" : "hover:bg-black/5 dark:hover:bg-white/5 text-text-primary"}`}
+                        >
+                          <span className={`w-3.5 h-3.5 shrink-0 rounded border flex items-center justify-center ${checked ? "bg-primary border-primary" : "border-black/20 dark:border-white/20"}`}>
+                            {checked && <span className="material-symbols-outlined text-[10px] text-white">check</span>}
+                          </span>
+                          <span className="truncate font-mono">{m.id}</span>
+                          <span className="ml-auto shrink-0 text-text-muted">{m.providerName}</span>
+                        </button>
+                      );
+                    })}
+                </div>
+              </div>
+            )}
+          </div>
+
           <div className="flex gap-2">
             <Button onClick={handleCreateKey} fullWidth disabled={!newKeyName.trim()}>
               Create
@@ -954,6 +1026,9 @@ export default function APIPageClient({ machineId }) {
               onClick={() => {
                 setShowAddModal(false);
                 setNewKeyName("");
+                setNewKeyAllowedModels([]);
+                setModelSearchQuery("");
+                setShowModelSelector(false);
               }}
               variant="ghost"
               fullWidth

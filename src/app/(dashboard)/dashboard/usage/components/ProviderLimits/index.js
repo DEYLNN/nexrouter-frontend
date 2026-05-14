@@ -118,15 +118,15 @@ export default function ProviderLimits() {
 
       // Parse quota data using provider-specific parser
       let parsedQuotas;
-      if (isMimoSgp && data?.profile) {
-        // MiMo SGP: build quota from profile + plan data
-        const profile = data.profile;
-        const plan = data.plan;
+      if (isMimoSgp && data?.usage) {
+        // MiMo SGP: build quota from usage.items[0]
+        const planItem = data.usage?.data?.usage?.items?.[0];
+        const planInfo = data.plan?.data;
         parsedQuotas = [{
-          name: profile.planName || profile.plan || "MiMo Plan SGP",
-          used: plan?.usedTokens || plan?.used || 0,
-          total: plan?.totalTokens || plan?.total || 0,
-          resetAt: plan?.resetAt || null,
+          name: planInfo?.planName || "MiMo Plan SGP",
+          used: planItem?.used || 0,
+          total: planItem?.limit || 0,
+          resetAt: planInfo?.currentPeriodEnd || null,
         }];
       } else {
         parsedQuotas = parseQuotaData(provider, data);
@@ -785,23 +785,20 @@ export default function ProviderLimits() {
                   <>
                     <QuotaTable quotas={quota?.quotas} compact />
                     {/* MiMo SGP: show profile info from platform */}
-                    {conn.provider === "xiaomi-mimo-plan-sgp" && quota?.raw?.profile && (
+                    {conn.provider === "xiaomi-mimo-plan-sgp" && quota?.raw?.profile?.data && (
                       <div className="px-3 py-2 border-t border-[rgba(255,255,255,0.08)]">
                         <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted">
-                          {quota.raw.profile.userId && (
-                            <span>ID: {quota.raw.profile.userId}</span>
+                          {quota.raw.profile.data.userId && (
+                            <span>ID: {quota.raw.profile.data.userId}</span>
                           )}
-                          {quota.raw.profile.email && (
-                            <span>{quota.raw.profile.email}</span>
+                          {quota.raw.profile.data.email && (
+                            <span>{quota.raw.profile.data.email}</span>
                           )}
-                          {quota.raw.profile.planName && (
-                            <span className="text-primary">{quota.raw.profile.planName}</span>
+                          {quota.raw.plan?.data?.planName && (
+                            <span className="text-primary">{quota.raw.plan.data.planName} plan</span>
                           )}
-                          {quota.raw.plan?.usedTokens != null && (
-                            <span>Used: {(quota.raw.plan.usedTokens / 1e6).toFixed(1)}M tokens</span>
-                          )}
-                          {quota.raw.plan?.totalTokens != null && (
-                            <span>Limit: {(quota.raw.plan.totalTokens / 1e6).toFixed(1)}M tokens</span>
+                          {quota.raw.plan?.data?.currentPeriodEnd && (
+                            <span>Renews: {quota.raw.plan.data.currentPeriodEnd}</span>
                           )}
                         </div>
                       </div>

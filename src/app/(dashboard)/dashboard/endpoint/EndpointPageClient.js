@@ -707,12 +707,16 @@ export default function APIPageClient({ machineId }) {
     });
   };
 
-  const [baseUrl, setBaseUrl] = useState("/v1");
+  const [baseUrl, setBaseUrl] = useState(() => {
+    const backendBase = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "";
+    return backendBase ? `${backendBase.replace(/\/$/, "")}/v1` : "/v1";
+  });
 
-  // Hydration fix: Only access window on client side
+  // Hydration fix: use configured backend URL when available, fallback to current origin.
   useEffect(() => {
     if (typeof window !== "undefined") {
-      setBaseUrl(`${window.location.origin}/v1`);
+      const backendBase = process.env.NEXT_PUBLIC_BACKEND_BASE_URL || "";
+      setBaseUrl(backendBase ? `${backendBase.replace(/\/$/, "")}/v1` : `${window.location.origin}/v1`);
     }
   }, []);
 

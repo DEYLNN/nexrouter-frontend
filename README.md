@@ -19,7 +19,7 @@
   <img src="https://img.shields.io/badge/version-0.5.0-blue?style=flat-square" alt="Version">
   <img src="https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js" alt="Next.js">
   <img src="https://img.shields.io/badge/Hono-Fire-orange?style=flat-square&logo=hono" alt="Hono">
-  <img src="https://img.shields.io/badge/providers-106+-green?style=flat-square" alt="Providers">
+  <img src="https://img.shields.io/badge/providers-40+-green?style=flat-square" alt="Providers">
   <img src="https://img.shields.io/badge/license-MIT-yellow?style=flat-square" alt="License">
 </p>
 
@@ -40,10 +40,10 @@
 
 ---
 
-## Supported Providers
+## Supported Providers (40+ LLM providers)
 
 <details open>
-<summary><strong>💬 LLM / Chat (40+ providers)</strong></summary>
+<summary><strong>💬 LLM / Chat</strong></summary>
 <br>
 <table>
 <tr>
@@ -109,84 +109,7 @@
 </table>
 </details>
 
-<details>
-<summary><strong>🌐 Web / Subscription (2 providers)</strong></summary>
-<br>
-<table>
-<tr>
-<td align="center" width="90"><img src="public/providers/grok-web.png" width="36"><br><sub>Grok Web</sub></td>
-<td align="center" width="90"><img src="public/providers/perplexity-web.png" width="36"><br><sub>Perplexity Web</sub></td>
-</tr>
-</table>
-</details>
 
-<details>
-<summary><strong>🔊 Text-to-Speech (8 providers)</strong></summary>
-<br>
-<table>
-<tr>
-<td align="center" width="90"><img src="public/providers/elevenlabs.png" width="36"><br><sub>ElevenLabs</sub></td>
-<td align="center" width="90"><img src="public/providers/aws-polly.png" width="36"><br><sub>AWS Polly</sub></td>
-<td align="center" width="90"><img src="public/providers/google-tts.png" width="36"><br><sub>Google TTS</sub></td>
-<td align="center" width="90"><img src="public/providers/edge-tts.png" width="36"><br><sub>Edge TTS</sub></td>
-<td align="center" width="90"><img src="public/providers/cartesia.png" width="36"><br><sub>Cartesia</sub></td>
-<td align="center" width="90"><img src="public/providers/playht.png" width="36"><br><sub>PlayHT</sub></td>
-<td align="center" width="90"><img src="public/providers/coqui.png" width="36"><br><sub>Coqui</sub></td>
-<td align="center" width="90"><img src="public/providers/inworld.png" width="36"><br><sub>Inworld</sub></td>
-</tr>
-</table>
-</details>
-
-<details>
-<summary><strong>🎨 Image & Video (8 providers)</strong></summary>
-<br>
-<table>
-<tr>
-<td align="center" width="90"><img src="public/providers/stability-ai.png" width="36"><br><sub>Stability AI</sub></td>
-<td align="center" width="90"><img src="public/providers/fal-ai.png" width="36"><br><sub>Fal.ai</sub></td>
-<td align="center" width="90"><img src="public/providers/black-forest-labs.png" width="36"><br><sub>FLUX/BFL</sub></td>
-<td align="center" width="90"><img src="public/providers/runwayml.png" width="36"><br><sub>Runway</sub></td>
-<td align="center" width="90"><img src="public/providers/topaz.png" width="36"><br><sub>Topaz</sub></td>
-<td align="center" width="90"><img src="public/providers/recraft.png" width="36"><br><sub>Recraft</sub></td>
-<td align="center" width="90"><img src="public/providers/comfyui.png" width="36"><br><sub>ComfyUI</sub></td>
-<td align="center" width="90"><img src="public/providers/sdwebui.png" width="36"><br><sub>SD WebUI</sub></td>
-</tr>
-</table>
-</details>
-
-<details>
-<summary><strong>🔍 Embedding & Search (12 providers)</strong></summary>
-<br>
-<table>
-<tr>
-<td align="center" width="90"><img src="public/providers/jina-ai.png" width="36"><br><sub>Jina AI</sub></td>
-<td align="center" width="90"><img src="public/providers/voyage-ai.png" width="36"><br><sub>Voyage AI</sub></td>
-<td align="center" width="90"><img src="public/providers/brave-search.png" width="36"><br><sub>Brave</sub></td>
-<td align="center" width="90"><img src="public/providers/exa.png" width="36"><br><sub>Exa</sub></td>
-<td align="center" width="90"><img src="public/providers/tavily.png" width="36"><br><sub>Tavily</sub></td>
-<td align="center" width="90"><img src="public/providers/firecrawl.png" width="36"><br><sub>Firecrawl</sub></td>
-<td align="center" width="90"><img src="public/providers/serper.png" width="36"><br><sub>Serper</sub></td>
-<td align="center" width="90"><img src="public/providers/google-pse.png" width="36"><br><sub>Google PSE</sub></td>
-</tr>
-<tr>
-<td align="center" width="90"><img src="public/providers/searchapi.png" width="36"><br><sub>SearchAPI</sub></td>
-<td align="center" width="90"><img src="public/providers/searxng.png" width="36"><br><sub>SearXNG</sub></td>
-<td align="center" width="90"><img src="public/providers/linkup.png" width="36"><br><sub>Linkup</sub></td>
-<td align="center" width="90"><img src="public/providers/youcom.png" width="36"><br><sub>You.com</sub></td>
-</tr>
-</table>
-</details>
-
-<details>
-<summary><strong>🎤 Speech-to-Text (2 providers)</strong></summary>
-<br>
-<table>
-<tr>
-<td align="center" width="90"><img src="public/providers/deepgram.png" width="36"><br><sub>Deepgram</sub></td>
-<td align="center" width="90"><img src="public/providers/assemblyai.png" width="36"><br><sub>AssemblyAI</sub></td>
-</tr>
-</table>
-</details>
 
 ---
 

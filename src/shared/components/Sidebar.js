@@ -327,6 +327,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
           {!isCollapsed ? (
             <Link
               href="/dashboard/changelog"
+              onClick={onClose}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between",
                 gap: "8px", padding: "6px 8px", borderRadius: "8px",
@@ -346,6 +347,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
           ) : (
             <Link
               href="/dashboard/changelog"
+              onClick={onClose}
               title={`Changelog v${APP_CONFIG.version}`}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",

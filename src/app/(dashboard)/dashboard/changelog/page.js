@@ -1,11 +1,13 @@
-import { readFileSync } from "fs";
-import { join } from "path";
 import ChangelogClient from "./ChangelogClient";
 
-export default function ChangelogPage() {
+export default async function ChangelogPage() {
   let content = "";
   try {
-    content = readFileSync(join(process.cwd(), "CHANGELOG.md"), "utf-8");
+    const res = await fetch(
+      "https://raw.githubusercontent.com/DEYLNN/ai-gateway-next-frontend/main/CHANGELOG.md",
+      { next: { revalidate: 300 } } // revalidate every 5 min
+    );
+    if (res.ok) content = await res.text();
   } catch {}
   return <ChangelogClient content={content} />;
 }

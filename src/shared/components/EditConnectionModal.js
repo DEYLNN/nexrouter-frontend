@@ -189,6 +189,11 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
           codexPlan: codexData.codexPlan,
           blockedModels: codexData.blockedModels,
         };
+      } else if (hasBlockedModels) {
+        updates.providerSpecificData = {
+          ...(connection.providerSpecificData || {}),
+          blockedModels: codexData.blockedModels,
+        };
       }
       
       await onSave(updates);

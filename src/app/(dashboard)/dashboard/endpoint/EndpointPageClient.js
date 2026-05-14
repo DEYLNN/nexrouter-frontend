@@ -879,7 +879,7 @@ export default function APIPageClient({ machineId }) {
                     </code>
                     <button
                       onClick={() => toggleKeyVisibility(key.id)}
-                      className="p-1 hover:bg-[rgba(255,255,255,0.05)] rounded text-text-muted hover:text-primary opacity-0 group-hover:opacity-100 transition-all"
+                      className="p-1 hover:bg-[rgba(255,255,255,0.05)] rounded text-text-muted hover:text-primary transition-all"
                       title={visibleKeys.has(key.id) ? "Hide key" : "Show key"}
                     >
                       <span className="material-symbols-outlined text-[14px]">
@@ -888,7 +888,7 @@ export default function APIPageClient({ machineId }) {
                     </button>
                     <button
                       onClick={() => copy(key.key, key.id)}
-                      className="p-1 hover:bg-[rgba(255,255,255,0.05)] rounded text-text-muted hover:text-primary opacity-0 group-hover:opacity-100 transition-all"
+                      className="p-1 hover:bg-[rgba(255,255,255,0.05)] rounded text-text-muted hover:text-primary transition-all"
                     >
                       <span className="material-symbols-outlined text-[14px]">
                         {copied === key.id ? "check" : "content_copy"}
@@ -919,7 +919,7 @@ export default function APIPageClient({ machineId }) {
                   />
                   <button
                     onClick={() => handleDeleteKey(key.id)}
-                    className="p-2 hover:bg-red-500/10 rounded text-red-500 opacity-0 group-hover:opacity-100 transition-all"
+                    className="p-2 hover:bg-red-500/10 rounded text-red-500 transition-all"
                   >
                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4a1 1 0 011-1h4a1 1 0 011 1v2"/></svg>
                   </button>

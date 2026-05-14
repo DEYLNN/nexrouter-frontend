@@ -341,6 +341,11 @@ export const PROVIDER_MODELS = {
     { id: "openai/gpt-image-1", name: "GPT Image 1 (via OpenRouter)", type: "image", params: ["n", "size", "quality", "response_format"] },
     { id: "google/imagen-3.0-generate-002", name: "Imagen 3 (via OpenRouter)", type: "image", params: ["n", "size"] },
     { id: "black-forest-labs/FLUX.1-schnell", name: "FLUX.1 Schnell (via OpenRouter)", type: "image", params: ["n", "size"] },
+    // Free LLM models
+    { id: "poolside/laguna-m.1:free", name: "Poolside Laguna M.1 (Free)" },
+    { id: "openai/gpt-oss-120b:free", name: "GPT OSS 120B (Free)" },
+    { id: "nvidia/nemotron-3-super-120b-a12b:free", name: "NVIDIA Nemotron Super 120B (Free)" },
+    { id: "minimax/minimax-m2.5:free", name: "MiniMax M2.5 (Free)" },
   ],
   glm: [
     { id: "glm-5.1", name: "GLM 5.1" },

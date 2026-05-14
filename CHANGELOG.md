@@ -1,5 +1,37 @@
 # Changelog
 
+## [0.6.0] - 2026-05-14
+
+### Features
+- Fix changelog click + add auto-changelog GitHub Action
+- Add xiaomi-mimo-plan-sgp to USAGE_SUPPORTED_PROVIDERS + USAGE_APIKEY_PROVIDERS
+- Add MiMo SGP usage card to quota page with profile + token info
+- Add MiMo SGP platform cookie field for usage tracking + mimo-usage API endpoint
+- OpenRouter: change alias to 'or', add 4 free static models
+- Add prefix uniqueness check when creating custom provider nodes
+
+### Fixes
+- Remove GH Action (token missing workflow scope) + fix changelog click + auto_changelog script
+- Fix MiMo SGP usage card: correct API data shape + plan detail + usage bar
+- Fix Cloudflare name to Cloudflare AI + sync provider aliases
+- Fix: kiro model IDs use dash format (claude-sonnet-4-6, claude-opus-4-7)
+- Fix: save blockedModels for kiro/cwv per-account
+- Fix endpoint card style, caveman mobile layout, kiro/cwv models update, per-account blocked models
+
+### Improvements
+- README: remove non-LLM provider sections, keep only relevant
+- v0.5.0: comprehensive README with provider grid and architecture
+- Sidebar: replace Admin/shutdown footer with Changelog + version link
+- v0.5.0: bump version + changelog
+- API key model access: allowedModels selector + restricted/full access toggle
+- Endpoint page: API key action buttons always visible (eye/copy/delete)
+- Quota table: format numbers compact (K/M/B)
+- MiMo SGP quota card: masked email header, ID footer, expired handling
+- Revert kiro claude 4.x model ids to dot style
+- Use backend env for displayed API endpoint
+- Initial split Next frontend
+
+
 ## [0.5.0] - 2026-05-14
 
 ### Features

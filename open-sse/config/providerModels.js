@@ -60,8 +60,10 @@ export const PROVIDER_MODELS = {
   ],
   nous: [  // Nous Portal
     { id: "stepfun/step-3.5-flash", name: "StepFun Step 3.5 Flash" },
-    { id: "qwen/qwen3.6-plus", name: "Qwen 3.6 Plus" },
     { id: "deepseek/deepseek-v4-flash", name: "DeepSeek V4 Flash" },
+    { id: "google/lyria-3-clip-preview", name: "Google Lyria 3 Clip Preview" },
+    { id: "google/lyria-3-pro-preview", name: "Google Lyria 3 Pro Preview" },
+    { id: "openrouter/owl-alpha", name: "OpenRouter Owl Alpha" },
   ],
   qw: [  // Qwen Code
     // { id: "qwen3-coder-next", name: "Qwen3 Coder Next" },

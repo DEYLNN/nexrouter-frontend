@@ -17,6 +17,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
   const isAzure = provider === "azure";
   const isCloudflareAi = provider === "cloudflare-ai";
   const isMimoSgp = provider === "xiaomi-mimo-plan-sgp";
+  const isCustomProvider = isCompatible;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -118,6 +119,10 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
   const handleValidate = async () => {
     setValidating(true);
     try {
+      if (isCustomProvider) {
+        setValidationResult("success");
+        return;
+      }
       const res = await fetch("/api/providers/validate", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -136,7 +141,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
     if (!provider) return;
     if (!isOllamaLocal && !formData.apiKey) return;
     // API key names are generated uniquely to avoid backend upsert-by-name replacing existing keys.
-    if (isCompatible && !formData.defaultModel.trim()) return;
+    // Custom compatible providers route by provider prefix; default model is no longer required per key.
 
     setSaving(true);
     try {
@@ -144,14 +149,19 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
       try {
         setValidating(true);
         setValidationResult(null);
-        const res = await fetch("/api/providers/validate", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ provider, apiKey: formData.apiKey, providerSpecificData: buildProviderSpecificData() }),
-        });
-        const data = await res.json();
-        isValid = !!data.valid;
-        setValidationResult(isValid ? "success" : "failed");
+        if (isCustomProvider) {
+          isValid = true;
+          setValidationResult("success");
+        } else {
+          const res = await fetch("/api/providers/validate", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ provider, apiKey: formData.apiKey, providerSpecificData: buildProviderSpecificData() }),
+          });
+          const data = await res.json();
+          isValid = !!data.valid;
+          setValidationResult(isValid ? "success" : "failed");
+        }
       } catch {
         setValidationResult("failed");
       } finally {
@@ -161,7 +171,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
       await onSave({
         name: makeUniqueName(formData.name || (isOllamaLocal ? "Ollama Local" : credentialLabel)),
         apiKey: formData.apiKey,
-        defaultModel: isCompatible ? formData.defaultModel.trim() : undefined,
+        defaultModel: undefined,
         priority: Number.parseInt(formData.priority, 10) || nextPriority,
         testStatus: isValid ? "active" : "unknown",
         providerSpecificData: buildProviderSpecificData()
@@ -294,7 +304,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
             )}
           </p>
         )}
-        {isCompatible && (
+        {false && isCompatible && (
           <Input
             label="Default Model"
             value={formData.defaultModel}
@@ -317,7 +327,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
         )}
         {isCompatible && (
           <p className="text-xs text-text-muted">
-            Enter the model ID exactly as your compatible endpoint expects it. This model will be saved as the connection default.
+            Custom provider keys inherit the provider base URL/prefix. Default model is configured in the model list/aliases, not per key.
           </p>
         )}
         {isCloudflareAi && (
@@ -390,7 +400,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
         />
 
         <div className="flex gap-2">
-          <Button onClick={handleSubmit} fullWidth disabled={saving || (!isOllamaLocal && !formData.apiKey) || (isCompatible && !formData.defaultModel.trim()) || (isAzure && (!azureData.azureEndpoint || !azureData.deployment || !azureData.organization)) || (isCloudflareAi && !cloudflareData.accountId)}>
+          <Button onClick={handleSubmit} fullWidth disabled={saving || (!isOllamaLocal && !formData.apiKey) || (isAzure && (!azureData.azureEndpoint || !azureData.deployment || !azureData.organization)) || (isCloudflareAi && !cloudflareData.accountId)}>
             {saving ? "Saving..." : "Save"}
           </Button>
           <Button onClick={() => { resetForm(); onClose(); }} variant="ghost" fullWidth>

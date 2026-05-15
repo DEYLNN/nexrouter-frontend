@@ -1047,6 +1047,7 @@ export default function ProviderDetailPage() {
         authHint={providerInfo?.authHint}
         website={providerInfo?.website}
         error={addConnectionError}
+        existingConnections={connections}
         onSave={handleSaveApiKey}
         onBulkDone={fetchConnections}
         onClose={() => {

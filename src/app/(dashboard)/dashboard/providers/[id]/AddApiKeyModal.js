@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Badge, Input, Modal } from "@/shared/components";
 
 const BULK_PLACEHOLDER = `name1|sk-key1\nname2|sk-key2\nsk-key-only-auto-named`;
 
-export default function AddApiKeyModal({ isOpen, provider, providerName, isCompatible, isAnthropic, authType, authHint, website, error, onSave, onBulkDone, onClose }) {
+export default function AddApiKeyModal({ isOpen, provider, providerName, isCompatible, isAnthropic, authType, authHint, website, error, existingConnections = [], onSave, onBulkDone, onClose }) {
   const isOllamaLocal = provider === "ollama-local";
   const isCookie = authType === "cookie";
   const credentialLabel = isCookie ? "Cookie Value" : "API Key";
@@ -39,6 +39,46 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
   const [mode, setMode] = useState("single"); // "single" | "bulk"
   const [bulkText, setBulkText] = useState("");
   const [bulkResult, setBulkResult] = useState(null); // { success, failed }
+
+  const nextPriority = useMemo(() => {
+    const used = new Set(
+      (existingConnections || [])
+        .filter((c) => c.provider === provider)
+        .map((c) => Number.parseInt(c.priority, 10))
+        .filter((n) => Number.isFinite(n) && n > 0)
+    );
+    let n = 1;
+    while (used.has(n)) n += 1;
+    return n;
+  }, [existingConnections, provider]);
+
+  const resetForm = (priority = nextPriority) => {
+    setFormData({
+      name: "",
+      apiKey: "",
+      defaultModel: "",
+      priority,
+      ollamaHostUrl: "",
+    });
+    setAzureData({
+      azureEndpoint: "",
+      apiVersion: "2024-10-01-preview",
+      deployment: "",
+      organization: "",
+    });
+    setCloudflareData({ accountId: "" });
+    setMimoData({ platformCookie: "" });
+    setValidating(false);
+    setValidationResult(null);
+    setSaving(false);
+    setMode("single");
+    setBulkText("");
+    setBulkResult(null);
+  };
+
+  useEffect(() => {
+    if (isOpen) resetForm(nextPriority);
+  }, [isOpen, provider, nextPriority]);
 
   const buildProviderSpecificData = () => {
     if (isOllamaLocal && formData.ollamaHostUrl.trim()) {
@@ -111,7 +151,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
         name: formData.name || (isOllamaLocal ? "Ollama Local" : ""),
         apiKey: formData.apiKey,
         defaultModel: isCompatible ? formData.defaultModel.trim() : undefined,
-        priority: formData.priority,
+        priority: Number.parseInt(formData.priority, 10) || nextPriority,
         testStatus: isValid ? "active" : "unknown",
         providerSpecificData: buildProviderSpecificData()
       });
@@ -127,6 +167,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
     setBulkResult(null);
     let success = 0;
     let failed = 0;
+    let priority = nextPriority;
     for (let i = 0; i < lines.length; i++) {
       const parts = lines[i].split("|");
       const apiKey = parts.length >= 2 ? parts.slice(1).join("|").trim() : parts[0].trim();
@@ -136,17 +177,22 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
         const res = await fetch("/api/providers", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ provider, apiKey, name, priority: 1, testStatus: "unknown" }),
+          body: JSON.stringify({ provider, apiKey, name, priority, testStatus: "unknown" }),
         });
-        if (res.ok) success++;
-        else failed++;
+        if (res.ok) {
+          success++;
+          priority++;
+        } else failed++;
       } catch {
         failed++;
       }
     }
     setSaving(false);
     setBulkResult({ success, failed });
-    if (success > 0 && onBulkDone) onBulkDone();
+    if (success > 0) {
+      setBulkText("");
+      if (onBulkDone) await onBulkDone();
+    }
   };
 
   if (!provider) return null;
@@ -325,15 +371,17 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
         <Input
           label="Priority"
           type="number"
+          min="1"
           value={formData.priority}
-          onChange={(e) => setFormData({ ...formData, priority: Number.parseInt(e.target.value) || 1 })}
+          onChange={(e) => setFormData({ ...formData, priority: Number.parseInt(e.target.value, 10) || nextPriority })}
+          hint={`Auto-selected next free priority #${nextPriority}. Priority #1 is primary; lower number wins.`}
         />
 
         <div className="flex gap-2">
           <Button onClick={handleSubmit} fullWidth disabled={saving || (!isOllamaLocal && (!formData.name || !formData.apiKey)) || (isCompatible && !formData.defaultModel.trim()) || (isAzure && (!azureData.azureEndpoint || !azureData.deployment || !azureData.organization)) || (isCloudflareAi && !cloudflareData.accountId)}>
             {saving ? "Saving..." : "Save"}
           </Button>
-          <Button onClick={onClose} variant="ghost" fullWidth>
+          <Button onClick={() => { resetForm(); onClose(); }} variant="ghost" fullWidth>
             Cancel
           </Button>
         </div>
@@ -353,6 +401,7 @@ AddApiKeyModal.propTypes = {
   authHint: PropTypes.string,
   website: PropTypes.string,
   error: PropTypes.string,
+  existingConnections: PropTypes.array,
   onSave: PropTypes.func.isRequired,
   onBulkDone: PropTypes.func,
   onClose: PropTypes.func.isRequired,

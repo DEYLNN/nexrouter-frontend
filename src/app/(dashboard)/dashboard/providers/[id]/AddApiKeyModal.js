@@ -80,6 +80,20 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
     if (isOpen) resetForm(nextPriority);
   }, [isOpen, provider, nextPriority]);
 
+
+  const randomSuffix = () => {
+    if (globalThis.crypto?.randomUUID) return globalThis.crypto.randomUUID().slice(0, 8);
+    return Math.random().toString(36).slice(2, 10);
+  };
+
+  const makeUniqueName = (base = credentialLabel) => {
+    const existing = new Set((existingConnections || []).filter((c) => c.provider === provider).map((c) => String(c.name || "").toLowerCase()));
+    const cleanBase = String(base || credentialLabel).trim() || credentialLabel;
+    let name = `${cleanBase} ${randomSuffix()}`;
+    while (existing.has(name.toLowerCase())) name = `${cleanBase} ${randomSuffix()}`;
+    return name;
+  };
+
   const buildProviderSpecificData = () => {
     if (isOllamaLocal && formData.ollamaHostUrl.trim()) {
       return { baseUrl: formData.ollamaHostUrl.trim() };
@@ -121,10 +135,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
   const handleSubmit = async () => {
     if (!provider) return;
     if (!isOllamaLocal && !formData.apiKey) return;
-    if (!isOllamaLocal) {
-      // Non-ollama providers require a name
-      if (!formData.name) return;
-    }
+    // API key names are generated uniquely to avoid backend upsert-by-name replacing existing keys.
     if (isCompatible && !formData.defaultModel.trim()) return;
 
     setSaving(true);
@@ -148,7 +159,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
       }
 
       await onSave({
-        name: formData.name || (isOllamaLocal ? "Ollama Local" : ""),
+        name: makeUniqueName(formData.name || (isOllamaLocal ? "Ollama Local" : credentialLabel)),
         apiKey: formData.apiKey,
         defaultModel: isCompatible ? formData.defaultModel.trim() : undefined,
         priority: Number.parseInt(formData.priority, 10) || nextPriority,
@@ -171,8 +182,8 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
     for (let i = 0; i < lines.length; i++) {
       const parts = lines[i].split("|");
       const apiKey = parts.length >= 2 ? parts.slice(1).join("|").trim() : parts[0].trim();
-      const baseName = parts.length >= 2 ? parts[0].trim() : "Key";
-      const name = `${baseName} ${i + 1}`;
+      const baseName = parts.length >= 2 ? parts[0].trim() : credentialLabel;
+      const name = makeUniqueName(baseName);
       try {
         const res = await fetch("/api/providers", {
           method: "POST",
@@ -234,7 +245,8 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
           label="Name"
           value={formData.name}
           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-          placeholder={isOllamaLocal ? "Ollama Local" : "Production Key"}
+          placeholder={isOllamaLocal ? "Ollama Local" : `${credentialLabel} ${nextPriority}`}
+          hint="Optional. A short random suffix is added automatically so a new key never replaces an existing key with the same name."
         />
         {isOllamaLocal && (
           <div className="flex gap-2">
@@ -378,7 +390,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
         />
 
         <div className="flex gap-2">
-          <Button onClick={handleSubmit} fullWidth disabled={saving || (!isOllamaLocal && (!formData.name || !formData.apiKey)) || (isCompatible && !formData.defaultModel.trim()) || (isAzure && (!azureData.azureEndpoint || !azureData.deployment || !azureData.organization)) || (isCloudflareAi && !cloudflareData.accountId)}>
+          <Button onClick={handleSubmit} fullWidth disabled={saving || (!isOllamaLocal && !formData.apiKey) || (isCompatible && !formData.defaultModel.trim()) || (isAzure && (!azureData.azureEndpoint || !azureData.deployment || !azureData.organization)) || (isCloudflareAi && !cloudflareData.accountId)}>
             {saving ? "Saving..." : "Save"}
           </Button>
           <Button onClick={() => { resetForm(); onClose(); }} variant="ghost" fullWidth>

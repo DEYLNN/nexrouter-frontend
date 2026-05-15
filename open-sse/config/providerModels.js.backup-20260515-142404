@@ -215,9 +215,6 @@ export const PROVIDER_MODELS = {
   ],
 
   // API Key Providers (alias = id)
-  "freemodel-dev": [
-    { id: "gpt-5.5", name: "GPT-5.5" },
-  ],
   bai: [
     { id: "glm-5.1", name: "GLM 5.1" },
     { id: "minimax-m2.7", name: "MiniMax M2.7" },

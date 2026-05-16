@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.10] - 2026-05-16
+
+### Features
+- Add Gemini Flash Lite model to Gitlawb provider
+
 ## [0.5.9] - 2026-05-16
 
 ### Improvements

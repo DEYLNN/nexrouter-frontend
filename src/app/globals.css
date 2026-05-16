@@ -57,12 +57,12 @@
 
   /* Shadows */
   --shadow-soft: 0 1px 2px 0 rgba(0,0,0,0.04);
-  --shadow-warm: 0 2px 12px -2px rgba(59, 130, 246, 0.18);
-  --shadow-elevated: 0 12px 28px -4px rgba(15, 23, 42, 0.08);
+  --shadow-warm: 0 1px 8px -3px rgba(59, 130, 246, 0.14);
+  --shadow-elevated: 0 8px 18px -10px rgba(15, 23, 42, 0.10);
   --shadow-elev:
-    inset 0 1px 0 0 rgba(255,255,255,0.8),
+    inset 0 1px 0 0 rgba(255,255,255,0.55),
     0 1px 2px rgba(15,23,42,0.04),
-    0 12px 36px -8px rgba(15,23,42,0.10);
+    0 8px 18px -12px rgba(15,23,42,0.14);
   --shadow-focus: 0 0 0 3px rgba(59,130,246,0.22);
 
   color-scheme: dark;
@@ -110,12 +110,12 @@
   --color-info: #3B82F6;
 
   --shadow-soft: 0 1px 2px 0 rgba(0,0,0,0.5);
-  --shadow-warm: 0 2px 12px -2px rgba(59, 130, 246, 0.20);
-  --shadow-elevated: 0 40px 100px -20px rgba(0,0,0,1);
+  --shadow-warm: 0 1px 8px -3px rgba(59, 130, 246, 0.16);
+  --shadow-elevated: 0 10px 28px -18px rgba(0,0,0,0.72);
   --shadow-elev:
-    inset 0 0 40px 0 rgba(255,255,255,0.02),
-    0 1px 2px rgba(0,0,0,0.5),
-    0 40px 100px -20px rgba(0,0,0,1);
+    inset 0 1px 0 rgba(255,255,255,0.025),
+    0 1px 2px rgba(0,0,0,0.32),
+    0 10px 28px -18px rgba(0,0,0,0.76);
   --shadow-focus: 0 0 0 3px rgba(59, 130, 246, 0.30);
 
   color-scheme: dark;
@@ -281,8 +281,8 @@ input, textarea {
 
 /* macOS Vibrancy */
 .bg-vibrancy {
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   background: rgba(255, 255, 255, 0.72);
 }
 .dark .bg-vibrancy {
@@ -356,7 +356,7 @@ button {
     border-color: rgba(229, 106, 74, 0.8);
   }
 }
-.animate-border-glow { animation: border-glow 2s ease-in-out infinite; }
+.animate-border-glow { animation: none; }
 
 @keyframes slideInFromRight {
   from { transform: translateX(100%); opacity: 0; }
@@ -378,7 +378,7 @@ button {
   0%, 100% { opacity: 0.4; transform: scale(1); }
   50% { opacity: 0.7; transform: scale(1.05); }
 }
-.animate-pulse-glow { animation: pulseGlow 3s ease-in-out infinite; }
+.animate-pulse-glow { animation: none; }
 
 /* CTA shimmer + glow pulse */
 @keyframes ctaShimmer {
@@ -393,7 +393,7 @@ button {
   position: relative;
   overflow: hidden;
   isolation: isolate;
-  animation: ctaGlowPulse 2.4s ease-in-out infinite;
+  animation: none;
 }
 .btn-cta::before {
   content: "";
@@ -403,7 +403,7 @@ button {
   width: 50%;
   height: 100%;
   background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
-  animation: ctaShimmer 2.8s ease-in-out infinite;
+  animation: none;
   pointer-events: none;
   z-index: 1;
 }
@@ -500,16 +500,14 @@ button {
 
   /* Ambient multi-point glow — lower opacity for dark mode */
   --theme-ambient:
-    radial-gradient(circle at 14% 8%, rgba(17, 166, 166, 0.11), transparent 55%),
-    radial-gradient(circle at 86% 12%, rgba(36, 107, 254, 0.10), transparent 50%),
-    radial-gradient(circle at 82% 88%, rgba(201, 138, 173, 0.09), transparent 60%),
-    radial-gradient(circle at 12% 92%, rgba(17, 163, 106, 0.08), transparent 55%);
+    radial-gradient(circle at 14% 8%, rgba(17, 166, 166, 0.055), transparent 52%),
+    radial-gradient(circle at 86% 12%, rgba(36, 107, 254, 0.045), transparent 48%);
 
   /* Elevated cool glass surface */
-  --theme-glass-bg: rgba(24, 26, 30, 0.55);
+  --theme-glass-bg: rgba(24, 26, 30, 0.74);
   --theme-glass-border: rgba(255, 255, 255, 0.07);
   --theme-glass-hi: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
-  --theme-glass-shadow: 0 24px 60px -24px rgba(0, 0, 0, 0.70);
+  --theme-glass-shadow: 0 8px 26px -20px rgba(0, 0, 0, 0.70);
 
   /* Data / mono chips */
   --theme-data: var(--theme-accent-blue);
@@ -587,8 +585,8 @@ button {
   border: 1px solid var(--theme-glass-border);
   box-shadow: var(--theme-glass-hi), var(--theme-glass-shadow);
   border-radius: var(--radius-editorial-md);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
 }
 
 .theme-glass-lg {
@@ -596,8 +594,8 @@ button {
   border: 1px solid var(--theme-glass-border);
   box-shadow: var(--theme-glass-hi), var(--theme-glass-shadow);
   border-radius: var(--radius-editorial-lg);
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 .theme-mono {
@@ -704,4 +702,38 @@ html, body {
   --theme-shell-text: #1F2A24;
   --theme-shell-text-muted: rgba(31, 42, 36, 0.68);
   --theme-shell-text-subtle: rgba(31, 42, 36, 0.45);
+}
+
+
+/* ============================================================
+   Performance calm mode — dashboard polish without heavy FX
+   ============================================================ */
+@media (prefers-reduced-motion: no-preference) {
+  .transition-all { transition-property: color, background-color, border-color, opacity, transform, box-shadow; }
+}
+
+/* Keep only functional loaders moving. Decorative pulses/glows are static. */
+.animate-ping,
+.animate-blob,
+.animate-border-glow,
+.animate-pulse-glow {
+  animation: none !important;
+}
+
+/* Tailwind heavy shadows/blurs softened globally for smoother dashboard scrolling. */
+.shadow-2xl { box-shadow: 0 12px 32px -24px rgba(0, 0, 0, 0.70) !important; }
+.shadow-xl { box-shadow: 0 10px 24px -22px rgba(0, 0, 0, 0.62) !important; }
+.shadow-lg { box-shadow: 0 8px 20px -18px rgba(0, 0, 0, 0.56) !important; }
+.backdrop-blur, .backdrop-blur-sm, .backdrop-blur-md, .backdrop-blur-lg, .backdrop-blur-xl, .backdrop-blur-2xl {
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
 }

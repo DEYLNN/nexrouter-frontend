@@ -726,15 +726,15 @@ function ApiKeyProviderCard({
         background: "var(--theme-glass-bg)",
         border: "1px solid var(--theme-glass-border)",
         boxShadow: "var(--theme-glass-hi)",
-        backdropFilter: "blur(14px)",
-        WebkitBackdropFilter: "blur(14px)",
+        backdropFilter: "blur(4px)",
+        WebkitBackdropFilter: "blur(4px)",
         cursor: "pointer",
         opacity: allDisabled ? 0.5 : 1,
         transition: "border-color 150ms ease, background 150ms ease, box-shadow 200ms ease",
         height: "100%",
         boxSizing: "border-box",
       }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(23,33,27,0.18)"; e.currentTarget.style.boxShadow = "0 18px 36px -18px rgba(23,33,27,0.16)"; }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(23,33,27,0.16)"; e.currentTarget.style.boxShadow = "0 8px 18px -16px rgba(23,33,27,0.20)"; }}
         onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--theme-glass-border)"; e.currentTarget.style.boxShadow = "var(--theme-glass-hi)"; }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>

@@ -106,10 +106,10 @@ function ProfileMenu({ onLogout }) {
           position: "absolute", top: "calc(100% + 8px)", right: 0,
           width: "180px", borderRadius: "10px",
           background: "var(--theme-shell-bg)",
-          backdropFilter: "blur(18px) saturate(140%)",
-          WebkitBackdropFilter: "blur(18px) saturate(140%)",
+          backdropFilter: "blur(6px)",
+          WebkitBackdropFilter: "blur(6px)",
           border: "1px solid var(--theme-shell-border)",
-          boxShadow: "0 16px 48px rgba(23,33,27,0.18)",
+          boxShadow: "0 8px 22px -16px rgba(23,33,27,0.24)",
           zIndex: 100, overflow: "hidden",
           animation: "fadeIn 100ms ease",
         }}>

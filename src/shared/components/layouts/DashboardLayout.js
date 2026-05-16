@@ -30,10 +30,10 @@ export default function DashboardLayout({ children }) {
 
   return (
     <div style={{ display: "flex", height: "100vh", width: "100%", overflow: "hidden", background: "var(--color-bg)", position: "relative" }}>
-      {/* Ambient editorial glow — Cuties/Mahiru inspired */}
+      {/* Subtle static ambient tone — no heavy blur/animation */}
       <div aria-hidden="true" className="theme-ambient-bg" style={{
         position: "absolute", inset: 0, pointerEvents: "none",
-        opacity: 1, zIndex: 0,
+        opacity: 0.32, zIndex: 0,
       }} />
 
       {/* Toast notifications */}
@@ -48,8 +48,8 @@ export default function DashboardLayout({ children }) {
               borderRadius: "10px",
               background: cfg.bg,
               border: `1px solid ${cfg.border}`,
-              backdropFilter: "blur(12px)",
-              boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
+              backdropFilter: "blur(4px)",
+              boxShadow: "0 6px 18px -14px rgba(0,0,0,0.55)",
             }}>
               <span style={{ color: cfg.color, flexShrink: 0, marginTop: "1px" }}><Icon /></span>
               <div style={{ flex: 1, minWidth: 0 }}>
@@ -69,7 +69,7 @@ export default function DashboardLayout({ children }) {
       {/* Mobile overlay */}
       {sidebarOpen && (
         <div
-          style={{ position: "fixed", inset: 0, zIndex: 40, background: "rgba(0,0,0,0.6)", backdropFilter: "blur(4px)" }}
+          style={{ position: "fixed", inset: 0, zIndex: 40, background: "rgba(0,0,0,0.55)", backdropFilter: "none" }}
           className="lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />

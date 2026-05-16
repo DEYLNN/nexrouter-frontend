@@ -47,6 +47,31 @@ Public/test backend may be:
 http://157.173.124.46:18323
 ```
 
+## Release / push rule
+
+Zhen instruction — 2026-05-16:
+
+Every meaningful FE push must keep version + changelog synced.
+
+Before the final commit/push, run:
+
+```bash
+python3 scripts/release-note.py "Short summary of the change"
+npm run build
+git add -A
+git commit -m "<same short summary or clear commit message>"
+git push origin main
+rm -rf .next
+```
+
+Rules:
+
+- `package.json` version uses **patch bumps only** (`0.5.1 → 0.5.2 → ...`).
+- Update `CHANGELOG.md` for every pushed FE change.
+- Use one concise changelog bullet per work batch.
+- Do not create minor version bumps unless Zhen explicitly asks.
+- Existing helper `.github/scripts/auto_changelog.py` exists, but local agent pushes should prefer `scripts/release-note.py` because it is deterministic and avoids re-listing old commits.
+
 ## Cleanup habit after push/build
 
 To avoid filling disk:

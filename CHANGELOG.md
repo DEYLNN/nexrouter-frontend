@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.2] - 2026-05-16
+
+### Improvements
+- Document release note and cleanup rules for FE pushes
+
 ## [0.5.1] - 2026-05-14
 
 ### Features

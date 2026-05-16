@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.7] - 2026-05-16
+
+### Features
+- Add default provider icon and apply it to Free Model Dev
+
 ## [0.5.6] - 2026-05-16
 
 ### Fixes

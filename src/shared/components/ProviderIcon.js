@@ -11,9 +11,10 @@ export default function ProviderIcon({
   fallbackText = "?",
   fallbackColor,
 }) {
-  const [errored, setErrored] = useState(false);
+  const [stage, setStage] = useState(src ? "primary" : "default");
+  const currentSrc = stage === "primary" ? src : stage === "default" ? "/providers/default-icon.png" : null;
 
-  if (!src || errored) {
+  if (!currentSrc) {
     return (
       <span
         className={`inline-flex items-center justify-center font-bold rounded-lg ${className}`.trim()}
@@ -31,12 +32,12 @@ export default function ProviderIcon({
 
   return (
     <img
-      src={src}
+      src={currentSrc}
       alt={alt}
       width={size}
       height={size}
       className={className}
-      onError={() => setErrored(true)}
+      onError={() => setStage(stage === "primary" ? "default" : "text")}
     />
   );
 }

@@ -10,14 +10,15 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { AI_PROVIDERS } from "@/shared/constants/providers";
-import { providerIconPath } from "@/shared/utils/providerIcon";
+import { canonicalProviderId, providerIconPath } from "@/shared/utils/providerIcon";
 
 // Force-stop FE animation if a provider stays active longer than this
 const FE_ACTIVE_TIMEOUT_MS = 60000;
 const FE_ACTIVE_TICK_MS = 1000;
 
 function getProviderConfig(providerId) {
-  return AI_PROVIDERS[providerId] || { color: "#6b7280", name: providerId };
+  const canonical = canonicalProviderId(providerId);
+  return AI_PROVIDERS[canonical] || AI_PROVIDERS[providerId] || { color: "#6b7280", name: providerId };
 }
 
 // Resolve aliases/custom local icon paths from shared provider metadata.
@@ -144,10 +145,11 @@ function buildLayout(providers, activeSet, lastSet, errorSet) {
   };
 
   providers.forEach((p, i) => {
-    const config = getProviderConfig(p.provider);
-    const active = activeSet.has(p.provider?.toLowerCase());
-    const last = !active && lastSet.has(p.provider?.toLowerCase());
-    const error = !active && errorSet.has(p.provider?.toLowerCase());
+    const providerKey = canonicalProviderId(p.provider);
+    const config = getProviderConfig(providerKey);
+    const active = activeSet.has(providerKey);
+    const last = !active && lastSet.has(providerKey);
+    const error = !active && errorSet.has(providerKey);
     const nodeId = `provider-${p.provider}`;
     const data = {
       label: (config.name !== p.provider ? config.name : null) || p.name || p.provider,
@@ -199,11 +201,11 @@ function buildLayout(providers, activeSet, lastSet, errorSet) {
 export default function ProviderTopology({ providers = [], activeRequests = [], lastProvider = "", errorProvider = "" }) {
   // Serialize to stable string keys so useMemo only re-runs when values actually change
   const activeKey = useMemo(
-    () => activeRequests.map((r) => r.provider?.toLowerCase()).filter(Boolean).sort().join(","),
+    () => activeRequests.map((r) => canonicalProviderId(r.provider)).filter(Boolean).sort().join(","),
     [activeRequests]
   );
-  const lastKey = lastProvider?.toLowerCase() || "";
-  const errorKey = errorProvider?.toLowerCase() || "";
+  const lastKey = lastProvider ? canonicalProviderId(lastProvider) : "";
+  const errorKey = errorProvider ? canonicalProviderId(errorProvider) : "";
 
   const rawActiveSet = useMemo(() => new Set(activeKey ? activeKey.split(",") : []), [activeKey]);
   const lastSet = useMemo(() => new Set(lastKey ? [lastKey] : []), [lastKey]);
@@ -247,7 +249,7 @@ export default function ProviderTopology({ providers = [], activeRequests = [], 
 
   // Stable key — only remount when provider list changes
   const providersKey = useMemo(
-    () => providers.map((p) => p.provider).sort().join(","),
+    () => providers.map((p) => canonicalProviderId(p.provider)).sort().join(","),
     [providers]
   );
 

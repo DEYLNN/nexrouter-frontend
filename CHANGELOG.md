@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.13] - 2026-05-16
+
+### Fixes
+- Fix topology active animation for provider aliases
+
 ## [0.5.12] - 2026-05-16
 
 ### Improvements

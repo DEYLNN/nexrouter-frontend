@@ -8,8 +8,8 @@ import RequestLogsTable from "./components/RequestLogsTable";
 const PERIODS = [
   { value: "24h", label: "24h" },
   { value: "7d", label: "7D" },
+  { value: "14d", label: "14D" },
   { value: "30d", label: "30D" },
-  { value: "60d", label: "60D" },
 ];
 
 export default function UsagePage() {
@@ -25,7 +25,7 @@ function UsageContent() {
   const router = useRouter();
 
   const [tabLoading, setTabLoading] = useState(false);
-  const [period, setPeriod] = useState("60d");
+  const [period, setPeriod] = useState("7d");
 
   const tabFromUrl = searchParams.get("tab");
   const activeTab = tabFromUrl && ["overview", "logs"].includes(tabFromUrl)

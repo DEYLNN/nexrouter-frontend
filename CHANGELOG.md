@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.18] - 2026-05-16
+
+### Improvements
+- Set usage overview default range to 7 days
+
 ## [0.5.17] - 2026-05-16
 
 ### Improvements

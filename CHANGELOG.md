@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.14] - 2026-05-16
+
+### Fixes
+- Fix public models provider metadata mapping
+
 ## [0.5.13] - 2026-05-16
 
 ### Fixes

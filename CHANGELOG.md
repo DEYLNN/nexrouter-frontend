@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.19] - 2026-05-16
+
+### Improvements
+- Improve usage chart mobile layout
+
 ## [0.5.18] - 2026-05-16
 
 ### Improvements

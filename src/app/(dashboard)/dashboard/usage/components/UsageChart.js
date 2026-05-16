@@ -91,12 +91,12 @@ export default function UsageChart({ period = "7d" }) {
   return (
     <Card className="relative flex min-w-0 flex-col gap-3 overflow-hidden p-3 sm:p-4">
       <div className="pointer-events-none absolute inset-x-8 top-4 h-24 rounded-full bg-[radial-gradient(circle,rgba(79,124,255,0.12),transparent_68%)] blur-2xl" />
-      <div className="relative z-10 flex items-center justify-between gap-3">
-        <div>
+      <div className="relative z-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <div className="min-w-0">
           <div className="text-xs font-medium uppercase tracking-[0.16em] text-text-muted">Usage trend</div>
           <div className="text-sm font-semibold text-text-main">Tokens & spend</div>
         </div>
-        <div className="grid grid-cols-2 items-center gap-1 rounded-xl border border-[rgba(17,24,39,0.06)] bg-white/55 p-1 shadow-[0_8px_22px_-20px_rgba(17,24,39,0.3)] backdrop-blur-sm">
+        <div className="grid w-full grid-cols-2 items-center gap-1 rounded-xl border border-[rgba(17,24,39,0.06)] bg-white/55 p-1 shadow-[0_8px_22px_-20px_rgba(17,24,39,0.3)] backdrop-blur-sm sm:w-auto">
           {[
             ["tokens", "Tokens"],
             ["cost", "Cost"],
@@ -104,7 +104,7 @@ export default function UsageChart({ period = "7d" }) {
             <button
               key={value}
               onClick={() => setViewMode(value)}
-              className={`rounded-lg px-3 py-1.5 text-xs font-semibold transition-all ${viewMode === value ? "bg-gradient-to-r from-[#4F7CFF] to-[#8B5CF6] text-white shadow-[0_8px_18px_-12px_rgba(79,124,255,0.9)]" : "text-text-muted hover:bg-[rgba(79,124,255,0.06)] hover:text-text-main"}`}
+              className={`rounded-lg px-3 py-2 text-xs font-semibold transition-all sm:py-1.5 ${viewMode === value ? "bg-gradient-to-r from-[#4F7CFF] to-[#8B5CF6] text-white shadow-[0_8px_18px_-12px_rgba(79,124,255,0.9)]" : "text-text-muted hover:bg-[rgba(79,124,255,0.06)] hover:text-text-main"}`}
             >
               {label}
             </button>
@@ -117,11 +117,11 @@ export default function UsageChart({ period = "7d" }) {
       ) : !hasData ? (
         <div className="relative z-10 flex h-52 items-center justify-center text-sm text-text-muted">No data for this period</div>
       ) : (
-        <div className="relative z-10 h-[250px] min-w-0">
+        <div className="relative z-10 h-[210px] min-w-0 sm:h-[250px]">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart
               data={data}
-              margin={{ top: 12, right: 14, left: 0, bottom: 0 }}
+              margin={{ top: 10, right: 8, left: -8, bottom: 0 }}
               onMouseMove={(state) => setActiveLabel(state?.activeLabel || null)}
               onMouseLeave={() => setActiveLabel(null)}
             >
@@ -147,7 +147,7 @@ export default function UsageChart({ period = "7d" }) {
               </defs>
               <CartesianGrid vertical={false} stroke="rgba(0,0,0,0.05)" strokeDasharray="3 6" />
               <XAxis dataKey="label" tick={{ fontSize: 11, fill: "#6B7280" }} tickLine={false} axisLine={false} interval="preserveStartEnd" dy={8} />
-              <YAxis tick={{ fontSize: 11, fill: "#6B7280" }} tickLine={false} axisLine={false} tickFormatter={formatter} width={54} />
+              <YAxis tick={{ fontSize: 10, fill: "#6B7280" }} tickLine={false} axisLine={false} tickFormatter={formatter} width={42} />
               {activeLabel && <ReferenceLine x={activeLabel} stroke="rgba(79,124,255,0.22)" strokeWidth={1.2} strokeDasharray="4 4" ifOverflow="extendDomain" />}
               <Tooltip cursor={false} content={<ChartTooltip viewMode={viewMode} />} />
               <Area type="monotone" dataKey={key} stroke="none" fill="url(#usageFillSoft)" fillOpacity={1} dot={false} activeDot={false} isAnimationActive animationDuration={900} />

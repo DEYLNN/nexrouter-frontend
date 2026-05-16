@@ -1,8 +1,8 @@
 export default function manifest() {
   return {
-    name: '9Router - AI Infrastructure Management',
-    short_name: '9Router',
-    description: 'One endpoint for all your AI providers. Manage keys, monitor usage, and scale effortlessly.',
+    name: 'AI Gateway - Premium AI Infrastructure Console',
+    short_name: 'AI Gateway',
+    description: 'Route AI models, manage providers, monitor usage, and control API access from one premium dashboard.',
     start_url: '/',
     display: 'standalone',
     background_color: '#0a0a0a',

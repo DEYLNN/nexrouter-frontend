@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.26] - 2026-05-16
+
+### Improvements
+- Update AI Gateway titles and descriptions
+
 ## [0.5.25] - 2026-05-16
 
 ### Improvements

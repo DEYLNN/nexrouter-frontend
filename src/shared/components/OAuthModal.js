@@ -133,7 +133,7 @@ export default function OAuthModal({ isOpen, provider, providerInfo, onSuccess, 
       setError(null);
 
       // Device code flow providers
-      const deviceCodeProviders = ["github", "qwen", "kiro", "kimi-coding", "kilocode", "codebuddy", "nous-portal"];
+      const deviceCodeProviders = ["github", "qwen", "kiro", "kimi-coding", "kilocode", "codebuddy", "nous-portal", "freebuff"];
       if (deviceCodeProviders.includes(provider)) {
         setIsDeviceCode(true);
         setStep("waiting");
@@ -157,15 +157,22 @@ export default function OAuthModal({ isOpen, provider, providerInfo, onSuccess, 
         if (verifyUrl) window.open(verifyUrl, "_blank", "noopener,noreferrer");
 
         // Pass extraData for Kiro (contains _clientId, _clientSecret)
-        const extraData = provider === "kiro"
-          ? {
-              _clientId: data._clientId,
-              _clientSecret: data._clientSecret,
-              _region: data._region,
-              _authMethod: data._authMethod,
-              _startUrl: data._startUrl,
-            }
-          : null;
+        let extraData = null;
+        if (provider === "kiro") {
+          extraData = {
+            _clientId: data._clientId,
+            _clientSecret: data._clientSecret,
+            _region: data._region,
+            _authMethod: data._authMethod,
+            _startUrl: data._startUrl,
+          };
+        } else if (provider === "freebuff") {
+          extraData = {
+            _fingerprintHash: data._fingerprintHash,
+            _expiresAt: data._expiresAt,
+            _loginUrl: data._loginUrl,
+          };
+        }
         startPolling(data.device_code, data.codeVerifier, data.interval || 5, extraData);
         return;
       }

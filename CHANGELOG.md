@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.32] - 2026-05-16
+
+### Features
+- Add FreeBuff OAuth connect flow
+
 ## [0.5.31] - 2026-05-16
 
 ### Improvements

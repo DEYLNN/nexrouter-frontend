@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.33] - 2026-05-16
+
+### Improvements
+- Use FreeBuff branded provider icon
+
 ## [0.5.32] - 2026-05-16
 
 ### Features

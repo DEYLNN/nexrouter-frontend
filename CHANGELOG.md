@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.27] - 2026-05-16
+
+### Features
+- Add FreeBuff native provider model
+
 ## [0.5.26] - 2026-05-16
 
 ### Improvements

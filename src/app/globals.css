@@ -715,8 +715,7 @@ html, body {
   .transition-all { transition-property: color, background-color, border-color, opacity, transform, box-shadow; }
 }
 
-/* Keep only functional loaders moving. Decorative pulses/glows are static. */
-.animate-ping,
+/* Keep functional usage/topology animations moving; pause only heavy decorative glows/blobs. */
 .animate-blob,
 .animate-border-glow,
 .animate-pulse-glow {

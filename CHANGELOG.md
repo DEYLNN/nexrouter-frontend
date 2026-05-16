@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.12] - 2026-05-16
+
+### Improvements
+- Restore usage topology activity animations
+
 ## [0.5.11] - 2026-05-16
 
 ### Features

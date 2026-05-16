@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.30] - 2026-05-16
+
+### Features
+- Add FreeBuff model catalog entries
+
 ## [0.5.29] - 2026-05-16
 
 ### Improvements

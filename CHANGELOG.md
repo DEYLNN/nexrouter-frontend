@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.9] - 2026-05-16
+
+### Improvements
+- Use default icon for AIMurah provider
+
 ## [0.5.8] - 2026-05-16
 
 ### Features

@@ -4,6 +4,8 @@ import { useState, useEffect, useCallback, useMemo, Fragment } from "react";
 import PropTypes from "prop-types";
 import Card from "@/shared/components/Card";
 import Badge from "@/shared/components/Badge";
+import ProviderIcon from "@/shared/components/ProviderIcon";
+import { providerDisplayColor, providerDisplayName, providerIconPath } from "@/shared/utils/providerIcon";
 
 const fmt = (n) => new Intl.NumberFormat().format(n || 0);
 const fmtCost = (n) => `$${(n || 0).toFixed(2)}`;
@@ -18,8 +20,8 @@ function fmtTime(iso) {
 }
 
 function SortIcon({ field, currentSort, currentOrder }) {
-  if (currentSort !== field) return <span className="ml-1 opacity-20">↕</span>;
-  return <span className="ml-1">{currentOrder === "asc" ? "↑" : "↓"}</span>;
+  if (currentSort !== field) return <span className="ml-1 text-[11px] opacity-35">↕</span>;
+  return <span className="ml-1 text-[11px] text-[#4F7CFF]">{currentOrder === "asc" ? "↑" : "↓"}</span>;
 }
 
 SortIcon.propTypes = {
@@ -32,32 +34,21 @@ SortIcon.propTypes = {
  * Render 3 token or cost cells based on viewMode
  */
 function ValueCells({ item, viewMode, isSummary = false }) {
+  const cellClass = "px-4 py-3.5 text-right font-mono text-[12px] whitespace-nowrap";
   if (viewMode === "tokens") {
     return (
       <>
-        <td className="px-6 py-3 text-right text-text-muted">
-          {isSummary && item.promptTokens === undefined ? "—" : fmt(item.promptTokens)}
-        </td>
-        <td className="px-6 py-3 text-right text-text-muted">
-          {isSummary && item.completionTokens === undefined ? "—" : fmt(item.completionTokens)}
-        </td>
-        <td className="px-6 py-3 text-right font-medium">
-          {fmt(item.totalTokens)}
-        </td>
+        <td className={`${cellClass} text-text-muted`}>{isSummary && item.promptTokens === undefined ? "—" : fmt(item.promptTokens)}</td>
+        <td className={`${cellClass} text-text-muted`}>{isSummary && item.completionTokens === undefined ? "—" : fmt(item.completionTokens)}</td>
+        <td className={`${cellClass} font-semibold text-text-main`}>{fmt(item.totalTokens)}</td>
       </>
     );
   }
   return (
     <>
-      <td className="px-6 py-3 text-right text-text-muted">
-        {isSummary && item.inputCost === undefined ? "—" : fmtCost(item.inputCost)}
-      </td>
-      <td className="px-6 py-3 text-right text-text-muted">
-        {isSummary && item.outputCost === undefined ? "—" : fmtCost(item.outputCost)}
-      </td>
-      <td className="px-6 py-3 text-right font-medium text-warning">
-        {fmtCost(item.totalCost || item.cost)}
-      </td>
+      <td className={`${cellClass} text-text-muted`}>{isSummary && item.inputCost === undefined ? "—" : fmtCost(item.inputCost)}</td>
+      <td className={`${cellClass} text-text-muted`}>{isSummary && item.outputCost === undefined ? "—" : fmtCost(item.outputCost)}</td>
+      <td className={`${cellClass} font-semibold text-[#F59E0B]`}>{fmtCost(item.totalCost || item.cost)}</td>
     </>
   );
 }
@@ -66,6 +57,41 @@ ValueCells.propTypes = {
   item: PropTypes.object.isRequired,
   viewMode: PropTypes.string.isRequired,
   isSummary: PropTypes.bool,
+};
+
+function ModelSummaryCell({ group, expanded }) {
+  const provider = group.items?.[0]?.provider || String(group.groupKey || "").split("/")[0] || "unknown";
+  return (
+    <div className="flex min-w-0 items-center gap-3">
+      <span className={`material-symbols-outlined shrink-0 text-[18px] text-text-muted transition-transform ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[rgba(17,24,39,0.06)] bg-white/75 shadow-[0_8px_18px_-16px_rgba(17,24,39,0.35)]">
+        <ProviderIcon src={providerIconPath(provider)} alt={provider} size={22} className="rounded-md object-contain" fallbackText={provider.slice(0, 2).toUpperCase()} fallbackColor={providerDisplayColor(provider)} />
+      </div>
+      <div className="min-w-0">
+        <div className={`truncate text-[13px] font-semibold leading-5 tracking-[-0.01em] ${group.summary.pending > 0 ? "text-[#4F7CFF]" : "text-text-main"}`} title={group.groupKey}>{group.groupKey}</div>
+        <div className="truncate text-[11px] text-text-muted" title={providerDisplayName(provider)}>{providerDisplayName(provider)}</div>
+      </div>
+    </div>
+  );
+}
+
+ModelSummaryCell.propTypes = {
+  group: PropTypes.object.isRequired,
+  expanded: PropTypes.bool,
+};
+
+function DefaultSummaryCell({ group, expanded }) {
+  return (
+    <div className="flex min-w-0 items-center gap-2">
+      <span className={`material-symbols-outlined text-[18px] text-text-muted transition-transform ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
+      <span className={`truncate font-semibold transition-colors ${group.summary.pending > 0 ? "text-[#4F7CFF]" : "text-text-main"}`}>{group.groupKey}</span>
+    </div>
+  );
+}
+
+DefaultSummaryCell.propTypes = {
+  group: PropTypes.object.isRequired,
+  expanded: PropTypes.bool,
 };
 
 /**
@@ -147,18 +173,20 @@ export default function UsageTable({
   const totalColSpan = columns.length + valueColumns.length;
 
   return (
-    <Card className="overflow-hidden">
-      <div className="p-4 border-b border-border bg-bg-subtle/50">
-        <h3 className="font-semibold">{title}</h3>
-      </div>
+    <Card className="overflow-hidden border-[rgba(17,24,39,0.07)] shadow-[0_14px_34px_-28px_rgba(17,24,39,0.30)]">
+      {title ? (
+        <div className="border-b border-[rgba(17,24,39,0.06)] bg-white/45 p-4">
+          <h3 className="font-semibold">{title}</h3>
+        </div>
+      ) : null}
       <div className="overflow-x-auto">
-        <table className="w-full text-sm text-left">
-          <thead className="bg-bg-subtle/30 text-text-muted uppercase text-xs">
+        <table className="w-full min-w-[760px] border-separate border-spacing-0 text-left text-sm">
+          <thead className="bg-[rgba(255,255,255,0.72)] text-[11px] uppercase tracking-[0.11em] text-text-muted backdrop-blur-sm">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col.field}
-                  className={`px-6 py-3 cursor-pointer hover:bg-bg-subtle/50 ${col.align === "right" ? "text-right" : ""}`}
+                  className={`px-4 py-3 cursor-pointer font-semibold transition-colors hover:bg-[rgba(79,124,255,0.04)] ${col.align === "right" ? "text-right" : ""}`}
                   onClick={() => onToggleSort(tableType, col.field)}
                 >
                   {col.label}{" "}
@@ -168,7 +196,7 @@ export default function UsageTable({
               {valueColumns.map((col) => (
                 <th
                   key={col.field}
-                  className="px-6 py-3 text-right cursor-pointer hover:bg-bg-subtle/50"
+                  className="px-4 py-3 text-right cursor-pointer font-semibold transition-colors hover:bg-[rgba(79,124,255,0.04)]"
                   onClick={() => onToggleSort(tableType, col.field)}
                 >
                   {col.label}{" "}
@@ -177,23 +205,20 @@ export default function UsageTable({
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-border">
+          <tbody>
             {groupedData.map((group) => (
               <Fragment key={group.groupKey}>
                 {/* Group summary row */}
                 <tr
-                  className="group-summary cursor-pointer hover:bg-bg-subtle/50 transition-colors"
+                  className="group cursor-pointer transition-colors hover:bg-[rgba(79,124,255,0.04)]"
                   onClick={() => toggleGroup(group.groupKey)}
                 >
-                  <td className="px-6 py-3">
-                    <div className="flex items-center gap-2">
-                      <span className={`material-symbols-outlined text-[18px] text-text-muted transition-transform ${expanded.has(group.groupKey) ? "rotate-90" : ""}`}>
-                        chevron_right
-                      </span>
-                      <span className={`font-medium transition-colors ${group.summary.pending > 0 ? "text-primary" : ""}`}>
-                        {group.groupKey}
-                      </span>
-                    </div>
+                  <td className="border-t border-[rgba(17,24,39,0.05)] px-4 py-3.5">
+                    {tableType === "model" ? (
+                      <ModelSummaryCell group={group} expanded={expanded.has(group.groupKey)} />
+                    ) : (
+                      <DefaultSummaryCell group={group} expanded={expanded.has(group.groupKey)} />
+                    )}
                   </td>
                   {renderSummaryCells(group)}
                   <ValueCells item={group.summary} viewMode={viewMode} isSummary />
@@ -202,7 +227,7 @@ export default function UsageTable({
                 {expanded.has(group.groupKey) && group.items.map((item) => (
                   <tr
                     key={`detail-${item.key}`}
-                    className="group-detail hover:bg-bg-subtle/20 transition-colors"
+                    className="group-detail bg-[rgba(79,124,255,0.018)] transition-colors hover:bg-[rgba(79,124,255,0.045)]"
                   >
                     {renderDetailCells(item)}
                     <ValueCells item={item} viewMode={viewMode} />
@@ -212,7 +237,7 @@ export default function UsageTable({
             ))}
             {groupedData.length === 0 && (
               <tr>
-                <td colSpan={totalColSpan} className="px-6 py-8 text-center text-text-muted">
+                <td colSpan={totalColSpan} className="px-6 py-10 text-center text-sm text-text-muted">
                   {emptyMessage}
                 </td>
               </tr>

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.23] - 2026-05-16
+
+### Improvements
+- Move premium styling to usage breakdown table
+
 ## [0.5.22] - 2026-05-16
 
 ### Improvements

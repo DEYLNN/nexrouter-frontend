@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.5] - 2026-05-16
+
+### Improvements
+- Switch sidebar back to light neutral theme
+
 ## [0.5.4] - 2026-05-16
 
 ### Improvements

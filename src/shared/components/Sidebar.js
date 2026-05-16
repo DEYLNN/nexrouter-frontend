@@ -207,7 +207,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
         width: w,
         height: "100%",
         margin: "0",
-        background: "linear-gradient(180deg, #111827 0%, #0F172A 100%)",
+        background: "linear-gradient(180deg, #F7F9FC 0%, #F1F4F9 100%)",
         backdropFilter: "none",
         WebkitBackdropFilter: "none",
         border: "1px solid var(--theme-shell-border)",
@@ -215,7 +215,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
         borderTop: "none",
         borderBottom: "none",
         borderRadius: "0",
-        boxShadow: "10px 0 28px -26px rgba(0,0,0,0.9)",
+        boxShadow: "8px 0 24px -24px rgba(17,24,39,0.22)",
         transition: "width 180ms cubic-bezier(0.4,0,0.2,1)",
         overflow: "hidden",
         flexShrink: 0,
@@ -234,7 +234,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
               <Link href="/dashboard" style={{ display: "flex", alignItems: "center", gap: "9px", textDecoration: "none" }}>
                 <div style={{
                   width: "32px", height: "32px", borderRadius: "11px",
-                  background: "linear-gradient(135deg, #4F7CFF 0%, #6B8DFF 100%)",
+                  background: "linear-gradient(135deg, #4F7CFF 0%, #7A9AFF 100%)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   color: "#FFFFFF", flexShrink: 0,
                   boxShadow: "0 6px 16px -10px rgba(79,124,255,0.75)",
@@ -273,7 +273,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
                 width: "32px", height: "32px", borderRadius: "11px",
-                background: "linear-gradient(135deg, #4F7CFF 0%, #6B8DFF 100%)",
+                background: "linear-gradient(135deg, #4F7CFF 0%, #7A9AFF 100%)",
                 border: "none", color: "#FFFFFF", cursor: "pointer",
                 boxShadow: "0 6px 16px -10px rgba(79,124,255,0.75)",
               }}

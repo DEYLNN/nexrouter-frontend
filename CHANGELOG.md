@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.17] - 2026-05-16
+
+### Improvements
+- Redesign usage overview chart with layered gradient area
+
 ## [0.5.16] - 2026-05-16
 
 ### Improvements

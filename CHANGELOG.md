@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.20] - 2026-05-16
+
+### Improvements
+- Redesign recent requests activity table
+
 ## [0.5.19] - 2026-05-16
 
 ### Improvements

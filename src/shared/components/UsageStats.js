@@ -3,6 +3,8 @@
 import { useState, useEffect, useMemo, useCallback } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { FREE_PROVIDERS, AI_PROVIDERS } from "@/shared/constants/providers";
+import ProviderIcon from "@/shared/components/ProviderIcon";
+import { providerIconPath, providerDisplayColor } from "@/shared/utils/providerIcon";
 
 // Keep providers without serviceKinds (default LLM) or with "llm" in serviceKinds
 function isLLMProvider(id) {
@@ -37,42 +39,85 @@ function TimeAgo({ timestamp }) {
   return <>{timeAgo(timestamp)}</>;
 }
 
+function statusMeta(status) {
+  const raw = String(status || "ok").toLowerCase();
+  if (["ok", "success", "done", "completed"].includes(raw)) return { label: "Success", bg: "rgba(34,197,94,0.12)", color: "#22C55E" };
+  if (["streaming", "active", "running"].includes(raw)) return { label: "Streaming", bg: "rgba(79,124,255,0.12)", color: "#4F7CFF" };
+  if (["queued", "pending"].includes(raw)) return { label: "Queued", bg: "rgba(245,158,11,0.12)", color: "#F59E0B" };
+  return { label: "Error", bg: "rgba(239,68,68,0.12)", color: "#EF4444" };
+}
+
+function requestProvider(model = "") {
+  return String(model).split("/")[0] || "unknown";
+}
+
+function requestModelName(model = "") {
+  const parts = String(model).split("/");
+  return parts.length > 1 ? parts.slice(1).join("/") : model;
+}
+
 function RecentRequests({ requests = [] }) {
   return (
-    <Card className="flex min-w-0 flex-col overflow-hidden" padding="sm" style={{ height: 480 }}>
-      {/* Header */}
-      <div className="px-1 py-2 border-b border-border shrink-0">
-        <span className="text-xs font-semibold text-text-muted uppercase tracking-wide">Recent Requests</span>
+    <Card className="flex min-w-0 flex-col overflow-hidden border-[rgba(17,24,39,0.07)] shadow-[0_10px_30px_-26px_rgba(17,24,39,0.28)]" padding="sm" style={{ height: 480 }}>
+      <div className="flex shrink-0 items-center justify-between border-b border-[rgba(17,24,39,0.06)] px-1 pb-3 pt-1">
+        <div>
+          <div className="text-[11px] font-semibold uppercase tracking-[0.16em] text-text-muted">Activity</div>
+          <div className="text-sm font-semibold tracking-[-0.01em] text-text-main">Recent requests</div>
+        </div>
+        <span className="rounded-full border border-[rgba(79,124,255,0.14)] bg-[rgba(79,124,255,0.07)] px-2.5 py-1 text-[11px] font-semibold text-[#4F7CFF]">
+          Live
+        </span>
       </div>
 
       {!requests.length ? (
-        <div className="flex-1 flex items-center justify-center text-text-muted text-sm">No requests yet.</div>
+        <div className="flex flex-1 items-center justify-center text-sm text-text-muted">No requests yet.</div>
       ) : (
         <div className="flex-1 overflow-y-auto">
-          <table className="w-full min-w-[300px] border-collapse text-xs">
-            <thead className="sticky top-0 bg-bg z-10">
-              <tr className="border-b border-border">
-                <th className="py-1.5 text-left font-semibold text-text-muted w-2"></th>
-                <th className="py-1.5 text-left font-semibold text-text-muted">Model</th>
-                <th className="py-1.5 text-right font-semibold text-text-muted whitespace-nowrap">In / Out</th>
-                <th className="py-1.5 text-right font-semibold text-text-muted">When</th>
+          <table className="w-full min-w-[340px] border-separate border-spacing-0 text-xs">
+            <thead className="sticky top-0 z-10 bg-[rgba(255,255,255,0.92)] backdrop-blur-sm">
+              <tr className="border-b border-[rgba(17,24,39,0.06)]">
+                <th className="px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted">Model</th>
+                <th className="px-2 py-2.5 text-left text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted">Status</th>
+                <th className="px-2 py-2.5 text-right text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted whitespace-nowrap">Tokens</th>
+                <th className="px-2 py-2.5 text-right text-[10px] font-semibold uppercase tracking-[0.12em] text-text-muted">When</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border/50">
+            <tbody>
               {requests.map((r, i) => {
-                const ok = !r.status || r.status === "ok" || r.status === "success";
+                const provider = requestProvider(r.model);
+                const modelName = requestModelName(r.model);
+                const meta = statusMeta(r.status);
                 return (
-                  <tr key={i} className="hover:bg-bg-subtle transition-colors">
-                    <td className="py-1.5">
-                      <span className={`block w-1.5 h-1.5 rounded-full ${ok ? "bg-success" : "bg-error"}`} />
+                  <tr key={i} className="group transition-colors hover:bg-[rgba(79,124,255,0.04)]">
+                    <td className="border-t border-[rgba(17,24,39,0.05)] px-2 py-3">
+                      <div className="flex min-w-0 items-center gap-2.5">
+                        <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[rgba(17,24,39,0.06)] bg-white/70 shadow-[0_8px_18px_-16px_rgba(17,24,39,0.3)]">
+                          <ProviderIcon
+                            src={providerIconPath(provider)}
+                            alt={provider}
+                            size={22}
+                            className="rounded-md object-contain"
+                            fallbackText={provider.slice(0, 2).toUpperCase()}
+                            fallbackColor={providerDisplayColor(provider)}
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <div className="max-w-[150px] truncate text-[12px] font-semibold leading-4 text-text-main" title={modelName}>{modelName}</div>
+                          <div className="max-w-[150px] truncate font-mono text-[10px] text-text-muted" title={provider}>{provider}</div>
+                        </div>
+                      </div>
                     </td>
-                    <td className="py-1.5 font-mono truncate max-w-[120px]" title={r.model}>{r.model}</td>
-                    <td className="py-1.5 text-right whitespace-nowrap">
-                      <span className="text-primary">{fmt(r.promptTokens)}↑</span>
-                      {" "}
-                      <span className="text-success">{fmt(r.completionTokens)}↓</span>
+                    <td className="border-t border-[rgba(17,24,39,0.05)] px-2 py-3">
+                      <span style={{ background: meta.bg, color: meta.color }} className="inline-flex rounded-full px-2 py-1 text-[10px] font-semibold leading-none">
+                        {meta.label}
+                      </span>
                     </td>
-                    <td className="py-1.5 text-right text-text-muted whitespace-nowrap"><TimeAgo timestamp={r.timestamp} /></td>
+                    <td className="border-t border-[rgba(17,24,39,0.05)] px-2 py-3 text-right font-mono text-[11px] whitespace-nowrap">
+                      <span className="font-semibold text-[#4F7CFF]">{fmt(r.promptTokens)}</span>
+                      <span className="mx-1 text-text-subtle">/</span>
+                      <span className="font-semibold text-[#22C55E]">{fmt(r.completionTokens)}</span>
+                    </td>
+                    <td className="border-t border-[rgba(17,24,39,0.05)] px-2 py-3 text-right text-[11px] text-text-muted whitespace-nowrap"><TimeAgo timestamp={r.timestamp} /></td>
                   </tr>
                 );
               })}
@@ -452,16 +497,19 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
       {/* Table with dropdown selector */}
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <select
-            value={tableView}
-            onChange={(e) => setTableView(e.target.value)}
-            className="w-full rounded-lg border border-border bg-surface px-3 py-1.5 text-sm font-medium text-text-main focus:outline-none focus:ring-2 focus:ring-primary/50 sm:w-auto"
-            style={{ colorScheme: 'auto' }}
-          >
-            {TABLE_OPTIONS.map((opt) => (
-              <option key={opt.value} value={opt.value}>{opt.label}</option>
-            ))}
-          </select>
+          <div className="relative w-full sm:w-[220px]">
+            <select
+              value={tableView}
+              onChange={(e) => setTableView(e.target.value)}
+              className="h-10 w-full appearance-none rounded-xl border border-[rgba(17,24,39,0.07)] bg-white/70 px-3 pr-9 text-sm font-semibold text-text-main shadow-[0_8px_22px_-20px_rgba(17,24,39,0.28)] outline-none backdrop-blur-sm transition-all hover:border-[rgba(79,124,255,0.22)] focus:border-[rgba(79,124,255,0.35)] focus:ring-2 focus:ring-[rgba(79,124,255,0.12)]"
+              style={{ colorScheme: 'auto' }}
+            >
+              {TABLE_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>{opt.label}</option>
+              ))}
+            </select>
+            <span className="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-text-muted">expand_more</span>
+          </div>
           <div className="grid grid-cols-2 items-center gap-1 rounded-lg border border-border bg-bg-subtle p-1 sm:flex">
             <button
               onClick={() => setViewMode("costs")}

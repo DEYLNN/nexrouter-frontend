@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.29] - 2026-05-16
+
+### Improvements
+- Register FreeBuff provider in frontend OpenSSE config
+
 ## [0.5.28] - 2026-05-16
 
 ### Improvements

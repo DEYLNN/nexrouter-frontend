@@ -136,6 +136,16 @@ export const PROVIDERS = {
       "X-Title": "Endpoint Proxy"
     }
   },
+  freebuff: {
+    baseUrl: "https://www.codebuff.com/api/v1/chat/completions",
+    format: "openai",
+    noAuth: true
+  },
+  fb: {
+    baseUrl: "https://www.codebuff.com/api/v1/chat/completions",
+    format: "openai",
+    noAuth: true
+  },
   bai: {
     baseUrl: "https://api.b.ai/v1/chat/completions",
     format: "openai"

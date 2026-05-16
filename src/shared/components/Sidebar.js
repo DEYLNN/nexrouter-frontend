@@ -77,17 +77,17 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
         alignItems: "center",
         gap: collapsed ? 0 : "11px",
         justifyContent: collapsed ? "center" : "flex-start",
-        height: "40px",
-        padding: collapsed ? "0 12px" : "0 13px",
-        borderRadius: "15px",
+        height: "36px",
+        padding: collapsed ? "0 10px" : "0 11px",
+        borderRadius: "10px",
         fontSize: "13px",
         fontWeight: active ? 650 : 500,
         textDecoration: "none",
-        color: active ? "var(--theme-shell-text)" : "var(--theme-shell-text-muted)",
-        background: active ? "linear-gradient(135deg, rgba(14,142,142,0.14), rgba(29,85,212,0.08))" : "transparent",
-        border: active ? "1px solid rgba(14,142,142,0.18)" : "1px solid transparent",
-        boxShadow: active ? "0 12px 24px -18px rgba(14,142,142,0.32)" : "none",
-        transition: "all 160ms ease",
+        color: active ? "var(--theme-shell-accent)" : "var(--theme-shell-text-muted)",
+        background: active ? "var(--theme-shell-active-bg)" : "transparent",
+        border: active ? "1px solid rgba(79,124,255,0.16)" : "1px solid transparent",
+        boxShadow: active ? "inset 3px 0 0 var(--theme-shell-accent), 0 6px 14px -14px rgba(79,124,255,0.45)" : "none",
+        transition: "background 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease",
         marginBottom: "4px",
       }}
       onMouseEnter={e => {
@@ -106,7 +106,7 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
       <span style={{
         flexShrink: 0,
         display: "flex",
-        color: active ? "var(--theme-accent-teal)" : "inherit",
+        color: active ? "var(--theme-shell-accent)" : "inherit",
         opacity: active ? 1 : 0.8,
       }}>
         {Icon}
@@ -205,15 +205,15 @@ export default function Sidebar({ onClose, forceExpanded }) {
         display: "flex",
         flexDirection: "column",
         width: w,
-        height: "calc(100% - 24px)",
-        margin: "12px",
+        height: "100%",
+        margin: "0",
         background: "var(--theme-shell-bg)",
-        backdropFilter: "blur(20px) saturate(150%)",
-        WebkitBackdropFilter: "blur(20px) saturate(150%)",
+        backdropFilter: "none",
+        WebkitBackdropFilter: "none",
         border: "1px solid var(--theme-shell-border)",
-        borderRadius: "24px",
-        boxShadow: "var(--theme-glass-shadow)",
-        transition: "width 200ms cubic-bezier(0.4,0,0.2,1), border-radius 200ms ease",
+        borderRadius: "0",
+        boxShadow: "1px 0 0 var(--theme-shell-border)",
+        transition: "width 180ms cubic-bezier(0.4,0,0.2,1)",
         overflow: "hidden",
         flexShrink: 0,
       }}>
@@ -223,18 +223,18 @@ export default function Sidebar({ onClose, forceExpanded }) {
           display: "flex",
           alignItems: "center",
           justifyContent: isCollapsed ? "center" : "space-between",
-          padding: "18px 14px 14px",
+          padding: "16px 12px 12px",
           flexShrink: 0,
         }}>
           {!isCollapsed ? (
             <>
               <Link href="/dashboard" style={{ display: "flex", alignItems: "center", gap: "9px", textDecoration: "none" }}>
                 <div style={{
-                  width: "34px", height: "34px", borderRadius: "13px",
-                  background: "linear-gradient(135deg, var(--theme-accent-teal) 0%, var(--theme-accent-blue) 100%)",
+                  width: "32px", height: "32px", borderRadius: "10px",
+                  background: "linear-gradient(135deg, #4F7CFF 0%, #6B8DFF 100%)",
                   display: "flex", alignItems: "center", justifyContent: "center",
-                  color: "var(--theme-shell-text)", flexShrink: 0,
-                  boxShadow: "0 6px 18px -6px rgba(17, 166, 166, 0.55)",
+                  color: "#FFFFFF", flexShrink: 0,
+                  boxShadow: "0 6px 16px -10px rgba(79,124,255,0.75)",
                 }}>
                   {I.logo}
                 </div>
@@ -269,10 +269,10 @@ export default function Sidebar({ onClose, forceExpanded }) {
               onClick={() => setCollapsed(false)}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
-                width: "34px", height: "34px", borderRadius: "13px",
-                background: "linear-gradient(135deg, var(--theme-accent-teal) 0%, var(--theme-accent-blue) 100%)",
-                border: "none", color: "var(--theme-shell-text)", cursor: "pointer",
-                boxShadow: "0 6px 18px -6px rgba(17, 166, 166, 0.55)",
+                width: "32px", height: "32px", borderRadius: "10px",
+                background: "linear-gradient(135deg, #4F7CFF 0%, #6B8DFF 100%)",
+                border: "none", color: "#FFFFFF", cursor: "pointer",
+                boxShadow: "0 6px 16px -10px rgba(79,124,255,0.75)",
               }}
               title="Expand sidebar"
             >
@@ -299,7 +299,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
         )}
 
         {/* Nav */}
-        <nav style={{ flex: 1, padding: "4px 8px", overflowY: "auto", overflowX: "hidden" }}>
+        <nav style={{ flex: 1, padding: "4px 10px", overflowY: "auto", overflowX: "hidden" }}>
           {NAV_MAIN.map(item => (
             <NavItem key={item.href} {...item} onClose={onClose} collapsed={isCollapsed} />
           ))}

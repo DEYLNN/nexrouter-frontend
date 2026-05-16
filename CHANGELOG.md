@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.3] - 2026-05-16
+
+### Improvements
+- Refine navbar and sidebar visual integration
+
 ## [0.5.2] - 2026-05-16
 
 ### Improvements

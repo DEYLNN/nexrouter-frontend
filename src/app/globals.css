@@ -563,13 +563,14 @@ button {
 
 .dark {
   /* Shell variables (sidebar + header) — cool dark glass */
-  --theme-shell-bg: rgba(17, 17, 19, 0.55);
-  --theme-shell-border: rgba(255, 255, 255, 0.06);
-  --theme-shell-hover: rgba(255, 255, 255, 0.06);
-  --theme-shell-active-bg: rgba(255, 255, 255, 0.08);
-  --theme-shell-text: #FAFAFA;
-  --theme-shell-text-muted: rgba(250, 250, 250, 0.55);
-  --theme-shell-text-subtle: rgba(250, 250, 250, 0.35);
+  --theme-shell-bg: #F5F7FB;
+  --theme-shell-border: rgba(0, 0, 0, 0.05);
+  --theme-shell-hover: rgba(79, 124, 255, 0.06);
+  --theme-shell-active-bg: rgba(79, 124, 255, 0.12);
+  --theme-shell-text: #111827;
+  --theme-shell-text-muted: #6B7280;
+  --theme-shell-text-subtle: rgba(107, 114, 128, 0.72);
+  --theme-shell-accent: #4F7CFF;
 }
 
 /* Reusable theme utilities — opt-in only; not applied globally in Step 1 */
@@ -695,13 +696,14 @@ html, body {
 
 /* Sidebar/navbar stronger light treatment */
 :root {
-  --theme-shell-bg: linear-gradient(180deg, rgba(255, 248, 220, 0.92), rgba(255, 240, 198, 0.84));
-  --theme-shell-border: rgba(139, 92, 32, 0.18);
-  --theme-shell-hover: rgba(139, 92, 32, 0.075);
-  --theme-shell-active-bg: rgba(14, 142, 142, 0.14);
-  --theme-shell-text: #1F2A24;
-  --theme-shell-text-muted: rgba(31, 42, 36, 0.68);
-  --theme-shell-text-subtle: rgba(31, 42, 36, 0.45);
+  --theme-shell-bg: #F5F7FB;
+  --theme-shell-border: rgba(0, 0, 0, 0.05);
+  --theme-shell-hover: rgba(79, 124, 255, 0.06);
+  --theme-shell-active-bg: rgba(79, 124, 255, 0.12);
+  --theme-shell-text: #111827;
+  --theme-shell-text-muted: #6B7280;
+  --theme-shell-text-subtle: rgba(107, 114, 128, 0.72);
+  --theme-shell-accent: #4F7CFF;
 }
 
 

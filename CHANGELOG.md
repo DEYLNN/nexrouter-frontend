@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.15] - 2026-05-16
+
+### Improvements
+- Merge free provider cards into OAuth and API key sections
+
 ## [0.5.14] - 2026-05-16
 
 ### Fixes

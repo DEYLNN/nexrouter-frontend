@@ -252,17 +252,17 @@ export default function ProvidersPage() {
     }))
     .filter((p) => matchSearch(p.name));
 
-  const oauthEntries = Object.entries(OAUTH_PROVIDERS).filter(([, info]) =>
-    matchSearch(info.name),
-  );
-  const freeEntries = Object.entries(FREE_PROVIDERS).filter(([, info]) =>
-    matchSearch(info.name),
-  );
-  const freeTierEntries = Object.entries(FREE_TIER_PROVIDERS).filter(
-    ([, info]) => matchSearch(info.name),
-  );
+  const oauthEntries = [
+    ...Object.entries(OAUTH_PROVIDERS),
+    ...Object.entries(FREE_PROVIDERS).filter(([, info]) => !info.noAuth),
+  ].filter(([, info]) => matchSearch(info.name));
+
   const apikeyEntries = sortByConnections(
-    Object.entries(APIKEY_PROVIDERS).filter(
+    [
+      ...Object.entries(APIKEY_PROVIDERS),
+      ...Object.entries(FREE_TIER_PROVIDERS),
+      ...Object.entries(FREE_PROVIDERS).filter(([, info]) => info.noAuth),
+    ].filter(
       ([, info]) =>
         (info.serviceKinds ?? ["llm"]).includes("llm") && matchSearch(info.name),
     ),
@@ -395,60 +395,9 @@ export default function ProvidersPage() {
               key={key}
               providerId={key}
               provider={info}
-              stats={getProviderStats(key, "oauth")}
-              authType="oauth"
-              onToggle={(active) => handleToggleProvider(key, "oauth", active)}
-            />
-          ))}
-        </div>
-      </div>
-      )}
-
-      {/* Free Tier Providers */}
-      {(freeEntries.length > 0 || freeTierEntries.length > 0) && (
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2 leading-tight">
-            Free Tier Providers
-          </h2>
-          <button
-            onClick={() => handleBatchTest("free")}
-            disabled={!!testingMode}
-            className={`flex w-full items-center justify-center gap-1.5 rounded-lg border px-3 py-2 text-xs font-medium transition-colors sm:w-auto sm:py-1.5 ${
-              testingMode === "free"
-                ? "bg-primary/20 border-primary/40 text-primary animate-pulse"
-                : "bg-bg border-border text-text-muted hover:text-text-main hover:border-primary/40"
-            }`}
-            title="Test all Free connections"
-            aria-label="Test all Free provider connections"
-          >
-            <span
-              className={`material-symbols-outlined text-[14px]${testingMode === "free" ? " animate-spin" : ""}`}
-            >
-              play_arrow
-            </span>
-            {testingMode === "free" ? "Testing..." : "Test All"}
-          </button>
-        </div>
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))", gap: "8px" }}>
-          {freeEntries.map(([key, info]) => (
-            <ProviderCard
-              key={key}
-              providerId={key}
-              provider={info}
-              stats={getProviderStats(key, "oauth")}
-              authType="free"
-              onToggle={(active) => handleToggleProvider(key, "oauth", active)}
-            />
-          ))}
-          {freeTierEntries.map(([key, info]) => (
-            <ApiKeyProviderCard
-              key={key}
-              providerId={key}
-              provider={info}
-              stats={getProviderStats(key, "apikey")}
-              authType="apikey"
-              onToggle={(active) => handleToggleProvider(key, "apikey", active)}
+              stats={getProviderStats(key, FREE_PROVIDERS[key] ? "oauth" : "oauth")}
+              authType={FREE_PROVIDERS[key] ? "free" : "oauth"}
+              onToggle={(active) => handleToggleProvider(key, FREE_PROVIDERS[key] ? "oauth" : "oauth", active)}
             />
           ))}
         </div>
@@ -487,9 +436,9 @@ export default function ProvidersPage() {
               key={key}
               providerId={key}
               provider={info}
-              stats={getProviderStats(key, "apikey")}
-              authType="apikey"
-              onToggle={(active) => handleToggleProvider(key, "apikey", active)}
+              stats={getProviderStats(key, FREE_PROVIDERS[key]?.noAuth ? "oauth" : "apikey")}
+              authType={FREE_PROVIDERS[key]?.noAuth ? "free" : "apikey"}
+              onToggle={(active) => handleToggleProvider(key, FREE_PROVIDERS[key]?.noAuth ? "oauth" : "apikey", active)}
             />
           ))}
         </div>
@@ -518,9 +467,9 @@ export default function ProvidersPage() {
               key={key}
               providerId={key}
               provider={info}
-              stats={getProviderStats(key, "apikey")}
-              authType="apikey"
-              onToggle={(active) => handleToggleProvider(key, "apikey", active)}
+              stats={getProviderStats(key, FREE_PROVIDERS[key]?.noAuth ? "oauth" : "apikey")}
+              authType={FREE_PROVIDERS[key]?.noAuth ? "free" : "apikey"}
+              onToggle={(active) => handleToggleProvider(key, FREE_PROVIDERS[key]?.noAuth ? "oauth" : "apikey", active)}
             />
           ))}
         </div>

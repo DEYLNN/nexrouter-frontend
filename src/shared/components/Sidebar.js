@@ -75,20 +75,20 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
       style={{
         display: "flex",
         alignItems: "center",
-        gap: collapsed ? 0 : "11px",
+        gap: collapsed ? 0 : "10px",
         justifyContent: collapsed ? "center" : "flex-start",
-        height: "36px",
-        padding: collapsed ? "0 10px" : "0 11px",
-        borderRadius: "10px",
+        height: "38px",
+        padding: collapsed ? "0 10px" : "0 12px",
+        borderRadius: "11px",
         fontSize: "13px",
         fontWeight: active ? 650 : 500,
         textDecoration: "none",
         color: active ? "var(--theme-shell-accent)" : "var(--theme-shell-text-muted)",
         background: active ? "var(--theme-shell-active-bg)" : "transparent",
         border: active ? "1px solid rgba(79,124,255,0.16)" : "1px solid transparent",
-        boxShadow: active ? "inset 3px 0 0 var(--theme-shell-accent), 0 6px 14px -14px rgba(79,124,255,0.45)" : "none",
+        boxShadow: active ? "0 8px 18px -16px rgba(79,124,255,0.85), inset 0 1px 0 rgba(255,255,255,0.04)" : "none",
         transition: "background 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease",
-        marginBottom: "4px",
+        marginBottom: "5px",
       }}
       onMouseEnter={e => {
         if (!active) {
@@ -122,9 +122,9 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
 
 // ─── section label ────────────────────────────────────────────────────────────
 function SectionLabel({ label, collapsed }) {
-  if (collapsed) return <div style={{ height: "1px", background: "var(--theme-shell-hover)", margin: "8px 6px" }} />;
+  if (collapsed) return <div style={{ height: "1px", background: "var(--theme-shell-border)", margin: "12px 8px" }} />;
   return (
-    <div style={{ padding: "0 10px", marginTop: "18px", marginBottom: "4px" }}>
+    <div style={{ padding: "0 10px", marginTop: "20px", marginBottom: "7px" }}>
       <span style={{
         fontSize: "10px", fontWeight: 600,
         color: "var(--theme-shell-text-subtle)",
@@ -207,12 +207,15 @@ export default function Sidebar({ onClose, forceExpanded }) {
         width: w,
         height: "100%",
         margin: "0",
-        background: "var(--theme-shell-bg)",
+        background: "linear-gradient(180deg, #111827 0%, #0F172A 100%)",
         backdropFilter: "none",
         WebkitBackdropFilter: "none",
         border: "1px solid var(--theme-shell-border)",
+        borderLeft: "none",
+        borderTop: "none",
+        borderBottom: "none",
         borderRadius: "0",
-        boxShadow: "1px 0 0 var(--theme-shell-border)",
+        boxShadow: "10px 0 28px -26px rgba(0,0,0,0.9)",
         transition: "width 180ms cubic-bezier(0.4,0,0.2,1)",
         overflow: "hidden",
         flexShrink: 0,
@@ -223,14 +226,14 @@ export default function Sidebar({ onClose, forceExpanded }) {
           display: "flex",
           alignItems: "center",
           justifyContent: isCollapsed ? "center" : "space-between",
-          padding: "16px 12px 12px",
+          padding: "18px 14px 14px",
           flexShrink: 0,
         }}>
           {!isCollapsed ? (
             <>
               <Link href="/dashboard" style={{ display: "flex", alignItems: "center", gap: "9px", textDecoration: "none" }}>
                 <div style={{
-                  width: "32px", height: "32px", borderRadius: "10px",
+                  width: "32px", height: "32px", borderRadius: "11px",
                   background: "linear-gradient(135deg, #4F7CFF 0%, #6B8DFF 100%)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   color: "#FFFFFF", flexShrink: 0,
@@ -239,7 +242,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
                   {I.logo}
                 </div>
                 <div>
-                  <div style={{ fontSize: "14px", fontWeight: 700, color: "var(--theme-shell-text)", letterSpacing: "-0.03em", lineHeight: 1.1 }}>
+                  <div style={{ fontSize: "14px", fontWeight: 720, color: "var(--theme-shell-text)", letterSpacing: "-0.03em", lineHeight: 1.1 }}>
                     {APP_CONFIG.name}
                   </div>
                   <div style={{ fontSize: "10px", color: "var(--theme-shell-text-subtle)", marginTop: "1px" }}>
@@ -269,7 +272,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
               onClick={() => setCollapsed(false)}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center",
-                width: "32px", height: "32px", borderRadius: "10px",
+                width: "32px", height: "32px", borderRadius: "11px",
                 background: "linear-gradient(135deg, #4F7CFF 0%, #6B8DFF 100%)",
                 border: "none", color: "#FFFFFF", cursor: "pointer",
                 boxShadow: "0 6px 16px -10px rgba(79,124,255,0.75)",
@@ -299,7 +302,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
         )}
 
         {/* Nav */}
-        <nav style={{ flex: 1, padding: "4px 10px", overflowY: "auto", overflowX: "hidden" }}>
+        <nav style={{ flex: 1, padding: "6px 12px", overflowY: "auto", overflowX: "hidden" }}>
           {NAV_MAIN.map(item => (
             <NavItem key={item.href} {...item} onClose={onClose} collapsed={isCollapsed} />
           ))}
@@ -320,7 +323,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
 
         {/* Footer — Changelog + Version */}
         <div style={{
-          padding: "10px 8px 14px",
+          padding: "12px 12px 16px",
           borderTop: "1px solid var(--theme-shell-border)",
           flexShrink: 0,
         }}>
@@ -330,7 +333,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
               onClick={onClose}
               style={{
                 display: "flex", alignItems: "center", justifyContent: "space-between",
-                gap: "8px", padding: "6px 8px", borderRadius: "8px",
+                gap: "8px", padding: "8px 10px", borderRadius: "10px",
                 textDecoration: "none", transition: "background 150ms ease",
               }}
               onMouseEnter={e => { e.currentTarget.style.background = "var(--theme-shell-hover)"; }}
@@ -421,7 +424,7 @@ function ManualUpdatePanel({ latestVersion, installCmd, copied, onCopyAndShutdow
   return (
     <div style={{ width: "100%", maxWidth: "460px", borderRadius: "12px", background: "#111113", border: "1px solid var(--theme-shell-border)", padding: "24px", color: "var(--theme-shell-text)" }}>
       <div style={{ display: "flex", alignItems: "center", gap: "12px", marginBottom: "16px" }}>
-        <div style={{ width: "36px", height: "36px", borderRadius: "50%", background: "rgba(245,158,11,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F59E0B", flexShrink: 0 }}>
+        <div style={{ width: "36px", height: "38px", borderRadius: "50%", background: "rgba(245,158,11,0.12)", display: "flex", alignItems: "center", justifyContent: "center", color: "#F59E0B", flexShrink: 0 }}>
           {I.update}
         </div>
         <div>

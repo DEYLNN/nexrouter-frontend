@@ -551,25 +551,26 @@ button {
   --radius-editorial-md: 14px;
   --radius-editorial-lg: 20px;
 
-  /* Shell variables (sidebar + header) — warm paper in light mode */
-  --theme-shell-bg: rgba(255, 251, 236, 0.62);
-  --theme-shell-border: rgba(23, 33, 27, 0.08);
-  --theme-shell-hover: rgba(23, 33, 27, 0.05);
-  --theme-shell-active-bg: rgba(14, 142, 142, 0.12);
-  --theme-shell-text: rgba(23, 33, 27, 0.92);
-  --theme-shell-text-muted: rgba(23, 33, 27, 0.55);
-  --theme-shell-text-subtle: rgba(23, 33, 27, 0.40);
+  /* Shell variables (sidebar tokens; navbar uses local white glass) */
+  --theme-shell-bg: #111827;
+  --theme-shell-border: rgba(255, 255, 255, 0.05);
+  --theme-shell-hover: rgba(255, 255, 255, 0.04);
+  --theme-shell-active-bg: rgba(79, 124, 255, 0.14);
+  --theme-shell-text: #F3F4F6;
+  --theme-shell-text-muted: #9CA3AF;
+  --theme-shell-text-subtle: rgba(156, 163, 175, 0.62);
+  --theme-shell-accent: #4F7CFF;
 }
 
 .dark {
   /* Shell variables (sidebar + header) — cool dark glass */
-  --theme-shell-bg: #F5F7FB;
-  --theme-shell-border: rgba(0, 0, 0, 0.05);
-  --theme-shell-hover: rgba(79, 124, 255, 0.06);
-  --theme-shell-active-bg: rgba(79, 124, 255, 0.12);
-  --theme-shell-text: #111827;
-  --theme-shell-text-muted: #6B7280;
-  --theme-shell-text-subtle: rgba(107, 114, 128, 0.72);
+  --theme-shell-bg: #111827;
+  --theme-shell-border: rgba(255, 255, 255, 0.05);
+  --theme-shell-hover: rgba(255, 255, 255, 0.04);
+  --theme-shell-active-bg: rgba(79, 124, 255, 0.14);
+  --theme-shell-text: #F3F4F6;
+  --theme-shell-text-muted: #9CA3AF;
+  --theme-shell-text-subtle: rgba(156, 163, 175, 0.62);
   --theme-shell-accent: #4F7CFF;
 }
 
@@ -696,13 +697,13 @@ html, body {
 
 /* Sidebar/navbar stronger light treatment */
 :root {
-  --theme-shell-bg: #F5F7FB;
-  --theme-shell-border: rgba(0, 0, 0, 0.05);
-  --theme-shell-hover: rgba(79, 124, 255, 0.06);
-  --theme-shell-active-bg: rgba(79, 124, 255, 0.12);
-  --theme-shell-text: #111827;
-  --theme-shell-text-muted: #6B7280;
-  --theme-shell-text-subtle: rgba(107, 114, 128, 0.72);
+  --theme-shell-bg: #111827;
+  --theme-shell-border: rgba(255, 255, 255, 0.05);
+  --theme-shell-hover: rgba(255, 255, 255, 0.04);
+  --theme-shell-active-bg: rgba(79, 124, 255, 0.14);
+  --theme-shell-text: #F3F4F6;
+  --theme-shell-text-muted: #9CA3AF;
+  --theme-shell-text-subtle: rgba(156, 163, 175, 0.62);
   --theme-shell-accent: #4F7CFF;
 }
 

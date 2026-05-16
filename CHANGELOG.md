@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.4] - 2026-05-16
+
+### Improvements
+- Polish dark premium sidebar and SaaS navbar
+
 ## [0.5.3] - 2026-05-16
 
 ### Improvements

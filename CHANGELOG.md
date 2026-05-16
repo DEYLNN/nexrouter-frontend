@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.21] - 2026-05-16
+
+### Improvements
+- Modernize usage breakdown model table
+
 ## [0.5.20] - 2026-05-16
 
 ### Improvements

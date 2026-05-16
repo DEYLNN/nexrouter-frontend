@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.31] - 2026-05-16
+
+### Improvements
+- Hide unsupported FreeBuff models
+
 ## [0.5.30] - 2026-05-16
 
 ### Features

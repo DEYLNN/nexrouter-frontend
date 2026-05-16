@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.8] - 2026-05-16
+
+### Features
+- Add AIMurah as static API key provider
+
 ## [0.5.7] - 2026-05-16
 
 ### Features

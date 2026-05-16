@@ -112,12 +112,22 @@ export default function ProvidersPage() {
     !searchQuery.trim() ||
     name.toLowerCase().includes(searchQuery.trim().toLowerCase());
 
+  const providerAuthType = (providerId) => FREE_PROVIDERS[providerId]?.noAuth ? "oauth" : "apikey";
+  const providerStatsFor = (providerId) => {
+    const stats = getProviderStats(providerId, providerAuthType(providerId));
+    if (FREE_PROVIDERS[providerId]?.noAuth) {
+      return { ...stats, connected: Math.max(stats.connected, 1), total: Math.max(stats.total, 1), allDisabled: false };
+    }
+    return stats;
+  };
+
   const sortByConnections = (entries, authType) =>
-    [...entries].sort(
-      (a, b) =>
-        getProviderStats(b[0], authType).total -
-        getProviderStats(a[0], authType).total,
-    );
+    [...entries].sort((a, b) => {
+      const aReady = FREE_PROVIDERS[a[0]]?.noAuth ? 1 : 0;
+      const bReady = FREE_PROVIDERS[b[0]]?.noAuth ? 1 : 0;
+      if (aReady !== bReady) return bReady - aReady;
+      return getProviderStats(b[0], authType).total - getProviderStats(a[0], authType).total;
+    });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -436,9 +446,9 @@ export default function ProvidersPage() {
               key={key}
               providerId={key}
               provider={info}
-              stats={getProviderStats(key, FREE_PROVIDERS[key]?.noAuth ? "oauth" : "apikey")}
+              stats={providerStatsFor(key)}
               authType={FREE_PROVIDERS[key]?.noAuth ? "free" : "apikey"}
-              onToggle={(active) => handleToggleProvider(key, FREE_PROVIDERS[key]?.noAuth ? "oauth" : "apikey", active)}
+              onToggle={(active) => handleToggleProvider(key, providerAuthType(key), active)}
             />
           ))}
         </div>
@@ -467,9 +477,9 @@ export default function ProvidersPage() {
               key={key}
               providerId={key}
               provider={info}
-              stats={getProviderStats(key, FREE_PROVIDERS[key]?.noAuth ? "oauth" : "apikey")}
+              stats={providerStatsFor(key)}
               authType={FREE_PROVIDERS[key]?.noAuth ? "free" : "apikey"}
-              onToggle={(active) => handleToggleProvider(key, FREE_PROVIDERS[key]?.noAuth ? "oauth" : "apikey", active)}
+              onToggle={(active) => handleToggleProvider(key, providerAuthType(key), active)}
             />
           ))}
         </div>
@@ -641,6 +651,7 @@ function ApiKeyProviderCard({
   onToggle,
 }) {
   const { connected, error, errorCode, errorTime, allDisabled } = stats;
+  const isNoAuth = !!provider.noAuth;
   const isCompatible = providerId.startsWith(OPENAI_COMPATIBLE_PREFIX);
   const isAnthropicCompatible = providerId.startsWith(
     ANTHROPIC_COMPATIBLE_PREFIX,
@@ -709,6 +720,8 @@ function ApiKeyProviderCard({
             <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap", marginTop: "2px" }}>
               {allDisabled ? (
                 <span style={{ fontSize: "11px", color: "var(--color-text-subtle)", background: "rgba(23,33,27,0.05)", border: "1px solid rgba(23,33,27,0.08)", borderRadius: "6px", padding: "1px 6px" }}>Disabled</span>
+              ) : isNoAuth ? (
+                <Badge variant="success" size="sm" dot>Ready</Badge>
               ) : (
                 <>
                   {getStatusDisplay(connected, error, errorCode)}
@@ -718,7 +731,7 @@ function ApiKeyProviderCard({
             </div>
           </div>
         </div>
-        {stats.total > 0 && (
+        {stats.total > 0 && !isNoAuth && (
           <div
             className="opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
             style={{ transition: "opacity 150ms ease", flexShrink: 0 }}

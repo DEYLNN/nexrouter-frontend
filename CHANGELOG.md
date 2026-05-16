@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.16] - 2026-05-16
+
+### Improvements
+- Show no-key providers as ready in API key section
+
 ## [0.5.15] - 2026-05-16
 
 ### Improvements

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import ProviderIcon from "@/shared/components/ProviderIcon";
+import { providerDisplayColor, providerDisplayName, providerIconPath } from "@/shared/utils/providerIcon";
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 const fmt = (n) => new Intl.NumberFormat().format(n || 0);
@@ -34,44 +35,11 @@ function relativeTime(str) {
 }
 
 function providerColor(provider) {
-  const map = {
-    CODEX: "#3B82F6", CX: "#3B82F6",
-    KIRO: "#A855F7", KR: "#A855F7",
-    CANOPYWAVE: "#10B981", CWV: "#10B981",
-    OPENROUTER: "#F97316",
-    GEMINI: "#4285F4",
-    CLAUDE: "#D97757", CC: "#D97757",
-    GITHUB: "#6B7280", GH: "#6B7280",
-    MINIMAX: "#7C3AED",
-  };
-  return map[provider?.toUpperCase()] || "#6B7280";
-}
-
-
-function providerIconPath(provider) {
-  const raw = (provider || "").toLowerCase();
-  const map = {
-    codex: "codex", cx: "codex",
-    kiro: "kiro", kr: "kiro",
-    canopywave: "canopywave", cwv: "canopywave",
-    github: "github", gh: "github",
-    "xiaomi-mimo-plan-sgp": "xiaomi-mimo-plan-sgp", mms: "xiaomi-mimo-plan-sgp", "mimo-sgp": "xiaomi-mimo-plan-sgp",
-    "openai-compatible-chat-5b54ddd1-0b0e-4452-9056-7a5e232672f9": "xiaomi-mimo-plan-sgp",
-    openai: "openai", anthropic: "anthropic", xai: "xai", minimax: "minimax", fireworks: "fireworks", cerebras: "cerebras", chutes: "chutes",
-  };
-  return `/providers/${map[raw] || raw}.png`;
+  return providerDisplayColor(provider);
 }
 
 function providerLabel(provider) {
-  const raw = (provider || "").trim();
-  const map = {
-    "XIAOMI-MIMO-PLAN-SGP": "MIMO Plan SGP",
-    "OPENAI-COMPATIBLE-CHAT-5B54DDD1-0B0E-4452-9056-7A5E232672F9": "MimoSubs",
-    CODEX: "Codex",
-    KIRO: "Kiro",
-    CANOPYWAVE: "CanopyWave",
-  };
-  return map[raw.toUpperCase()] || raw;
+  return providerDisplayName(provider);
 }
 
 function ProviderPill({ provider, color }) {

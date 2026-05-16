@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.6] - 2026-05-16
+
+### Fixes
+- Fix provider icons in usage logs for new providers
+
 ## [0.5.5] - 2026-05-16
 
 ### Improvements

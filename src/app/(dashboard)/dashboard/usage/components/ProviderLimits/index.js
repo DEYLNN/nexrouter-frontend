@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import ProviderIcon from "@/shared/components/ProviderIcon";
+import { providerIconPath } from "@/shared/utils/providerIcon";
 import QuotaTable from "./QuotaTable";
 import Toggle from "@/shared/components/Toggle";
 import { parseQuotaData, calculatePercentage } from "./utils";
@@ -548,7 +549,7 @@ export default function ProviderLimits() {
                   <span className="material-symbols-outlined text-[14px] text-text-muted">apps</span>
                 ) : (
                   <ProviderIcon
-                    src={`/providers/${providerFilter}.png`}
+                    src={providerIconPath(providerFilter)}
                     alt={providerFilter}
                     size={18}
                     className="size-[18px] rounded object-contain"
@@ -588,7 +589,7 @@ export default function ProviderLimits() {
                         className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${providerFilter === provider ? "bg-primary/10 text-primary" : "text-text-primary hover:bg-black/5 dark:hover:bg-white/10"}`}
                       >
                         <ProviderIcon
-                          src={`/providers/${provider}.png`}
+                          src={providerIconPath(provider)}
                           alt={provider}
                           size={24}
                           className="size-6 rounded-md object-contain"

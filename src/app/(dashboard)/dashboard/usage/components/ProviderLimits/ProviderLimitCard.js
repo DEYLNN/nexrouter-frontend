@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Card from "@/shared/components/Card";
 import ProviderIcon from "@/shared/components/ProviderIcon";
+import { providerIconPath } from "@/shared/utils/providerIcon";
 import Badge from "@/shared/components/Badge";
 import QuotaProgressBar from "./QuotaProgressBar";
 import { calculatePercentage } from "./utils";
@@ -63,7 +64,7 @@ export default function ProviderLimitCard({
             style={{ backgroundColor: `${providerColor}15` }}
           >
             <ProviderIcon
-              src={`/providers/${provider}.png`}
+              src={providerIconPath(provider)}
               alt={provider || "Provider"}
               size={40}
               className="object-contain rounded-lg"

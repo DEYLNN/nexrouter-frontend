@@ -85,10 +85,10 @@ export default function LoginPage() {
     <div style={{
       minHeight: "100vh",
       display: "flex",
-      alignItems: "center",
+      alignItems: "flex-start",
       justifyContent: "center",
       background: "#09090B",
-      padding: "clamp(12px, 4vw, 24px)",
+      padding: "clamp(28px, 8vh, 72px) clamp(14px, 4vw, 24px) clamp(18px, 4vw, 24px)",
       position: "relative",
       overflow: "hidden",
     }}>
@@ -110,27 +110,27 @@ export default function LoginPage() {
         WebkitMaskImage: "linear-gradient(to bottom, rgba(0,0,0,0.55), transparent 80%)",
       }} />
 
-      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "440px", display: "flex", flexDirection: "column", gap: "clamp(18px, 3vw, 28px)" }}>
+      <div style={{ position: "relative", zIndex: 1, width: "100%", maxWidth: "460px", display: "flex", flexDirection: "column", gap: "clamp(16px, 2.5vw, 24px)" }}>
 
         {/* Brand block */}
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "14px" }}>
           <div style={{
-            width: "58px", height: "58px",
-            borderRadius: "18px",
-            background: "linear-gradient(135deg, var(--theme-accent-teal) 0%, var(--theme-accent-blue) 100%)",
+            width: "62px", height: "62px",
+            borderRadius: "20px",
+            background: "linear-gradient(135deg, #4F7CFF 0%, #8B5CF6 58%, #11A6A6 100%)",
             display: "flex", alignItems: "center", justifyContent: "center",
             color: "#fff",
             boxShadow:
-              "0 0 0 1px rgba(255,251,236,0.08) inset, 0 12px 36px -8px rgba(17,166,166,0.55)",
+              "0 0 0 1px rgba(255,255,255,0.16) inset, 0 16px 44px -10px rgba(79,124,255,0.58), 0 0 56px -18px rgba(139,92,246,0.8)",
           }}>
             <IcoLogo />
           </div>
           <div style={{ textAlign: "center" }}>
             <h1 className="theme-display" style={{ fontSize: "clamp(28px, 6vw, 34px)", margin: 0, color: "#FAFAFA" }}>
-              9Router
+              AI Gateway
             </h1>
             <p className="theme-mono" style={{ fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", marginTop: "6px", color: "rgba(250,250,250,0.45)" }}>
-              AI Gateway · Editorial Console
+              Premium AI Infrastructure Console
             </p>
           </div>
         </div>
@@ -139,20 +139,23 @@ export default function LoginPage() {
         <div
           className="theme-glass-lg"
           style={{
-            padding: "clamp(20px, 5vw, 32px)",
+            padding: "clamp(22px, 5vw, 34px)",
             width: "100%",
+            border: "1px solid rgba(255,255,255,0.12)",
+            background: "linear-gradient(180deg, rgba(255,255,255,0.11), rgba(255,255,255,0.055))",
+            boxShadow: "0 28px 80px -42px rgba(0,0,0,0.95), 0 0 0 1px rgba(255,255,255,0.04) inset",
           }}
         >
           <form onSubmit={handleLogin} style={{ display: "flex", flexDirection: "column", gap: "22px" }}>
             <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
               <span className="theme-chip theme-chip--teal" style={{ alignSelf: "flex-start" }}>
-                Secure access
+                Secure gateway
               </span>
               <h2 className="theme-display" style={{ fontSize: "22px", color: "#FAFAFA", margin: 0, marginTop: "6px" }}>
-                Welcome back
+                Control center
               </h2>
               <p style={{ fontSize: "13px", color: "rgba(250,250,250,0.60)", margin: 0, lineHeight: 1.55 }}>
-                Sign in to continue to your AI gateway dashboard.
+                Authenticate to manage providers, models, keys, usage, and routing from one command surface.
               </p>
             </div>
 
@@ -181,16 +184,16 @@ export default function LoginPage() {
                   style={{
                     width: "100%",
                     boxSizing: "border-box",
-                    height: "46px",
+                    height: "50px",
                     paddingLeft: "40px",
                     paddingRight: "14px",
-                    borderRadius: "12px",
+                    borderRadius: "14px",
                     border: error
                       ? "1px solid rgba(239,68,68,0.55)"
                       : focused
                         ? "1px solid rgba(17,166,166,0.55)"
                         : "1px solid rgba(255,251,236,0.12)",
-                    background: "rgba(9,9,11,0.45)",
+                    background: "rgba(9,9,11,0.58)",
                     color: "#FAFAFA",
                     fontSize: "14px",
                     outline: "none",
@@ -216,11 +219,11 @@ export default function LoginPage() {
               style={{
                 display: "flex", alignItems: "center", justifyContent: "center", gap: "8px",
                 width: "100%",
-                height: "48px",
+                height: "50px",
                 borderRadius: "14px",
                 background: loading || !password
                   ? "linear-gradient(135deg, rgba(17,166,166,0.35), rgba(36,107,254,0.35))"
-                  : "linear-gradient(135deg, var(--theme-accent-teal), var(--theme-accent-blue))",
+                  : "linear-gradient(135deg, #4F7CFF 0%, #8B5CF6 58%, #11A6A6 100%)",
                 border: "none",
                 color: "#fff",
                 fontSize: "14px",
@@ -228,7 +231,7 @@ export default function LoginPage() {
                 letterSpacing: "-0.01em",
                 cursor: loading || !password ? "not-allowed" : "pointer",
                 transition: "transform 120ms ease, filter 120ms ease",
-                boxShadow: "0 12px 32px -10px rgba(17,166,166,0.55)",
+                boxShadow: "0 14px 38px -12px rgba(79,124,255,0.72)",
               }}
               onMouseEnter={e => { if (!loading && password) e.currentTarget.style.filter = "brightness(1.08)"; }}
               onMouseLeave={e => { e.currentTarget.style.filter = "brightness(1)"; }}
@@ -268,7 +271,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div style={{ display: "flex", justifyContent: "center", gap: "10px", fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(250,250,250,0.32)" }} className="theme-mono">
-          <span>9router</span>
+          <span>AI Gateway</span>
           <span style={{ opacity: 0.4 }}>·</span>
           <span>secure access</span>
           <span style={{ opacity: 0.4 }}>·</span>

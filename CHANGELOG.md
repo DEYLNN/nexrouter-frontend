@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.25] - 2026-05-16
+
+### Improvements
+- Modernize login screen for AI Gateway
+
 ## [0.5.24] - 2026-05-16
 
 ### Improvements

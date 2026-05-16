@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.28] - 2026-05-16
+
+### Improvements
+- Polish FreeBuff no-key provider detail view
+
 ## [0.5.27] - 2026-05-16
 
 ### Features

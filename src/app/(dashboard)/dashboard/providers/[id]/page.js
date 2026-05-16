@@ -59,7 +59,7 @@ export default function ProviderDetailPage() {
       }
     : (OAUTH_PROVIDERS[providerId] || APIKEY_PROVIDERS[providerId] || FREE_PROVIDERS[providerId] || FREE_TIER_PROVIDERS[providerId] || WEB_COOKIE_PROVIDERS[providerId]);
   const isOAuth = !!OAUTH_PROVIDERS[providerId] || !!FREE_PROVIDERS[providerId];
-  const isFreeNoAuth = !!FREE_PROVIDERS[providerId]?.noAuth;
+  const isFreeNoAuth = !!providerInfo?.noAuth;
   const models = getModelsByProviderId(providerId);
   const providerAlias = getProviderAlias(providerId);
   
@@ -713,6 +713,9 @@ export default function ProviderDetailPage() {
     if (isAnthropicCompatible) {
       return "/providers/anthropic.png";
     }
+    if (providerInfo.icon?.startsWith?.("/")) {
+      return providerInfo.icon;
+    }
     return `/providers/${providerInfo.id}.png`;
   };
 
@@ -764,7 +767,7 @@ export default function ProviderDetailPage() {
               )}
             </div>
             <p className="text-text-muted">
-              {connections.length} connection{connections.length === 1 ? "" : "s"}
+              {isFreeNoAuth ? "No API key required" : `${connections.length} connection${connections.length === 1 ? "" : "s"}`}
             </p>
           </div>
         </div>

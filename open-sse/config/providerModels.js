@@ -222,6 +222,7 @@ export const PROVIDER_MODELS = {
     { id: "mimo-v2-flash", name: "MiMo V2 Flash" },
     { id: "mimo-v2-omni", name: "MiMo V2 Omni" },
     { id: "google/gemini-3.1-flash-lite-preview", name: "Gemini 3.1 Flash Lite Preview" },
+    { id: "zai-org/GLM-5.1-FP8", name: "GLM 5.1 FP8" },
   ],
   gitlawb: [
     { id: "mimo-v2.5-pro", name: "MiMo V2.5 Pro" },
@@ -230,6 +231,7 @@ export const PROVIDER_MODELS = {
     { id: "mimo-v2-flash", name: "MiMo V2 Flash" },
     { id: "mimo-v2-omni", name: "MiMo V2 Omni" },
     { id: "google/gemini-3.1-flash-lite-preview", name: "Gemini 3.1 Flash Lite Preview" },
+    { id: "zai-org/GLM-5.1-FP8", name: "GLM 5.1 FP8" },
   ],
   "freemodel-dev": [
     { id: "gpt-5.5", name: "GPT-5.5" },

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.11] - 2026-05-16
+
+### Features
+- Add GLM model to Gitlawb provider
+
 ## [0.5.10] - 2026-05-16
 
 ### Features

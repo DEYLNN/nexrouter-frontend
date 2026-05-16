@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.22] - 2026-05-16
+
+### Improvements
+- Restore recent requests table layout
+
 ## [0.5.21] - 2026-05-16
 
 ### Improvements

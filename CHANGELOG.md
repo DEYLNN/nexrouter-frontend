@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.34] - 2026-05-17
+
+### Features
+- Add FreeBuff full-mode models to catalog
+
 ## [0.5.33] - 2026-05-16
 
 ### Improvements

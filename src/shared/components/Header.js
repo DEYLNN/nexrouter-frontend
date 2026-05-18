@@ -54,7 +54,7 @@ function getPageInfo(pathname) {
     if (info) return {
       title: info.name, description: "", breadcrumbs: [
         { label: "Providers", href: "/dashboard/providers" },
-        { label: info.name, image: `/providers/${info.id}.png` },
+        { label: info.name, image: info.icon?.startsWith?.("/") ? info.icon : `/providers/${info.id}.png` },
       ],
     };
   }

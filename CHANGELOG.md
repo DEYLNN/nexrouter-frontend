@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.35] - 2026-05-18
+
+### Features
+- Add GMI Cloud API-key provider with Gemini 3.1 Flash Lite Preview model
+
 ## [0.5.34] - 2026-05-17
 
 ### Features

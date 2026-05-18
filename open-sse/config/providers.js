@@ -124,6 +124,14 @@ export const PROVIDERS = {
     baseUrl: "https://api.swiftrouter.com/v1/chat/completions",
     format: "openai"
   },
+  gmi: {
+    baseUrl: "https://api.gmi-serving.com/v1/chat/completions",
+    format: "openai"
+  },
+  "gmi-cloud": {
+    baseUrl: "https://api.gmi-serving.com/v1/chat/completions",
+    format: "openai"
+  },
   routeway: {
     baseUrl: "https://api.routeway.ai/v1/chat/completions",
     format: "openai"

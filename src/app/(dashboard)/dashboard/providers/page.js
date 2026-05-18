@@ -565,7 +565,7 @@ function ProviderCard({ providerId, provider, stats, authType, onToggle }) {
               }}
             >
               <ProviderIcon
-                src={`/providers/${provider.id}.png`}
+                src={provider.icon?.startsWith?.("/") ? provider.icon : `/providers/${provider.id}.png`}
                 alt={provider.name}
                 size={30}
                 className="object-contain rounded-lg max-w-[32px] max-h-[32px]"
@@ -632,6 +632,7 @@ ProviderCard.propTypes = {
     name: PropTypes.string.isRequired,
     color: PropTypes.string,
     textIcon: PropTypes.string,
+    icon: PropTypes.string,
   }).isRequired,
   stats: PropTypes.shape({
     connected: PropTypes.number,
@@ -671,8 +672,8 @@ function ApiKeyProviderCard({
   };
 
   const getIconPath = () => {
-    if (isCompatible)
-      return "/providers/openai.png";
+    if (provider.icon?.startsWith?.("/")) return provider.icon;
+    if (isCompatible) return "/providers/openai.png";
     if (isAnthropicCompatible) return "/providers/anthropic.png";
     return `/providers/${provider.id}.png`;
   };
@@ -752,6 +753,7 @@ ApiKeyProviderCard.propTypes = {
     name: PropTypes.string.isRequired,
     color: PropTypes.string,
     textIcon: PropTypes.string,
+    icon: PropTypes.string,
     apiType: PropTypes.string,
   }).isRequired,
   stats: PropTypes.shape({

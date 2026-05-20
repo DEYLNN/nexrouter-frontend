@@ -29,6 +29,9 @@ const CLAUDE_API_HEADERS = {
 // Shared baseUrls
 const KIMI_CODING_BASE_URL = "https://api.kimi.com/coding/v1/messages";
 
+const GOOGLE_OAUTH_CLIENT_ID = process.env.GOOGLE_OAUTH_CLIENT_ID || process.env.GOOGLE_CLIENT_ID || "GOOGLE_CLIENT_ID_REPLACE_WITH_ENV";
+const GOOGLE_OAUTH_CLIENT_SECRET = process.env.GOOGLE_OAUTH_CLIENT_SECRET || process.env.GOOGLE_CLIENT_SECRET || "GOCSPX_REPLACE_WITH_ENV_SECRET";
+
 export const PROVIDERS = {
   claude: {
     baseUrl: "https://api.anthropic.com/v1/messages",
@@ -55,14 +58,14 @@ export const PROVIDERS = {
   gemini: {
     baseUrl: "https://generativelanguage.googleapis.com/v1beta/models",
     format: "gemini",
-    clientId: "GOOGLE_CLIENT_ID_REPLACE_WITH_ENV",
-    clientSecret: "GOCSPX_REPLACE_WITH_ENV_SECRET"
+    clientId: GOOGLE_OAUTH_CLIENT_ID,
+    clientSecret: GOOGLE_OAUTH_CLIENT_SECRET
   },
   "gemini-cli": {
     baseUrl: "https://cloudcode-pa.googleapis.com/v1internal",
     format: "gemini-cli",
-    clientId: "GOOGLE_CLIENT_ID_REPLACE_WITH_ENV",
-    clientSecret: "GOCSPX_REPLACE_WITH_ENV_SECRET"
+    clientId: GOOGLE_OAUTH_CLIENT_ID,
+    clientSecret: GOOGLE_OAUTH_CLIENT_SECRET
   },
   codex: {
     baseUrl: "https://chatgpt.com/backend-api/codex/responses",
@@ -113,8 +116,8 @@ export const PROVIDERS = {
     ],
     format: "antigravity",
     headers: { "User-Agent": `antigravity/1.107.0 ${platform()}/${arch()}` },
-    clientId: "GOOGLE_CLIENT_ID_REPLACE_WITH_ENV",
-    clientSecret: "GOCSPX_REPLACE_WITH_ENV_SECRET"
+    clientId: process.env.ANTIGRAVITY_OAUTH_CLIENT_ID || GOOGLE_OAUTH_CLIENT_ID,
+    clientSecret: process.env.ANTIGRAVITY_OAUTH_CLIENT_SECRET || GOOGLE_OAUTH_CLIENT_SECRET
   },
   canopywave: {
     baseUrl: "https://inference.canopywave.io/v1/chat/completions",
@@ -132,6 +135,14 @@ export const PROVIDERS = {
     baseUrl: "https://api.gmi-serving.com/v1/chat/completions",
     format: "openai"
   },
+  aim: {
+    baseUrl: "https://aimurah.my.id/api/v1/chat/completions",
+    format: "openai"
+  },
+  aimurah: {
+    baseUrl: "https://aimurah.my.id/api/v1/chat/completions",
+    format: "openai"
+  },
   routeway: {
     baseUrl: "https://api.routeway.ai/v1/chat/completions",
     format: "openai"
@@ -143,6 +154,14 @@ export const PROVIDERS = {
       "HTTP-Referer": "https://endpoint-proxy.local",
       "X-Title": "Endpoint Proxy"
     }
+  },
+  fmd: {
+    baseUrl: "https://api.freemodel.dev/v1/chat/completions",
+    format: "openai"
+  },
+  "freemodel-dev": {
+    baseUrl: "https://api.freemodel.dev/v1/chat/completions",
+    format: "openai"
   },
   freebuff: {
     baseUrl: "https://www.codebuff.com/api/v1/chat/completions",
@@ -312,6 +331,10 @@ export const PROVIDERS = {
     baseUrl: "https://api.groq.com/openai/v1/chat/completions",
     format: "openai"
   },
+  sambanova: {
+    baseUrl: "https://api.sambanova.ai/v1/chat/completions",
+    format: "openai"
+  },
   xai: {
     baseUrl: "https://api.x.ai/v1/chat/completions",
     format: "openai"
@@ -319,6 +342,24 @@ export const PROVIDERS = {
   mistral: {
     baseUrl: "https://api.mistral.ai/v1/chat/completions",
     format: "openai"
+  },
+  "github-models": {
+    baseUrl: "https://models.github.ai/inference/chat/completions",
+    format: "openai"
+  },
+  kilo: {
+    baseUrl: "https://api.kilo.ai/api/gateway/v1/chat/completions",
+    format: "openai"
+  },
+  pollinations: {
+    baseUrl: "https://text.pollinations.ai/openai/v1/chat/completions",
+    format: "openai",
+    noAuth: true
+  },
+  llm7: {
+    baseUrl: "https://api.llm7.io/v1/chat/completions",
+    format: "openai",
+    noAuth: true
   },
   perplexity: {
     baseUrl: "https://api.perplexity.ai/chat/completions",
@@ -402,6 +443,18 @@ export const PROVIDERS = {
     baseUrl: "https://opencode.ai",
     format: "openai",
     headers: { "x-opencode-client": "desktop" },
+    noAuth: true
+  },
+  glb: {
+    baseUrl: "https://opengateway.gitlawb.com/v1/chat/completions",
+    format: "openai",
+    headers: { "Accept-Encoding": "identity" },
+    noAuth: true
+  },
+  gitlawb: {
+    baseUrl: "https://opengateway.gitlawb.com/v1/chat/completions",
+    format: "openai",
+    headers: { "Accept-Encoding": "identity" },
     noAuth: true
   },
   "opencode-go": {

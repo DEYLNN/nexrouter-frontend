@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback, useRef } from "react";
+import { useTheme } from "@/shared/hooks/useTheme";
 import ProviderIcon from "@/shared/components/ProviderIcon";
 import { providerDisplayColor, providerDisplayName, providerIconPath } from "@/shared/utils/providerIcon";
 
@@ -113,6 +114,7 @@ const IconX = () => (
 
 // ─── stat card ───────────────────────────────────────────────────────────────
 function StatCard({ label, value, sub, icon: Icon, accent }) {
+  const { isDark } = useTheme();
   return (
     <div className="dark:!bg-[#0B1220] dark:!border-[#334155]" style={{
       background: "var(--color-surface)",

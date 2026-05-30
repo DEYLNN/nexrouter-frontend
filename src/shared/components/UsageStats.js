@@ -476,7 +476,9 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
                 return (
                   <>
                     <span className="flex min-w-0 items-center gap-2">
-                      <span className="material-symbols-outlined flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-[18px] leading-none text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]">{selected.icon}</span>
+                      <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]">
+                        <span className="material-symbols-outlined block translate-y-[1px] text-[18px] leading-none">{selected.icon}</span>
+                      </span>
                       <span className="min-w-0">
                         <span className="block truncate text-sm font-semibold text-text-main dark:!text-white">{selected.label}</span>
                         <span className="block truncate text-[10px] text-text-muted dark:!text-[#CBD5E1]">{selected.desc}</span>
@@ -501,12 +503,16 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
                       }}
                       className={`flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-left transition-colors ${active ? "bg-primary/10 text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]" : "text-text-muted hover:bg-black/5 hover:text-text-main dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B] dark:hover:!text-white"}`}
                     >
-                      <span className="material-symbols-outlined flex size-8 shrink-0 items-center justify-center rounded-lg bg-black/5 text-[18px] leading-none dark:!bg-[#111827]">{opt.icon}</span>
+                      <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-black/5 dark:!bg-[#111827]">
+                        <span className="material-symbols-outlined block translate-y-[1px] text-[18px] leading-none">{opt.icon}</span>
+                      </span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-sm font-semibold">{opt.label}</span>
                         <span className={`block truncate text-[10px] ${active ? "text-primary/80 dark:!text-[#BFDBFE]" : "text-text-muted dark:!text-[#94A3B8]"}`}>{opt.desc}</span>
                       </span>
-                      {active && <span className="material-symbols-outlined flex size-6 shrink-0 items-center justify-center text-[18px] leading-none">check</span>}
+                      {active && <span className="grid size-6 shrink-0 place-items-center">
+                        <span className="material-symbols-outlined block translate-y-[1px] text-[18px] leading-none">check</span>
+                      </span>}
                     </button>
                   );
                 })}

@@ -158,6 +158,7 @@ function ProfileMenu({ onLogout }) {
 
 // ─── header search ────────────────────────────────────────────────────────────
 function HeaderSearch() {
+  const { isDark } = useTheme();
   const visible = useHeaderSearchStore((s) => s.visible);
   const query = useHeaderSearchStore((s) => s.query);
   const placeholder = useHeaderSearchStore((s) => s.placeholder);
@@ -167,10 +168,10 @@ function HeaderSearch() {
   if (!visible) return null;
 
   return (
-    <div style={{ position: "relative", width: "clamp(120px, 28vw, 200px)" }}>
+    <div style={{ position: "relative", width: "clamp(120px, 24vw, 180px)", flexShrink: 1, minWidth: "96px" }}> 
       <span style={{
         position: "absolute", left: "9px", top: "50%", transform: "translateY(-50%)",
-        color: focused ? "rgba(59,130,246,0.7)" : "rgba(255,255,255,0.25)",
+        color: focused ? "rgba(96,165,250,0.9)" : (isDark ? "#94A3B8" : "rgba(17,24,39,0.35)"),
         display: "flex", pointerEvents: "none",
         transition: "color 150ms ease",
       }}>
@@ -187,9 +188,9 @@ function HeaderSearch() {
           width: "100%", boxSizing: "border-box",
           height: "32px", paddingLeft: "30px", paddingRight: query ? "28px" : "10px",
           borderRadius: "9px",
-          border: focused ? "1px solid rgba(79,124,255,0.28)" : "1px solid rgba(0,0,0,0.06)",
-          background: focused ? "rgba(79,124,255,0.065)" : "rgba(255,255,255,0.72)",
-          color: "#111827",
+          border: focused ? "1px solid rgba(96,165,250,0.45)" : (isDark ? "1px solid #1E293B" : "1px solid rgba(0,0,0,0.06)"),
+          background: isDark ? "#111827" : (focused ? "rgba(79,124,255,0.065)" : "rgba(255,255,255,0.72)"),
+          color: isDark ? "#E5E7EB" : "#111827",
           fontSize: "12px", outline: "none",
           transition: "all 150ms ease",
         }}
@@ -258,7 +259,7 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
     }}>
 
       {/* Left */}
-      <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0, flex: 1 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0, flex: "1 1 auto", overflow: "hidden" }}>
         {showMenuButton && (
           <>
             <button
@@ -281,6 +282,7 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
         )}
 
         {/* Breadcrumbs */}
+        <div style={{ minWidth: 0, overflow: "hidden", flex: "1 1 auto" }}>
         {breadcrumbs.length > 0 ? (() => {
           const current = breadcrumbs[breadcrumbs.length - 1];
           const parent = [...breadcrumbs].reverse().find((crumb) => crumb.href);
@@ -315,10 +317,11 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
             )}
           </div>
         ) : null}
+        </div>
       </div>
 
       {/* Right */}
-      <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 0 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: "8px", flexShrink: 1, minWidth: 0 }}>
         <div className="hidden sm:flex">
           <StatusDot />
         </div>

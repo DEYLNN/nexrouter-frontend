@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { APP_CONFIG, UPDATER_CONFIG } from "@/shared/constants/config";
 import { useCopyToClipboard } from "@/shared/hooks/useCopyToClipboard";
+import { useTheme } from "@/shared/hooks/useTheme";
 import Button from "./Button";
 import { ConfirmModal } from "./Modal";
 
@@ -148,6 +149,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
   const [shutdownCountdown, setShutdownCountdown] = useState(0);
   const [enableTranslator, setEnableTranslator] = useState(false);
   const { copied, copy } = useCopyToClipboard(2000);
+  const { isDark } = useTheme();
   const INSTALL_CMD = UPDATER_CONFIG.installCmdLatest;
   const isCollapsed = forceExpanded ? false : collapsed;
 
@@ -207,10 +209,10 @@ export default function Sidebar({ onClose, forceExpanded }) {
         width: w,
         height: "100%",
         margin: "0",
-        background: "var(--theme-shell-bg)",
+        background: isDark ? "#0F172A" : "linear-gradient(180deg, #F7F9FC 0%, #F1F4F9 100%)",
         backdropFilter: "none",
         WebkitBackdropFilter: "none",
-        border: "1px solid var(--theme-shell-border)",
+        border: isDark ? "1px solid #1E293B" : "1px solid var(--theme-shell-border)",
         borderLeft: "none",
         borderTop: "none",
         borderBottom: "none",

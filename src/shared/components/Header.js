@@ -10,6 +10,7 @@ import { OAUTH_PROVIDERS, APIKEY_PROVIDERS } from "@/shared/constants/config";
 import { AI_PROVIDERS } from "@/shared/constants/providers";
 import { translate } from "@/i18n/runtime";
 import ThemeToggle from "./ThemeToggle";
+import { useTheme } from "@/shared/hooks/useTheme";
 
 // ─── icons ────────────────────────────────────────────────────────────────────
 const I = {
@@ -226,6 +227,7 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
   const router = useRouter();
   const pageInfo = useMemo(() => getPageInfo(pathname), [pathname]);
   const { title, description, icon, breadcrumbs } = pageInfo;
+  const { isDark } = useTheme();
 
   const handleLogout = async () => {
     try {
@@ -243,10 +245,10 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
       height: "52px",
       margin: "10px 12px 0",
       padding: "0 clamp(12px, 2vw, 18px)",
-      background: "var(--theme-shell-bg)",
+      background: isDark ? "#0F172A" : "rgba(255,255,255,0.68)",
       backdropFilter: "none",
       WebkitBackdropFilter: "none",
-      border: "1px solid var(--theme-shell-border)",
+      border: isDark ? "1px solid #1E293B" : "1px solid rgba(17,24,39,0.06)",
       borderRadius: "12px",
       boxShadow: "none",
       flexShrink: 0,

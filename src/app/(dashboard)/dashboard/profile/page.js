@@ -351,34 +351,34 @@ export default function ProfilePage() {
 
   return (
     <div className="flex min-w-0 flex-col gap-6 px-1 sm:px-0">
-      <Card className="p-5 sm:p-6">
+      <Card className="p-5 sm:p-6 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <span className="material-symbols-outlined text-primary">manage_accounts</span>
-            <h1 className="text-xl font-semibold text-text-main sm:text-2xl">Profile & Settings</h1>
+            <h1 className="text-xl font-semibold text-text-main sm:text-2xl dark:!text-white">Profile & Settings</h1>
           </div>
-          <p className="max-w-2xl text-sm text-text-muted">Manage local storage, security, routing preferences, network proxy, and observability.</p>
+          <p className="max-w-2xl text-sm text-text-muted dark:!text-[#CBD5E1]">Manage local storage, security, routing preferences, network proxy, and observability.</p>
         </div>
       </Card>
       <div className="grid min-w-0 grid-cols-1 gap-4 xl:grid-cols-2">
         {/* Local Mode Info */}
-        <Card className="p-5 sm:p-6">
+        <Card className="p-5 sm:p-6 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
           <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between mb-4">
             <div className="flex items-center gap-3 sm:gap-4">
               <div className="size-10 sm:size-12 rounded-lg bg-green-500/10 text-green-500 flex items-center justify-center shrink-0">
                 <span className="material-symbols-outlined text-xl sm:text-2xl">computer</span>
               </div>
               <div>
-                <h2 className="text-lg sm:text-xl font-semibold">Local Mode</h2>
-                <p className="text-sm text-text-muted">Running on your machine</p>
+                <h2 className="text-lg sm:text-xl font-semibold dark:!text-white">Local Mode</h2>
+                <p className="text-sm text-text-muted dark:!text-[#CBD5E1]">Running on your machine</p>
               </div>
             </div>
           </div>
-          <div className="flex flex-col gap-3 pt-4 border-t border-border">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 rounded-lg bg-bg border border-border gap-2">
+          <div className="flex flex-col gap-3 pt-4 border-t border-border dark:!border-[#334155]">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 rounded-lg bg-bg border border-border gap-2 dark:!bg-[#111827] dark:!border-[#334155]">
               <div>
-                <p className="font-medium text-sm sm:text-base">Database Location</p>
-                <p className="text-xs sm:text-sm text-text-muted font-mono break-all">~/.9router/db/data.sqlite</p>
+                <p className="font-medium text-sm sm:text-base dark:!text-white">Database Location</p>
+                <p className="text-xs sm:text-sm text-text-muted font-mono break-all dark:!text-[#CBD5E1]">~/.9router/db/data.sqlite</p>
               </div>
             </div>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -417,18 +417,18 @@ export default function ProfilePage() {
         </Card>
 
         {/* Security */}
-        <Card className="p-5 sm:p-6">
+        <Card className="p-5 sm:p-6 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 rounded-lg bg-primary/10 text-primary shrink-0">
               <span className="material-symbols-outlined text-[20px]">shield</span>
             </div>
-            <h3 className="text-base sm:text-lg font-semibold">Security</h3>
+            <h3 className="text-base sm:text-lg font-semibold dark:!text-white">Security</h3>
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex items-start sm:items-center justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-sm sm:text-base">Require login</p>
-                <p className="text-xs sm:text-sm text-text-muted">
+                <p className="font-medium text-sm sm:text-base dark:!text-white">Require login</p>
+                <p className="text-xs sm:text-sm text-text-muted dark:!text-[#CBD5E1]">
                   When ON, dashboard requires password. When OFF, access without login.
                 </p>
               </div>
@@ -439,10 +439,10 @@ export default function ProfilePage() {
               />
             </div>
             {settings.requireLogin === true && (
-              <form onSubmit={handlePasswordChange} className="flex flex-col gap-4 pt-4 border-t border-border/50">
+              <form onSubmit={handlePasswordChange} className="flex flex-col gap-4 pt-4 border-t border-border/50 dark:!border-[#334155]">
                 {settings.hasPassword && (
                   <div className="flex flex-col gap-2">
-                    <label className="text-xs sm:text-sm font-medium">Current Password</label>
+                    <label className="text-xs sm:text-sm font-medium dark:!text-white">Current Password</label>
                     <Input
                       type="password"
                       placeholder="Enter current password"
@@ -461,7 +461,7 @@ export default function ProfilePage() {
                 )} */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-2">
-                    <label className="text-xs sm:text-sm font-medium">New Password</label>
+                    <label className="text-xs sm:text-sm font-medium dark:!text-white">New Password</label>
                     <Input
                       type="password"
                       placeholder="Enter new password"
@@ -471,7 +471,7 @@ export default function ProfilePage() {
                     />
                   </div>
                   <div className="flex flex-col gap-2">
-                    <label className="text-xs sm:text-sm font-medium">Confirm New Password</label>
+                    <label className="text-xs sm:text-sm font-medium dark:!text-white">Confirm New Password</label>
                     <Input
                       type="password"
                       placeholder="Confirm new password"
@@ -499,18 +499,18 @@ export default function ProfilePage() {
         </Card>
 
         {/* Routing Preferences */}
-        <Card className="p-5 sm:p-6">
+        <Card className="p-5 sm:p-6 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 rounded-lg bg-blue-500/10 text-blue-500 shrink-0">
               <span className="material-symbols-outlined text-[20px]">route</span>
             </div>
-            <h3 className="text-base sm:text-lg font-semibold">Routing Strategy</h3>
+            <h3 className="text-base sm:text-lg font-semibold dark:!text-white">Routing Strategy</h3>
           </div>
           <div className="flex flex-col gap-4">
             <div className="flex items-start sm:items-center justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-sm sm:text-base">Round Robin</p>
-                <p className="text-xs sm:text-sm text-text-muted">
+                <p className="font-medium text-sm sm:text-base dark:!text-white">Round Robin</p>
+                <p className="text-xs sm:text-sm text-text-muted dark:!text-[#CBD5E1]">
                   Cycle through accounts to distribute load
                 </p>
               </div>
@@ -523,10 +523,10 @@ export default function ProfilePage() {
 
             {/* Sticky Round Robin Limit */}
             {settings.fallbackStrategy === "round-robin" && (
-              <div className="flex items-start sm:items-center justify-between gap-4 pt-2 border-t border-border/50">
+              <div className="flex items-start sm:items-center justify-between gap-4 pt-2 border-t border-border/50 dark:!border-[#334155]">
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm sm:text-base">Sticky Limit</p>
-                  <p className="text-xs sm:text-sm text-text-muted">
+                  <p className="font-medium text-sm sm:text-base dark:!text-white">Sticky Limit</p>
+                  <p className="text-xs sm:text-sm text-text-muted dark:!text-[#CBD5E1]">
                     Calls per account before switching
                   </p>
                 </div>
@@ -543,10 +543,10 @@ export default function ProfilePage() {
             )}
 
             {/* Combo Round Robin */}
-            <div className="flex items-start sm:items-center justify-between gap-4 pt-4 border-t border-border/50">
+            <div className="flex items-start sm:items-center justify-between gap-4 pt-4 border-t border-border/50 dark:!border-[#334155]">
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-sm sm:text-base">Combo Round Robin</p>
-                <p className="text-xs sm:text-sm text-text-muted">
+                <p className="font-medium text-sm sm:text-base dark:!text-white">Combo Round Robin</p>
+                <p className="text-xs sm:text-sm text-text-muted dark:!text-[#CBD5E1]">
                   Cycle through providers in combos instead of always starting with first
                 </p>
               </div>
@@ -559,10 +559,10 @@ export default function ProfilePage() {
 
             {/* Combo Sticky Round Robin Limit */}
             {settings.comboStrategy === "round-robin" && (
-              <div className="flex items-center justify-between pt-2 border-t border-border/50">
+              <div className="flex items-center justify-between pt-2 border-t border-border/50 dark:!border-[#334155]">
                 <div>
-                  <p className="font-medium">Combo Sticky Limit</p>
-                  <p className="text-sm text-text-muted">
+                  <p className="font-medium dark:!text-white">Combo Sticky Limit</p>
+                  <p className="text-sm text-text-muted dark:!text-[#CBD5E1]">
                     Calls per combo model before switching
                   </p>
                 </div>
@@ -578,7 +578,7 @@ export default function ProfilePage() {
               </div>
             )}
 
-            <p className="text-xs text-text-muted italic pt-2 border-t border-border/50">
+            <p className="text-xs text-text-muted italic pt-2 border-t border-border/50 dark:!border-[#334155] dark:!text-[#CBD5E1]">
               {settings.fallbackStrategy === "round-robin"
                 ? `Currently distributing requests across all available accounts with ${settings.stickyRoundRobinLimit || 3} calls per account.`
                 : "Currently using accounts in priority order (Fill First)."}
@@ -590,19 +590,19 @@ export default function ProfilePage() {
         </Card>
 
         {/* Network */}
-        <Card className="p-5 sm:p-6">
+        <Card className="p-5 sm:p-6 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 rounded-lg bg-purple-500/10 text-purple-500 shrink-0">
               <span className="material-symbols-outlined text-[20px]">wifi</span>
             </div>
-            <h3 className="text-base sm:text-lg font-semibold">Network</h3>
+            <h3 className="text-base sm:text-lg font-semibold dark:!text-white">Network</h3>
           </div>
 
           <div className="flex flex-col gap-4">
             <div className="flex items-start sm:items-center justify-between gap-4">
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-sm sm:text-base">Outbound Proxy</p>
-                <p className="text-xs sm:text-sm text-text-muted">Enable proxy for OAuth + provider outbound requests.</p>
+                <p className="font-medium text-sm sm:text-base dark:!text-white">Outbound Proxy</p>
+                <p className="text-xs sm:text-sm text-text-muted dark:!text-[#CBD5E1]">Enable proxy for OAuth + provider outbound requests.</p>
               </div>
               <Toggle
                 checked={settings.outboundProxyEnabled === true}
@@ -612,30 +612,30 @@ export default function ProfilePage() {
             </div>
 
             {settings.outboundProxyEnabled === true && (
-              <form onSubmit={updateOutboundProxy} className="flex flex-col gap-4 pt-2 border-t border-border/50">
+              <form onSubmit={updateOutboundProxy} className="flex flex-col gap-4 pt-2 border-t border-border/50 dark:!border-[#334155]">
                 <div className="flex flex-col gap-2">
-                  <label className="font-medium text-sm sm:text-base">Proxy URL</label>
+                  <label className="font-medium text-sm sm:text-base dark:!text-white">Proxy URL</label>
                   <Input
                     placeholder="http://127.0.0.1:7897"
                     value={proxyForm.outboundProxyUrl}
                     onChange={(e) => setProxyForm((prev) => ({ ...prev, outboundProxyUrl: e.target.value }))}
                     disabled={loading || proxyLoading}
                   />
-                  <p className="text-xs sm:text-sm text-text-muted">Leave empty to inherit existing env proxy (if any).</p>
+                  <p className="text-xs sm:text-sm text-text-muted dark:!text-[#CBD5E1]">Leave empty to inherit existing env proxy (if any).</p>
                 </div>
 
-                <div className="flex flex-col gap-2 pt-2 border-t border-border/50">
-                  <label className="font-medium text-sm sm:text-base">No Proxy</label>
+                <div className="flex flex-col gap-2 pt-2 border-t border-border/50 dark:!border-[#334155]">
+                  <label className="font-medium text-sm sm:text-base dark:!text-white">No Proxy</label>
                   <Input
                     placeholder="localhost,127.0.0.1"
                     value={proxyForm.outboundNoProxy}
                     onChange={(e) => setProxyForm((prev) => ({ ...prev, outboundNoProxy: e.target.value }))}
                     disabled={loading || proxyLoading}
                   />
-                  <p className="text-xs sm:text-sm text-text-muted">Comma-separated hostnames/domains to bypass the proxy.</p>
+                  <p className="text-xs sm:text-sm text-text-muted dark:!text-[#CBD5E1]">Comma-separated hostnames/domains to bypass the proxy.</p>
                 </div>
 
-                <div className="pt-2 border-t border-border/50 flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
+                <div className="pt-2 border-t border-border/50 flex flex-col sm:flex-row items-stretch sm:items-center gap-2 dark:!border-[#334155]">
                   <Button
                     type="button"
                     variant="secondary"
@@ -654,7 +654,7 @@ export default function ProfilePage() {
             )}
 
             {proxyStatus.message && (
-              <p className={`text-xs sm:text-sm ${proxyStatus.type === "error" ? "text-red-500" : "text-green-500"} pt-2 border-t border-border/50`}>
+              <p className={`text-xs sm:text-sm ${proxyStatus.type === "error" ? "text-red-500" : "text-green-500"} pt-2 border-t border-border/50 dark:!border-[#334155]`}>
                 {proxyStatus.message}
               </p>
             )}
@@ -662,17 +662,17 @@ export default function ProfilePage() {
         </Card>
 
         {/* Observability Settings */}
-        <Card className="p-5 sm:p-6">
+        <Card className="p-5 sm:p-6 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
           <div className="flex items-center gap-3 mb-4">
             <div className="p-2 rounded-lg bg-orange-500/10 text-orange-500 shrink-0">
               <span className="material-symbols-outlined text-[20px]">monitoring</span>
             </div>
-            <h3 className="text-base sm:text-lg font-semibold">Observability</h3>
+            <h3 className="text-base sm:text-lg font-semibold dark:!text-white">Observability</h3>
           </div>
           <div className="flex items-start sm:items-center justify-between gap-4">
             <div className="flex-1 min-w-0">
-              <p className="font-medium text-sm sm:text-base">Enable Observability</p>
-              <p className="text-xs sm:text-sm text-text-muted">
+              <p className="font-medium text-sm sm:text-base dark:!text-white">Enable Observability</p>
+              <p className="text-xs sm:text-sm text-text-muted dark:!text-[#CBD5E1]">
                 Record request details for inspection in the logs view
               </p>
             </div>
@@ -685,7 +685,7 @@ export default function ProfilePage() {
         </Card>
 
         {/* App Info */}
-        <div className="text-center text-xs sm:text-sm text-text-muted py-4 xl:col-span-2">
+        <div className="text-center text-xs sm:text-sm text-text-muted py-4 xl:col-span-2 dark:!text-[#CBD5E1]">
           <p>{APP_CONFIG.name} v{APP_CONFIG.version}</p>
           <p className="mt-1">Local Mode - All data stored on your machine</p>
         </div>

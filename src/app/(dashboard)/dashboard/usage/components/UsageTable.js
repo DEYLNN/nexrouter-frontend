@@ -20,8 +20,8 @@ function fmtTime(iso) {
 }
 
 function SortIcon({ field, currentSort, currentOrder }) {
-  if (currentSort !== field) return <span className="ml-1 text-[11px] opacity-35">↕</span>;
-  return <span className="ml-1 text-[11px] text-[#4F7CFF]">{currentOrder === "asc" ? "↑" : "↓"}</span>;
+  if (currentSort !== field) return <span className="ml-1 inline-flex translate-y-[-1px] text-[12px] text-slate-400 dark:!text-[#94A3B8]">↕</span>;
+  return <span className="ml-1 inline-flex translate-y-[-1px] text-[12px] font-bold text-[#2563EB] dark:!text-[#60A5FA]">{currentOrder === "asc" ? "↑" : "↓"}</span>;
 }
 
 SortIcon.propTypes = {
@@ -63,8 +63,8 @@ function ModelSummaryCell({ group, expanded }) {
   const provider = group.items?.[0]?.provider || String(group.groupKey || "").split("/")[0] || "unknown";
   return (
     <div className="flex min-w-0 items-center gap-3">
-      <span className={`material-symbols-outlined shrink-0 text-[18px] text-text-muted dark:!text-[#CBD5E1] transition-transform ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
-      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[rgba(17,24,39,0.06)] bg-white/75 shadow-[0_8px_18px_-16px_rgba(17,24,39,0.35)]">
+      <span className={`material-symbols-outlined flex size-6 shrink-0 items-center justify-center rounded-md text-[18px] leading-none text-text-muted transition-transform dark:!bg-[#111827] dark:!text-[#E5E7EB] ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
+      <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[rgba(17,24,39,0.06)] bg-white/75 shadow-[0_8px_18px_-16px_rgba(17,24,39,0.35)] dark:!border-[#475569] dark:!bg-[#111827] dark:!shadow-none">
         <ProviderIcon src={providerIconPath(provider)} alt={provider} size={22} className="rounded-md object-contain" fallbackText={provider.slice(0, 2).toUpperCase()} fallbackColor={providerDisplayColor(provider)} />
       </div>
       <div className="min-w-0">
@@ -83,7 +83,7 @@ ModelSummaryCell.propTypes = {
 function DefaultSummaryCell({ group, expanded }) {
   return (
     <div className="flex min-w-0 items-center gap-2">
-      <span className={`material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1] transition-transform ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
+      <span className={`material-symbols-outlined flex size-6 shrink-0 items-center justify-center rounded-md text-[18px] leading-none text-text-muted transition-transform dark:!bg-[#111827] dark:!text-[#E5E7EB] ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
       <span className={`truncate font-semibold transition-colors ${group.summary.pending > 0 ? "text-[#4F7CFF]" : "text-text-main dark:!text-white"}`}>{group.groupKey}</span>
     </div>
   );
@@ -181,12 +181,12 @@ export default function UsageTable({
       ) : null}
       <div className="overflow-x-auto">
         <table className="w-full min-w-[760px] border-separate border-spacing-0 text-left text-sm">
-          <thead className="bg-[rgba(255,255,255,0.72)] text-[11px] uppercase tracking-[0.11em] text-text-muted dark:!text-[#CBD5E1] backdrop-blur-sm">
+          <thead className="bg-[rgba(255,255,255,0.72)] text-[11px] uppercase tracking-[0.11em] text-text-muted backdrop-blur-sm dark:!bg-[#111827] dark:!text-[#E5E7EB]">
             <tr>
               {columns.map((col) => (
                 <th
                   key={col.field}
-                  className={`px-4 py-3 cursor-pointer font-semibold transition-colors hover:bg-[rgba(79,124,255,0.04)] ${col.align === "right" ? "text-right" : ""}`}
+                  className={`px-4 py-3 cursor-pointer border-b border-[rgba(17,24,39,0.06)] font-semibold transition-colors hover:bg-[rgba(79,124,255,0.04)] dark:!border-[#334155] dark:hover:!bg-[#1E293B] dark:!text-[#E5E7EB] ${col.align === "right" ? "text-right" : ""}`}
                   onClick={() => onToggleSort(tableType, col.field)}
                 >
                   {col.label}{" "}
@@ -196,7 +196,7 @@ export default function UsageTable({
               {valueColumns.map((col) => (
                 <th
                   key={col.field}
-                  className="px-4 py-3 text-right cursor-pointer font-semibold transition-colors hover:bg-[rgba(79,124,255,0.04)]"
+                  className="px-4 py-3 text-right cursor-pointer border-b border-[rgba(17,24,39,0.06)] font-semibold transition-colors hover:bg-[rgba(79,124,255,0.04)] dark:!border-[#334155] dark:hover:!bg-[#1E293B] dark:!text-[#E5E7EB]"
                   onClick={() => onToggleSort(tableType, col.field)}
                 >
                   {col.label}{" "}
@@ -210,10 +210,10 @@ export default function UsageTable({
               <Fragment key={group.groupKey}>
                 {/* Group summary row */}
                 <tr
-                  className="group cursor-pointer transition-colors hover:bg-[rgba(79,124,255,0.04)]"
+                  className="group cursor-pointer transition-colors hover:bg-[rgba(79,124,255,0.04)] dark:hover:!bg-[#1E293B]"
                   onClick={() => toggleGroup(group.groupKey)}
                 >
-                  <td className="border-t border-[rgba(17,24,39,0.05)] px-4 py-3.5">
+                  <td className="border-t border-[rgba(17,24,39,0.05)] px-4 py-3.5 dark:!border-[#334155]">
                     {tableType === "model" ? (
                       <ModelSummaryCell group={group} expanded={expanded.has(group.groupKey)} />
                     ) : (
@@ -227,7 +227,7 @@ export default function UsageTable({
                 {expanded.has(group.groupKey) && group.items.map((item) => (
                   <tr
                     key={`detail-${item.key}`}
-                    className="group-detail bg-[rgba(79,124,255,0.018)] transition-colors hover:bg-[rgba(79,124,255,0.045)]"
+                    className="group-detail bg-[rgba(79,124,255,0.018)] transition-colors hover:bg-[rgba(79,124,255,0.045)] dark:!bg-[#111827] dark:hover:!bg-[#1E293B]"
                   >
                     {renderDetailCells(item)}
                     <ValueCells item={item} viewMode={viewMode} />

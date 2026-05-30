@@ -469,14 +469,14 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
             <button
               type="button"
               onClick={() => setTableMenuOpen((v) => !v)}
-              className="flex h-11 w-full items-center justify-between gap-3 rounded-2xl border border-[rgba(17,24,39,0.08)] bg-white/80 px-3 text-left shadow-[0_12px_30px_-24px_rgba(17,24,39,0.45)] transition-all hover:border-[rgba(79,124,255,0.28)] focus:outline-none focus:ring-2 focus:ring-[rgba(79,124,255,0.14)] dark:!border-[#334155] dark:!bg-[#0B1220] dark:!shadow-none dark:hover:!border-[#64748B]"
+              className="flex h-12 w-full items-center justify-between gap-3 rounded-2xl border border-[rgba(17,24,39,0.08)] bg-white/80 px-3 text-left shadow-[0_12px_30px_-24px_rgba(17,24,39,0.45)] transition-all hover:border-[rgba(79,124,255,0.28)] focus:outline-none focus:ring-2 focus:ring-[rgba(79,124,255,0.14)] dark:!border-[#334155] dark:!bg-[#0B1220] dark:!shadow-none dark:hover:!border-[#64748B]"
             >
               {(() => {
                 const selected = TABLE_OPTIONS.find((opt) => opt.value === tableView) || TABLE_OPTIONS[0];
                 return (
                   <>
                     <span className="flex min-w-0 items-center gap-2">
-                      <span className="material-symbols-outlined grid size-7 shrink-0 place-items-center rounded-lg bg-primary/10 text-[17px] text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]">{selected.icon}</span>
+                      <span className="material-symbols-outlined flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-[18px] leading-none text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]">{selected.icon}</span>
                       <span className="min-w-0">
                         <span className="block truncate text-sm font-semibold text-text-main dark:!text-white">{selected.label}</span>
                         <span className="block truncate text-[10px] text-text-muted dark:!text-[#CBD5E1]">{selected.desc}</span>
@@ -499,14 +499,14 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
                         setTableView(opt.value);
                         setTableMenuOpen(false);
                       }}
-                      className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-left transition-colors ${active ? "bg-primary/10 text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]" : "text-text-muted hover:bg-black/5 hover:text-text-main dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B] dark:hover:!text-white"}`}
+                      className={`flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-left transition-colors ${active ? "bg-primary/10 text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]" : "text-text-muted hover:bg-black/5 hover:text-text-main dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B] dark:hover:!text-white"}`}
                     >
-                      <span className="material-symbols-outlined text-[18px]">{opt.icon}</span>
+                      <span className="material-symbols-outlined flex size-8 shrink-0 items-center justify-center rounded-lg bg-black/5 text-[18px] leading-none dark:!bg-[#111827]">{opt.icon}</span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-sm font-semibold">{opt.label}</span>
                         <span className={`block truncate text-[10px] ${active ? "text-primary/80 dark:!text-[#BFDBFE]" : "text-text-muted dark:!text-[#94A3B8]"}`}>{opt.desc}</span>
                       </span>
-                      {active && <span className="material-symbols-outlined text-[18px]">check</span>}
+                      {active && <span className="material-symbols-outlined flex size-6 shrink-0 items-center justify-center text-[18px] leading-none">check</span>}
                     </button>
                   );
                 })}

@@ -402,15 +402,17 @@ export default function RequestLogsTable() {
           onClick={fetchData}
           disabled={loading}
           style={{
-            display: "flex", alignItems: "center", gap: "5px",
-            background: "rgba(255,248,220,0.62)",
-            border: "1px solid var(--color-border)",
-            borderRadius: "7px",
+            display: "flex", alignItems: "center", gap: "6px",
+            background: isDark ? "#111827" : "rgba(255,248,220,0.62)",
+            border: isDark ? "1px solid #334155" : "1px solid var(--color-border)",
+            borderRadius: "9px",
             padding: "7px 12px",
             fontSize: "12px",
-            color: "var(--color-text-muted)",
+            fontWeight: 600,
+            color: isDark ? "#E5E7EB" : "var(--color-text-muted)",
             cursor: loading ? "not-allowed" : "pointer",
             opacity: loading ? 0.6 : 1,
+            boxShadow: isDark ? "none" : "0 8px 18px -16px rgba(23,33,27,0.22)",
             transition: "all 150ms ease",
           }}
         >

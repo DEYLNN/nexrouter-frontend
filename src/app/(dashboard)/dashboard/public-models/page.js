@@ -150,7 +150,7 @@ export default function PublicModelsPage() {
 
   return (
     <div style={{ padding: "clamp(4px, 1.5vw, 14px)", maxWidth: "1180px", margin: "0 auto" }}>
-      <section className="theme-glass" style={{ borderRadius: 18, padding: "clamp(9px, 2vw, 12px)", marginBottom: 12 }}>
+      <section className="theme-glass dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0" style={{ borderRadius: 18, padding: "clamp(9px, 2vw, 12px)", marginBottom: 12 }}>
         <div style={{ display: "flex", gap: 10, alignItems: "center", flexWrap: "wrap" }}>
           <div style={{ position: "relative", flex: "1 1 280px", maxWidth: 560, minWidth: 0 }}>
             <span style={{ position: "absolute", left: 14, top: "50%", transform: "translateY(-50%)", color: query ? "var(--theme-accent-teal)" : "var(--color-text-muted)", pointerEvents: "none", display: "flex" }}>{Icons.search}</span>
@@ -164,8 +164,8 @@ export default function PublicModelsPage() {
                 width: "100%",
                 height: 40,
                 borderRadius: 14,
-                background: "rgba(255,248,220,0.72)",
-                border: "1px solid rgba(23,33,27,0.10)",
+                background: "var(--color-surface)",
+                border: "1px solid var(--color-border)",
                 boxShadow: query ? "0 0 0 4px rgba(14,142,142,0.10)" : "inset 0 1px 0 rgba(255,255,255,0.55)",
               }}
             />
@@ -180,30 +180,30 @@ export default function PublicModelsPage() {
       </section>
 
       {loading ? (
-        <div className="theme-glass" style={{ borderRadius: 16, padding: 28, color: "var(--color-text-muted)" }}>Loading model inventory…</div>
+        <div className="theme-glass dark:!bg-[#0B1220] dark:!border-[#334155] dark:!text-[#E5E7EB] dark:!shadow-none dark:!backdrop-blur-0" style={{ borderRadius: 16, padding: 28, color: "var(--color-text-muted)" }}>Loading model inventory…</div>
       ) : Object.keys(grouped).length === 0 ? (
-        <div className="theme-glass" style={{ borderRadius: 16, padding: 28, color: "var(--color-text-muted)" }}>No models found.</div>
+        <div className="theme-glass dark:!bg-[#0B1220] dark:!border-[#334155] dark:!text-[#E5E7EB] dark:!shadow-none dark:!backdrop-blur-0" style={{ borderRadius: 16, padding: 28, color: "var(--color-text-muted)" }}>No models found.</div>
       ) : (
         <div style={{ display: "grid", gap: 10 }}>
           {Object.entries(grouped).map(([owner, items]) => {
             const enabledCount = items.filter((m) => enabledSet.has(m.id)).length;
             return (
-              <div key={owner} className="theme-glass" style={{ borderRadius: 16, overflow: "hidden" }}>
+              <div key={owner} className="theme-glass dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0" style={{ borderRadius: 16, overflow: "hidden" }}>
                 <div style={{
                   display: "flex",
                   justifyContent: "space-between",
                   alignItems: "center",
                   gap: 12,
                   padding: "10px clamp(12px, 2vw, 16px)",
-                  borderBottom: "1px solid rgba(23,33,27,0.08)",
-                  background: "rgba(255,248,220,0.42)",
+                  borderBottom: "1px solid var(--theme-shell-border-strong)",
+                  background: "var(--theme-shell-bg-strong)",
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                     {(() => {
                       const meta = providerMeta[String(owner).toLowerCase()] || defaultProviderMeta(owner);
                       return (
                         <>
-                          <div style={{ width: 30, height: 30, borderRadius: 10, display: "grid", placeItems: "center", background: "rgba(255,251,236,0.58)", border: "1px solid rgba(23,33,27,0.08)", flexShrink: 0 }}>
+                          <div style={{ width: 30, height: 30, borderRadius: 10, display: "grid", placeItems: "center", background: "var(--color-surface-2)", border: "1px solid var(--theme-shell-border-strong)", flexShrink: 0 }}>
                             <ProviderIcon src={providerIconPath(meta.icon)} alt={meta.label} size={22} className="h-[22px] w-[22px] rounded-md object-contain" fallbackText={meta.label.slice(0, 2).toUpperCase()} />
                           </div>
                           <div style={{ minWidth: 0 }}>
@@ -227,8 +227,8 @@ export default function PublicModelsPage() {
                         alignItems: "center",
                         gap: 12,
                         padding: "10px clamp(12px, 2vw, 16px)",
-                        borderTop: index === 0 ? "none" : "1px solid rgba(23,33,27,0.065)",
-                        background: enabled ? "rgba(14,142,142,0.06)" : "rgba(255,251,236,0.20)",
+                        borderTop: index === 0 ? "none" : "1px solid var(--theme-shell-border)",
+                        background: enabled ? "rgba(14,165,233,0.10)" : "var(--color-surface)",
                       }}>
                         <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 10 }}>
                           <span style={{
@@ -244,22 +244,22 @@ export default function PublicModelsPage() {
                             <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 5, flexWrap: "wrap" }}>
                               <span style={{
                                 fontSize: 10,
-                                color: enabled ? "var(--theme-accent-teal)" : "rgba(31,42,36,.62)",
+                                color: enabled ? "var(--theme-accent-teal)" : "var(--color-text-muted)",
                                 fontWeight: 800,
                                 textTransform: "uppercase",
                                 letterSpacing: ".08em",
                                 padding: "2px 7px",
                                 borderRadius: 999,
-                                background: enabled ? "rgba(14,142,142,.13)" : "rgba(31,42,36,.055)",
-                                border: `1px solid ${enabled ? "rgba(14,142,142,.25)" : "rgba(31,42,36,.08)"}`,
+                                background: enabled ? "rgba(14,165,233,.16)" : "var(--color-surface-2)",
+                                border: `1px solid ${enabled ? "rgba(14,165,233,.35)" : "var(--theme-shell-border-strong)"}`,
                               }}>{enabled ? "Exposed" : "Private"}</span>
                               <span className="theme-mono" style={{
                                 fontSize: 10,
                                 color: "var(--color-text-muted)",
                                 padding: "2px 7px",
                                 borderRadius: 999,
-                                background: "rgba(255,248,220,.58)",
-                                border: "1px solid rgba(23,33,27,.07)",
+                                background: "var(--color-surface-2)",
+                                border: "1px solid var(--theme-shell-border-strong)",
                               }}>owner: {model.owned_by}</span>
                             </div>
                           </div>

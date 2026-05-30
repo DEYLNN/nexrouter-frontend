@@ -749,8 +749,8 @@ export default function APIPageClient({ machineId }) {
   return (
     <div className="flex flex-col gap-8">
       {/* Endpoint Card */}
-      <Card>
-        <h2 className="text-lg font-semibold mb-4 flex items-center gap-2">
+      <Card className="dark:bg-[#111827] dark:border-[#1E293B] dark:shadow-none dark:backdrop-blur-0">
+        <h2 className="text-lg font-semibold mb-4 flex items-center gap-2 dark:text-white">
           <span className="material-symbols-outlined text-primary">api</span>
           API Endpoint
         </h2>
@@ -770,16 +770,16 @@ export default function APIPageClient({ machineId }) {
       </Card>
 
       {/* Token Saver (RTK + Caveman) */}
-      <Card id="rtk">
+      <Card id="rtk" className="dark:bg-[#111827] dark:border-[#1E293B] dark:shadow-none dark:backdrop-blur-0">
         <div className="flex items-center justify-between mb-2">
-          <h2 className="text-lg font-semibold flex items-center gap-2">
+          <h2 className="text-lg font-semibold flex items-center gap-2 dark:text-white">
             <span className="material-symbols-outlined text-primary">bolt</span>
             Token Saver
           </h2>
         </div>
-        <div className="flex items-center justify-between pt-2 pb-4 border-b border-border gap-4">
+        <div className="flex items-center justify-between pt-2 pb-4 border-b border-border dark:border-[#334155] gap-4">
           <div className="min-w-0 flex-1">
-            <p className="font-medium">
+            <p className="font-medium dark:text-white">
               Compress tool output{" "}
               <a
                 href="https://github.com/rtk-ai/rtk"
@@ -790,7 +790,7 @@ export default function APIPageClient({ machineId }) {
                 (RTK)
               </a>
             </p>
-            <p className="text-sm text-text-muted">
+            <p className="text-sm text-text-muted dark:text-[#CBD5E1]">
               git/grep/ls/tree/logs → 60-90% fewer input tokens
             </p>
           </div>
@@ -801,7 +801,7 @@ export default function APIPageClient({ machineId }) {
         </div>
         <div className="flex items-start justify-between pt-4 gap-3 flex-wrap">
           <div className="min-w-0 flex-1">
-            <p className="font-medium">
+            <p className="font-medium dark:text-white">
               Compress LLM output{" "}
               <a
                 href="https://github.com/JuliusBrussee/caveman"
@@ -812,7 +812,7 @@ export default function APIPageClient({ machineId }) {
                 (Caveman)
               </a>
             </p>
-            <p className="text-sm text-text-muted">
+            <p className="text-sm text-text-muted dark:text-[#CBD5E1]">
               Terse-style system prompt → ~65% fewer output tokens (up to 87%)
             </p>
             {cavemanEnabled && (
@@ -824,7 +824,7 @@ export default function APIPageClient({ machineId }) {
                     className={`px-3 py-1.5 rounded text-xs font-medium border transition-colors ${
                       cavemanLevel === lvl.id
                         ? "bg-primary text-white border-primary"
-                        : "bg-transparent border-border text-text-muted hover:bg-surface-2"
+                        : "bg-transparent border-border text-text-muted hover:bg-surface-2 dark:border-[#334155] dark:text-[#CBD5E1] dark:hover:bg-[#1E293B] dark:hover:text-white"
                     }`}
                     title={lvl.desc}
                   >
@@ -844,9 +844,9 @@ export default function APIPageClient({ machineId }) {
       </Card>
 
       {/* API Keys */}
-      <Card id="require-api-key">
+      <Card id="require-api-key" className="dark:bg-[#111827] dark:border-[#1E293B] dark:shadow-none dark:backdrop-blur-0">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-semibold flex items-center gap-2">
+          <h2 className="text-lg font-semibold flex items-center gap-2 dark:text-white">
             <span className="material-symbols-outlined text-primary">vpn_key</span>
             API Keys
           </h2>
@@ -855,10 +855,10 @@ export default function APIPageClient({ machineId }) {
           </Button>
         </div>
 
-        <div className="flex items-center justify-between pb-4 mb-4 border-b border-border">
+        <div className="flex items-center justify-between pb-4 mb-4 border-b border-border dark:border-[#334155]">
           <div>
-            <p className="font-medium">Require API key</p>
-            <p className="text-sm text-text-muted">
+            <p className="font-medium dark:text-white">Require API key</p>
+            <p className="text-sm text-text-muted dark:text-[#CBD5E1]">
               Requests without a valid key will be rejected
             </p>
           </div>
@@ -873,8 +873,8 @@ export default function APIPageClient({ machineId }) {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 text-primary mb-4">
               <span className="material-symbols-outlined text-[32px]">vpn_key</span>
             </div>
-            <p className="text-text-main font-medium mb-1">No API keys yet</p>
-            <p className="text-sm text-text-muted mb-4">Create your first API key to get started</p>
+            <p className="text-text-main dark:text-white font-medium mb-1">No API keys yet</p>
+            <p className="text-sm text-text-muted dark:text-[#CBD5E1] mb-4">Create your first API key to get started</p>
             <Button icon="add" onClick={() => setShowAddModal(true)}>
               Create Key
             </Button>
@@ -1226,14 +1226,14 @@ export default function APIPageClient({ machineId }) {
 /** Reusable endpoint row component */
 function EndpointRow({ label, url, copyId, copied, onCopy, badge, actions }) {
   return (
-    <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-surface-2/60 border border-border-subtle hover:border-border transition-colors">
+    <div className="flex items-center gap-2 px-3 py-2.5 rounded-lg bg-surface-2/60 dark:bg-[#0F172A] border border-border-subtle dark:border-[#334155] hover:border-border dark:hover:border-[#475569] transition-colors">
       <span className={`text-xs font-mono px-2 py-0.5 rounded-md shrink-0 min-w-[72px] text-center font-medium ${
-          (badge === "CF" || badge === "TS") ? "bg-primary/15 text-primary" : "bg-surface-3/80 text-text-muted"
+          (badge === "CF" || badge === "TS") ? "bg-primary/15 text-primary dark:bg-blue-500/20 dark:text-[#93C5FD]" : "bg-surface-3/80 text-text-muted dark:bg-[#1E293B] dark:text-[#E5E7EB]"
         }`}>{label}</span>
-      <code className="flex-1 font-mono text-sm text-text-main truncate select-all">{url}</code>
+      <code className="flex-1 font-mono text-sm text-text-main dark:text-[#F8FAFC] truncate select-all">{url}</code>
       <button
         onClick={() => onCopy(url, copyId)}
-        className="p-1.5 hover:bg-primary/10 rounded-md text-text-muted hover:text-primary transition-colors shrink-0"
+        className="p-1.5 hover:bg-primary/10 dark:hover:bg-[#1E293B] rounded-md text-text-muted dark:text-[#CBD5E1] hover:text-primary dark:hover:text-white transition-colors shrink-0"
         title="Copy"
       >
         <span className="material-symbols-outlined text-[16px]">{copied === copyId ? "check" : "content_copy"}</span>

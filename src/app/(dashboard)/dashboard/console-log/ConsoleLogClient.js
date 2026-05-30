@@ -5,12 +5,12 @@ import { Card, Button } from "@/shared/components";
 import { CONSOLE_LOG_CONFIG } from "@/shared/constants/config";
 
 const LOG_LEVEL_COLORS = {
-  LOG: "text-emerald-600",
-  INFO: "text-blue-600",
-  WARN: "text-amber-600",
-  ERROR: "text-red-600",
-  DEBUG: "text-violet-600",
-  USAGE: "text-primary",
+  LOG: "text-emerald-600 dark:!text-emerald-400",
+  INFO: "text-blue-600 dark:!text-blue-400",
+  WARN: "text-amber-600 dark:!text-amber-400",
+  ERROR: "text-red-600 dark:!text-red-400",
+  DEBUG: "text-violet-600 dark:!text-violet-400",
+  USAGE: "text-primary dark:!text-[#93C5FD]",
 };
 
 function formatJakartaTime(date) {
@@ -45,7 +45,7 @@ function colorLine(line) {
   const displayLine = normalizeConsoleTime(line);
   const match = displayLine.match(/\[(\w+)\]/g);
   const levelTag = match ? match[1]?.replace(/\[|\]/g, "") : null;
-  const color = LOG_LEVEL_COLORS[levelTag] || "text-text-main";
+  const color = LOG_LEVEL_COLORS[levelTag] || "text-text-main dark:!text-[#E5E7EB]";
   return <span className={color}>{displayLine}</span>;
 }
 
@@ -95,18 +95,30 @@ export default function ConsoleLogClient() {
 
   return (
     <div className="">
-      <Card>
-        <div className="flex items-center justify-end px-4 pt-3 pb-2">
-          <Button size="sm" variant="outline" icon="delete" onClick={handleClear}>
-            Clear
-          </Button>
+      <Card className="overflow-hidden dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
+        <div className="flex items-center justify-between border-b border-border px-4 py-3 dark:!border-[#334155]">
+          <div className="flex items-center gap-2">
+            <span className="material-symbols-outlined text-[18px] text-primary dark:!text-[#93C5FD]">terminal</span>
+            <div>
+              <h2 className="text-sm font-semibold text-text-main dark:!text-white">Console Log</h2>
+              <p className="text-xs text-text-muted dark:!text-[#CBD5E1]">
+                {connected ? "Live stream connected" : "Stream disconnected"} • {logs.length} lines
+              </p>
+            </div>
+          </div>
+          <div className="flex items-center gap-2">
+            <span className={`h-2.5 w-2.5 rounded-full ${connected ? "bg-emerald-500" : "bg-red-500"}`} />
+            <Button size="sm" variant="outline" icon="delete" onClick={handleClear}>
+              Clear
+            </Button>
+          </div>
         </div>
         <div
           ref={logRef}
-          className="h-[calc(100vh-220px)] overflow-y-auto rounded-b-lg border-t border-border bg-bg p-4 font-mono text-xs leading-relaxed text-text-main"
+          className="h-[calc(100vh-220px)] overflow-y-auto rounded-b-lg bg-bg p-4 font-mono text-xs leading-relaxed text-text-main dark:!bg-[#020617] dark:!text-[#E5E7EB]"
         >
           {logs.length === 0 ? (
-            <span className="text-text-muted">No console logs yet.</span>
+            <span className="text-text-muted dark:!text-[#94A3B8]">No console logs yet.</span>
           ) : (
             <div className="space-y-0.5">
               {logs.map((line, i) => (

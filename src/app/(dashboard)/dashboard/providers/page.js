@@ -304,7 +304,7 @@ export default function ProvidersPage() {
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="Search providers..."
-          className="h-10 w-full rounded-xl border border-[var(--color-border)] bg-[var(--theme-paper-glass)] py-2 pl-10 pr-10 text-[16px] text-[var(--color-text-main)] outline-none transition-all placeholder:text-[var(--color-text-subtle)] focus:border-[var(--theme-accent-teal)] focus:ring-2 focus:ring-[var(--theme-accent-teal)]/20 sm:text-sm"
+          className="h-10 w-full rounded-xl border border-[var(--color-border)] bg-[var(--theme-paper-glass)] py-2 pl-10 pr-10 text-[16px] text-[var(--color-text-main)] outline-none transition-all placeholder:text-[var(--color-text-subtle)] focus:border-[var(--theme-accent-teal)] focus:ring-2 focus:ring-[var(--theme-accent-teal)]/20 sm:text-sm dark:!bg-[#0B1220] dark:!border-[#334155] dark:!text-white dark:placeholder:!text-[#94A3B8]"
         />
         {searchQuery.trim() && (
           <button
@@ -321,7 +321,7 @@ export default function ProvidersPage() {
       {/* Custom Providers — dynamic */}
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2 leading-tight">
+          <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2 leading-tight dark:!text-white">
             Custom Providers
           </h2>
           <div className="grid grid-cols-2 gap-2 sm:flex sm:w-auto">
@@ -346,7 +346,7 @@ export default function ProvidersPage() {
         </div>
         {compatibleProviders.length === 0 &&
         anthropicCompatibleProviders.length === 0 ? (
-          <div className="flex items-center justify-center gap-2 py-2 border border-dashed border-border rounded-xl text-text-muted text-sm">
+          <div className="flex items-center justify-center gap-2 py-2 border border-dashed border-border rounded-xl text-text-muted text-sm dark:!border-[#475569] dark:!text-[#E5E7EB] dark:!bg-[#0B1220]">
             <span className="material-symbols-outlined text-[18px]">extension</span>
             <span>No custom providers — use buttons above to add OpenAI/Anthropic compatible endpoints</span>
           </div>
@@ -374,7 +374,7 @@ export default function ProvidersPage() {
       {oauthEntries.length > 0 && (
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2 leading-tight">
+          <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2 leading-tight dark:!text-white">
             OAuth Providers
           </h2>
           <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
@@ -418,7 +418,7 @@ export default function ProvidersPage() {
       {apikeyEntries.length > 0 && (
       <div className="flex flex-col gap-4">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2 leading-tight">
+          <h2 className="text-lg sm:text-xl font-semibold flex items-center gap-2 leading-tight dark:!text-white">
             API Key Providers{" "}
           </h2>
           <button
@@ -554,7 +554,7 @@ function ProviderCard({ providerId, provider, stats, authType, onToggle }) {
     <Link href={`/dashboard/providers/${providerId}`} className="group min-w-0">
       <Card
         padding="xs"
-        className={`h-full transition-all cursor-pointer hover:border-[rgba(23,33,27,0.18)] hover:shadow-[0_18px_36px_-18px_rgba(23,33,27,0.14)] ${allDisabled ? "opacity-50" : ""}`}
+        className={`h-full transition-all cursor-pointer hover:border-[rgba(23,33,27,0.18)] hover:shadow-[0_18px_36px_-18px_rgba(23,33,27,0.14)] dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 dark:hover:!border-[#64748B] ${allDisabled ? "opacity-50" : ""}`}
       >
         <div className="flex min-w-0 items-center justify-between gap-3">
           <div className="flex min-w-0 items-center gap-3">
@@ -576,7 +576,7 @@ function ProviderCard({ providerId, provider, stats, authType, onToggle }) {
               />
             </div>
             <div className="min-w-0">
-              <h3 className="truncate text-[13px] font-semibold leading-5 tracking-[-0.01em] text-text-main">{provider.name}</h3>
+              <h3 className="truncate text-[13px] font-semibold leading-5 tracking-[-0.01em] text-text-main dark:!text-white">{provider.name}</h3>
               <div className="flex min-w-0 items-center gap-1.5 text-xs flex-wrap">
                 {allDisabled ? (
                   <Badge variant="default" size="sm">
@@ -593,7 +593,7 @@ function ProviderCard({ providerId, provider, stats, authType, onToggle }) {
                   <>
                     {getStatusDisplay(connected, error, errorCode)}
                     {errorTime && (
-                      <span className="text-text-muted">{errorTime}</span>
+                      <span className="text-text-muted dark:!text-[#CBD5E1]">{errorTime}</span>
                     )}
                   </>
                 )}
@@ -651,6 +651,7 @@ function ApiKeyProviderCard({
   authType,
   onToggle,
 }) {
+  const { isDark } = useTheme();
   const { connected, error, errorCode, errorTime, allDisabled } = stats;
   const isNoAuth = !!provider.noAuth;
   const isCompatible = providerId.startsWith(OPENAI_COMPATIBLE_PREFIX);
@@ -684,19 +685,19 @@ function ApiKeyProviderCard({
         display: "flex", alignItems: "center", justifyContent: "space-between", gap: "12px",
         padding: "12px 14px",
         borderRadius: "var(--radius-editorial-md)",
-        background: "var(--theme-glass-bg)",
-        border: "1px solid var(--theme-glass-border)",
-        boxShadow: "var(--theme-glass-hi)",
-        backdropFilter: "blur(4px)",
-        WebkitBackdropFilter: "blur(4px)",
+        background: isDark ? "#0B1220" : "var(--theme-glass-bg)",
+        border: isDark ? "1px solid #334155" : "1px solid var(--theme-glass-border)",
+        boxShadow: isDark ? "none" : "var(--theme-glass-hi)",
+        backdropFilter: isDark ? "none" : "blur(4px)",
+        WebkitBackdropFilter: isDark ? "none" : "blur(4px)",
         cursor: "pointer",
         opacity: allDisabled ? 0.5 : 1,
         transition: "border-color 150ms ease, background 150ms ease, box-shadow 200ms ease",
         height: "100%",
         boxSizing: "border-box",
       }}
-        onMouseEnter={e => { e.currentTarget.style.borderColor = "rgba(23,33,27,0.16)"; e.currentTarget.style.boxShadow = "0 8px 18px -16px rgba(23,33,27,0.20)"; }}
-        onMouseLeave={e => { e.currentTarget.style.borderColor = "var(--theme-glass-border)"; e.currentTarget.style.boxShadow = "var(--theme-glass-hi)"; }}
+        onMouseEnter={e => { e.currentTarget.style.borderColor = isDark ? "#64748B" : "rgba(23,33,27,0.16)"; e.currentTarget.style.boxShadow = isDark ? "none" : "0 8px 18px -16px rgba(23,33,27,0.20)"; }}
+        onMouseLeave={e => { e.currentTarget.style.borderColor = isDark ? "#334155" : "var(--theme-glass-border)"; e.currentTarget.style.boxShadow = isDark ? "none" : "var(--theme-glass-hi)"; }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0 }}>
           <div style={{
@@ -715,18 +716,18 @@ function ApiKeyProviderCard({
             />
           </div>
           <div style={{ minWidth: 0 }}>
-            <div style={{ fontSize: "13px", lineHeight: "20px", fontWeight: 600, color: "var(--color-text-main)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", letterSpacing: "-0.01em" }}>
+            <div style={{ fontSize: "13px", lineHeight: "20px", fontWeight: 600, color: isDark ? "#FFFFFF" : "var(--color-text-main)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", letterSpacing: "-0.01em" }}>
               {provider.name}
             </div>
             <div style={{ display: "flex", alignItems: "center", gap: "6px", flexWrap: "wrap", marginTop: "2px" }}>
               {allDisabled ? (
-                <span style={{ fontSize: "11px", color: "var(--color-text-subtle)", background: "rgba(23,33,27,0.05)", border: "1px solid rgba(23,33,27,0.08)", borderRadius: "6px", padding: "1px 6px" }}>Disabled</span>
+                <span style={{ fontSize: "11px", color: isDark ? "#CBD5E1" : "var(--color-text-subtle)", background: isDark ? "#1E293B" : "rgba(23,33,27,0.05)", border: isDark ? "1px solid #475569" : "1px solid rgba(23,33,27,0.08)", borderRadius: "6px", padding: "1px 6px" }}>Disabled</span>
               ) : isNoAuth ? (
                 <Badge variant="success" size="sm" dot>Ready</Badge>
               ) : (
                 <>
                   {getStatusDisplay(connected, error, errorCode)}
-                  {errorTime && <span style={{ fontSize: "11px", color: "var(--color-text-subtle)" }}>{errorTime}</span>}
+                  {errorTime && <span style={{ fontSize: "11px", color: isDark ? "#CBD5E1" : "var(--color-text-subtle)" }}>{errorTime}</span>}
                 </>
               )}
             </div>
@@ -1011,7 +1012,7 @@ function ProviderTestResultsView({ results }) {
     <div className="flex min-w-0 flex-col gap-3">
       {summary && (
         <div className="flex flex-wrap items-center gap-2 text-xs mb-1 sm:gap-3">
-          <span className="text-text-muted">{modeLabel} Test</span>
+          <span className="text-text-muted dark:!text-[#CBD5E1]">{modeLabel} Test</span>
           <span className="px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-400 font-medium">
             {summary.passed} passed
           </span>

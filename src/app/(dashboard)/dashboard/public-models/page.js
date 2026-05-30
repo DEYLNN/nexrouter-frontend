@@ -6,6 +6,7 @@ import ProviderIcon from "@/shared/components/ProviderIcon";
 import { canonicalProviderId, providerDisplayName, providerIconPath as resolveProviderIconPath } from "@/shared/utils/providerIcon";
 import { AI_PROVIDERS } from "@/shared/constants/providers";
 import { useNotificationStore } from "@/store/notificationStore";
+import { useTheme } from "@/shared/hooks/useTheme";
 
 const Icons = {
   search: (
@@ -75,6 +76,7 @@ function buildProviderMeta(connections = []) {
 }
 
 export default function PublicModelsPage() {
+  const { isDark } = useTheme();
   const notify = useNotificationStore();
   const [models, setModels] = useState([]);
   const [enabledIds, setEnabledIds] = useState([]);
@@ -164,13 +166,14 @@ export default function PublicModelsPage() {
                 width: "100%",
                 height: 40,
                 borderRadius: 14,
-                background: "var(--color-surface)",
-                border: "1px solid var(--color-border)",
+                background: isDark ? "#111827" : "var(--color-surface)",
+                border: isDark ? "1px solid #475569" : "1px solid var(--color-border)",
+                color: isDark ? "#FFFFFF" : "var(--color-text-main)",
                 boxShadow: query ? "0 0 0 4px rgba(14,142,142,0.10)" : "inset 0 1px 0 rgba(255,255,255,0.55)",
               }}
             />
           </div>
-          <button onClick={() => setOnlyEnabled(!onlyEnabled)} style={{ height: 38, border: `1px solid ${onlyEnabled ? "rgba(14,142,142,.30)" : "rgba(23,33,27,.10)"}`, borderRadius: 999, padding: "0 14px", color: onlyEnabled ? "var(--theme-accent-teal)" : "var(--color-text-muted)", background: onlyEnabled ? "linear-gradient(135deg, rgba(14,142,142,.16), rgba(29,85,212,.08))" : "rgba(255,248,220,.62)", cursor: "pointer", fontSize: 13, fontWeight: 700, boxShadow: onlyEnabled ? "0 8px 18px -14px rgba(14,142,142,.45)" : "none" }}>
+          <button onClick={() => setOnlyEnabled(!onlyEnabled)} style={{ height: 38, border: `1px solid ${isDark ? (onlyEnabled ? "#2563EB" : "#475569") : (onlyEnabled ? "rgba(14,142,142,.30)" : "rgba(23,33,27,.10)")}`, borderRadius: 999, padding: "0 14px", color: isDark ? (onlyEnabled ? "#93C5FD" : "#E5E7EB") : (onlyEnabled ? "var(--theme-accent-teal)" : "var(--color-text-muted)"), background: isDark ? (onlyEnabled ? "#172554" : "#111827") : (onlyEnabled ? "linear-gradient(135deg, rgba(14,142,142,.16), rgba(29,85,212,.08))" : "rgba(255,248,220,.62)"), cursor: "pointer", fontSize: 13, fontWeight: 700, boxShadow: onlyEnabled ? "0 8px 18px -14px rgba(14,142,142,.45)" : "none" }}>
             Enabled only
           </button>
           <Button variant="secondary" size="sm" onClick={() => save(filtered.map((m) => m.id))} disabled={loading || saving}>Enable shown</Button>
@@ -195,26 +198,26 @@ export default function PublicModelsPage() {
                   alignItems: "center",
                   gap: 12,
                   padding: "10px clamp(12px, 2vw, 16px)",
-                  borderBottom: "1px solid var(--theme-shell-border-strong)",
-                  background: "var(--theme-shell-bg-strong)",
+                  borderBottom: isDark ? "1px solid #475569" : "1px solid rgba(23,33,27,0.08)",
+                  background: isDark ? "#111827" : "rgba(255,248,220,0.42)",
                 }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
                     {(() => {
                       const meta = providerMeta[String(owner).toLowerCase()] || defaultProviderMeta(owner);
                       return (
                         <>
-                          <div style={{ width: 30, height: 30, borderRadius: 10, display: "grid", placeItems: "center", background: "var(--color-surface-2)", border: "1px solid var(--theme-shell-border-strong)", flexShrink: 0 }}>
+                          <div style={{ width: 30, height: 30, borderRadius: 10, display: "grid", placeItems: "center", background: isDark ? "#0B1220" : "var(--color-surface-2)", border: isDark ? "1px solid #475569" : "1px solid var(--theme-shell-border-strong)", flexShrink: 0 }}>
                             <ProviderIcon src={providerIconPath(meta.icon)} alt={meta.label} size={22} className="h-[22px] w-[22px] rounded-md object-contain" fallbackText={meta.label.slice(0, 2).toUpperCase()} />
                           </div>
                           <div style={{ minWidth: 0 }}>
-                            <h2 style={{ fontSize: 13.5, fontWeight: 760, margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: "var(--color-text-main)" }}>{meta.label}</h2>
-                            <div className="theme-mono" style={{ fontSize: 10.5, color: "var(--color-text-muted)", marginTop: 1, wordBreak: "break-all" }}>alias: {owner}</div>
+                            <h2 style={{ fontSize: 13.5, fontWeight: 760, margin: 0, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", color: isDark ? "#FFFFFF" : "var(--color-text-main)" }}>{meta.label}</h2>
+                            <div className="theme-mono" style={{ fontSize: 10.5, color: isDark ? "#CBD5E1" : "var(--color-text-muted)", marginTop: 1, wordBreak: "break-all" }}>alias: {owner}</div>
                           </div>
                         </>
                       );
                     })()}
                   </div>
-                  <span className="theme-mono" style={{ fontSize: 11, color: "var(--color-text-muted)", flexShrink: 0 }}>{enabledCount}/{items.length}</span>
+                  <span className="theme-mono" style={{ fontSize: 11, color: isDark ? "#E5E7EB" : "var(--color-text-muted)", flexShrink: 0 }}>{enabledCount}/{items.length}</span>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column" }}>
@@ -227,39 +230,39 @@ export default function PublicModelsPage() {
                         alignItems: "center",
                         gap: 12,
                         padding: "10px clamp(12px, 2vw, 16px)",
-                        borderTop: index === 0 ? "none" : "1px solid var(--theme-shell-border)",
-                        background: enabled ? "rgba(14,165,233,0.10)" : "var(--color-surface)",
+                        borderTop: index === 0 ? "none" : (isDark ? "1px solid #334155" : "1px solid rgba(23,33,27,0.065)"),
+                        background: isDark ? (enabled ? "#13213B" : "#0B1220") : (enabled ? "rgba(14,142,142,0.06)" : "rgba(255,251,236,0.20)"),
                       }}>
                         <div style={{ minWidth: 0, display: "flex", alignItems: "center", gap: 10 }}>
                           <span style={{
                             width: 10,
                             height: 10,
                             borderRadius: 999,
-                            background: enabled ? "var(--theme-accent-teal)" : "rgba(31,42,36,0.22)",
-                            boxShadow: enabled ? "0 0 0 4px rgba(14,142,142,0.12)" : "none",
+                            background: enabled ? (isDark ? "#60A5FA" : "var(--theme-accent-teal)") : (isDark ? "#64748B" : "rgba(31,42,36,0.22)"),
+                            boxShadow: enabled ? (isDark ? "0 0 0 4px rgba(96,165,250,0.18)" : "0 0 0 4px rgba(14,142,142,0.12)") : "none",
                             flexShrink: 0,
                           }} />
                           <div style={{ minWidth: 0 }}>
-                            <div className="theme-mono" style={{ fontSize: 12.5, fontWeight: 650, color: "var(--color-text-main)", wordBreak: "break-word", lineHeight: 1.35 }}>{model.id}</div>
+                            <div className="theme-mono" style={{ fontSize: 12.5, fontWeight: 650, color: isDark ? "#FFFFFF" : "var(--color-text-main)", wordBreak: "break-word", lineHeight: 1.35 }}>{model.id}</div>
                             <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 5, flexWrap: "wrap" }}>
                               <span style={{
                                 fontSize: 10,
-                                color: enabled ? "var(--theme-accent-teal)" : "var(--color-text-muted)",
+                                color: enabled ? (isDark ? "#93C5FD" : "var(--theme-accent-teal)") : (isDark ? "#CBD5E1" : "var(--color-text-muted)"),
                                 fontWeight: 800,
                                 textTransform: "uppercase",
                                 letterSpacing: ".08em",
                                 padding: "2px 7px",
                                 borderRadius: 999,
-                                background: enabled ? "rgba(14,165,233,.16)" : "var(--color-surface-2)",
-                                border: `1px solid ${enabled ? "rgba(14,165,233,.35)" : "var(--theme-shell-border-strong)"}`,
+                                background: enabled ? (isDark ? "#172554" : "rgba(14,165,233,.16)") : (isDark ? "#111827" : "var(--color-surface-2)"),
+                                border: `1px solid ${enabled ? (isDark ? "#2563EB" : "rgba(14,165,233,.35)") : (isDark ? "#475569" : "var(--theme-shell-border-strong)")}`,
                               }}>{enabled ? "Exposed" : "Private"}</span>
                               <span className="theme-mono" style={{
                                 fontSize: 10,
-                                color: "var(--color-text-muted)",
+                                color: isDark ? "#E5E7EB" : "var(--color-text-muted)",
                                 padding: "2px 7px",
                                 borderRadius: 999,
-                                background: "var(--color-surface-2)",
-                                border: "1px solid var(--theme-shell-border-strong)",
+                                background: isDark ? "#111827" : "var(--color-surface-2)",
+                                border: isDark ? "1px solid #475569" : "1px solid var(--theme-shell-border-strong)",
                               }}>owner: {model.owned_by}</span>
                             </div>
                           </div>

@@ -86,7 +86,7 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
         color: active ? "var(--theme-shell-accent)" : "var(--theme-shell-text-muted)",
         background: active ? "var(--theme-shell-active-bg)" : "transparent",
         border: active ? "1px solid var(--theme-shell-border-strong)" : "1px solid transparent",
-        boxShadow: active ? "0 10px 24px -18px var(--theme-shell-glow), inset 0 1px 0 rgba(255,255,255,0.07)" : "none",
+        boxShadow: "none",
         transition: "background 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease",
         marginBottom: "5px",
       }}
@@ -208,27 +208,18 @@ export default function Sidebar({ onClose, forceExpanded }) {
         height: "100%",
         margin: "0",
         background: "var(--theme-shell-bg)",
-        backdropFilter: "blur(10px) saturate(1.1)",
-        WebkitBackdropFilter: "blur(10px) saturate(1.1)",
+        backdropFilter: "none",
+        WebkitBackdropFilter: "none",
         border: "1px solid var(--theme-shell-border)",
         borderLeft: "none",
         borderTop: "none",
         borderBottom: "none",
         borderRadius: "0",
-        boxShadow: "16px 0 48px -34px rgba(0,0,0,0.86), inset -1px 0 0 rgba(255,255,255,0.02)",
+        boxShadow: "none",
         transition: "width 180ms cubic-bezier(0.4,0,0.2,1)",
         overflow: "hidden",
         flexShrink: 0,
       }}>
-        <div aria-hidden="true" className="hidden dark:block" style={{
-          position: "absolute", inset: 0, pointerEvents: "none",
-          background: "radial-gradient(circle at 50% 0%, rgba(37,99,235,0.10), transparent 32%), linear-gradient(180deg, rgba(255,255,255,0.018), transparent 22%)",
-          opacity: 0.62,
-        }} />
-        <div aria-hidden="true" className="hidden dark:block" style={{
-          position: "absolute", top: 0, right: 0, bottom: 0, width: 1,
-          background: "linear-gradient(180deg, transparent, var(--theme-shell-border-strong), transparent)",
-        }} />
 
         {/* Logo */}
         <div style={{
@@ -246,7 +237,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
                   background: "linear-gradient(135deg, #2563EB 0%, #60A5FA 100%)",
                   display: "flex", alignItems: "center", justifyContent: "center",
                   color: "#FFFFFF", flexShrink: 0,
-                  boxShadow: "0 8px 22px -12px var(--theme-shell-glow)",
+                  boxShadow: "none",
                 }}>
                   {I.logo}
                 </div>
@@ -284,7 +275,7 @@ export default function Sidebar({ onClose, forceExpanded }) {
                 width: "32px", height: "32px", borderRadius: "11px",
                 background: "linear-gradient(135deg, #2563EB 0%, #60A5FA 100%)",
                 border: "none", color: "#FFFFFF", cursor: "pointer",
-                boxShadow: "0 8px 22px -12px var(--theme-shell-glow)",
+                boxShadow: "none",
               }}
               title="Expand sidebar"
             >

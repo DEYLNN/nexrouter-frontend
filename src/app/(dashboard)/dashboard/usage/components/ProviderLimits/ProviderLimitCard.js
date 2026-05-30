@@ -54,7 +54,7 @@ export default function ProviderLimitCard({
   const planVariant = planVariants[plan?.toLowerCase()] || "default";
 
   return (
-    <Card padding="md" className="flex flex-col gap-4">
+    <Card padding="md" className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 flex flex-col gap-4">
       {/* Header */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -92,11 +92,11 @@ export default function ProviderLimitCard({
         <button
           onClick={handleRefresh}
           disabled={refreshing || loading}
-          className="p-2 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="p-2 rounded-lg hover:bg-black/5 dark:hover:!bg-[#334155] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           title="Refresh quota"
         >
           <span
-            className={`material-symbols-outlined text-[20px] text-text-muted ${
+            className={`material-symbols-outlined text-[20px] text-text-muted dark:!text-[#CBD5E1] ${
               refreshing || loading ? "animate-spin" : ""
             }`}
           >
@@ -109,12 +109,12 @@ export default function ProviderLimitCard({
       {loading && (
         <div className="space-y-4">
           <div className="space-y-2">
-            <div className="h-4 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
-            <div className="h-2 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
+            <div className="h-4 bg-black/5 dark:!bg-[#1E293B] rounded animate-pulse" />
+            <div className="h-2 bg-black/5 dark:!bg-[#1E293B] rounded animate-pulse" />
           </div>
           <div className="space-y-2">
-            <div className="h-4 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
-            <div className="h-2 bg-black/5 dark:bg-white/5 rounded animate-pulse" />
+            <div className="h-4 bg-black/5 dark:!bg-[#1E293B] rounded animate-pulse" />
+            <div className="h-2 bg-black/5 dark:!bg-[#1E293B] rounded animate-pulse" />
           </div>
         </div>
       )}
@@ -173,7 +173,7 @@ export default function ProviderLimitCard({
 
       {/* Empty State */}
       {!loading && !error && !message && quotas?.length === 0 && (
-        <div className="text-center py-8 text-text-muted">
+        <div className="text-center py-8 text-text-muted dark:!text-[#CBD5E1]">
           <span className="material-symbols-outlined text-[48px] opacity-20">
             data_usage
           </span>

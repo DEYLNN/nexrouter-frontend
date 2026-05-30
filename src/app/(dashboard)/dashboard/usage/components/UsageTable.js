@@ -38,16 +38,16 @@ function ValueCells({ item, viewMode, isSummary = false }) {
   if (viewMode === "tokens") {
     return (
       <>
-        <td className={`${cellClass} text-text-muted`}>{isSummary && item.promptTokens === undefined ? "—" : fmt(item.promptTokens)}</td>
-        <td className={`${cellClass} text-text-muted`}>{isSummary && item.completionTokens === undefined ? "—" : fmt(item.completionTokens)}</td>
-        <td className={`${cellClass} font-semibold text-text-main`}>{fmt(item.totalTokens)}</td>
+        <td className={`${cellClass} text-text-muted dark:!text-[#CBD5E1]`}>{isSummary && item.promptTokens === undefined ? "—" : fmt(item.promptTokens)}</td>
+        <td className={`${cellClass} text-text-muted dark:!text-[#CBD5E1]`}>{isSummary && item.completionTokens === undefined ? "—" : fmt(item.completionTokens)}</td>
+        <td className={`${cellClass} font-semibold text-text-main dark:!text-white`}>{fmt(item.totalTokens)}</td>
       </>
     );
   }
   return (
     <>
-      <td className={`${cellClass} text-text-muted`}>{isSummary && item.inputCost === undefined ? "—" : fmtCost(item.inputCost)}</td>
-      <td className={`${cellClass} text-text-muted`}>{isSummary && item.outputCost === undefined ? "—" : fmtCost(item.outputCost)}</td>
+      <td className={`${cellClass} text-text-muted dark:!text-[#CBD5E1]`}>{isSummary && item.inputCost === undefined ? "—" : fmtCost(item.inputCost)}</td>
+      <td className={`${cellClass} text-text-muted dark:!text-[#CBD5E1]`}>{isSummary && item.outputCost === undefined ? "—" : fmtCost(item.outputCost)}</td>
       <td className={`${cellClass} font-semibold text-[#F59E0B]`}>{fmtCost(item.totalCost || item.cost)}</td>
     </>
   );
@@ -63,13 +63,13 @@ function ModelSummaryCell({ group, expanded }) {
   const provider = group.items?.[0]?.provider || String(group.groupKey || "").split("/")[0] || "unknown";
   return (
     <div className="flex min-w-0 items-center gap-3">
-      <span className={`material-symbols-outlined shrink-0 text-[18px] text-text-muted transition-transform ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
+      <span className={`material-symbols-outlined shrink-0 text-[18px] text-text-muted dark:!text-[#CBD5E1] transition-transform ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
       <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg border border-[rgba(17,24,39,0.06)] bg-white/75 shadow-[0_8px_18px_-16px_rgba(17,24,39,0.35)]">
         <ProviderIcon src={providerIconPath(provider)} alt={provider} size={22} className="rounded-md object-contain" fallbackText={provider.slice(0, 2).toUpperCase()} fallbackColor={providerDisplayColor(provider)} />
       </div>
       <div className="min-w-0">
-        <div className={`truncate text-[13px] font-semibold leading-5 tracking-[-0.01em] ${group.summary.pending > 0 ? "text-[#4F7CFF]" : "text-text-main"}`} title={group.groupKey}>{group.groupKey}</div>
-        <div className="truncate text-[11px] text-text-muted" title={providerDisplayName(provider)}>{providerDisplayName(provider)}</div>
+        <div className={`truncate text-[13px] font-semibold leading-5 tracking-[-0.01em] ${group.summary.pending > 0 ? "text-[#4F7CFF]" : "text-text-main dark:!text-white"}`} title={group.groupKey}>{group.groupKey}</div>
+        <div className="truncate text-[11px] text-text-muted dark:!text-[#CBD5E1]" title={providerDisplayName(provider)}>{providerDisplayName(provider)}</div>
       </div>
     </div>
   );
@@ -83,8 +83,8 @@ ModelSummaryCell.propTypes = {
 function DefaultSummaryCell({ group, expanded }) {
   return (
     <div className="flex min-w-0 items-center gap-2">
-      <span className={`material-symbols-outlined text-[18px] text-text-muted transition-transform ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
-      <span className={`truncate font-semibold transition-colors ${group.summary.pending > 0 ? "text-[#4F7CFF]" : "text-text-main"}`}>{group.groupKey}</span>
+      <span className={`material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1] transition-transform ${expanded ? "rotate-90" : ""}`}>chevron_right</span>
+      <span className={`truncate font-semibold transition-colors ${group.summary.pending > 0 ? "text-[#4F7CFF]" : "text-text-main dark:!text-white"}`}>{group.groupKey}</span>
     </div>
   );
 }
@@ -173,7 +173,7 @@ export default function UsageTable({
   const totalColSpan = columns.length + valueColumns.length;
 
   return (
-    <Card className="overflow-hidden border-[rgba(17,24,39,0.07)] shadow-[0_14px_34px_-28px_rgba(17,24,39,0.30)]">
+    <Card className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 overflow-hidden border-[rgba(17,24,39,0.07)] shadow-[0_14px_34px_-28px_rgba(17,24,39,0.30)]">
       {title ? (
         <div className="border-b border-[rgba(17,24,39,0.06)] bg-white/45 p-4">
           <h3 className="font-semibold">{title}</h3>
@@ -181,7 +181,7 @@ export default function UsageTable({
       ) : null}
       <div className="overflow-x-auto">
         <table className="w-full min-w-[760px] border-separate border-spacing-0 text-left text-sm">
-          <thead className="bg-[rgba(255,255,255,0.72)] text-[11px] uppercase tracking-[0.11em] text-text-muted backdrop-blur-sm">
+          <thead className="bg-[rgba(255,255,255,0.72)] text-[11px] uppercase tracking-[0.11em] text-text-muted dark:!text-[#CBD5E1] backdrop-blur-sm">
             <tr>
               {columns.map((col) => (
                 <th
@@ -237,7 +237,7 @@ export default function UsageTable({
             ))}
             {groupedData.length === 0 && (
               <tr>
-                <td colSpan={totalColSpan} className="px-6 py-10 text-center text-sm text-text-muted">
+                <td colSpan={totalColSpan} className="px-6 py-10 text-center text-sm text-text-muted dark:!text-[#CBD5E1]">
                   {emptyMessage}
                 </td>
               </tr>

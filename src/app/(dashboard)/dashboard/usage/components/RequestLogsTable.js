@@ -142,7 +142,7 @@ function LogRow({ entry }) {
   const label = providerLabel(entry.provider);
 
   return (
-    <div className="group relative flex items-start gap-3 theme-glass rounded-2xl px-3 py-3 transition-all duration-200 hover:border-[rgba(23,33,27,0.16)] hover:shadow-[0_14px_34px_-24px_rgba(23,33,27,0.28)] sm:px-4 sm:py-3.5">
+    <div className="group relative flex items-start gap-3 theme-glass dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 rounded-2xl px-3 py-3 transition-all duration-200 hover:border-[rgba(23,33,27,0.16)] hover:shadow-[0_14px_34px_-24px_rgba(23,33,27,0.28)] sm:px-4 sm:py-3.5">
       {/* Provider avatar */}
       <div className="relative flex-shrink-0">
         <div className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm" style={{ background: `linear-gradient(135deg, ${color}22, ${color}0a)`, border: `1px solid ${color}30` }}>
@@ -158,7 +158,7 @@ function LogRow({ entry }) {
         {/* Top row: model + time */}
         <div className="mb-1.5 flex items-center justify-between gap-2">
           <div className="min-w-0 flex-1">
-            <div className="truncate font-mono text-[13px] font-semibold text-text-main">{entry.model}</div>
+            <div className="truncate font-mono text-[13px] font-semibold text-text-main dark:!text-white">{entry.model}</div>
           </div>
           <div className="flex flex-shrink-0 items-center gap-1.5 text-[11px] text-text-subtle">
             <IconClock />
@@ -181,11 +181,11 @@ function LogRow({ entry }) {
         <div className="flex flex-wrap items-center gap-2">
           <div className="inline-flex items-center gap-1.5 rounded-md border border-[rgba(23,33,27,0.08)] bg-[rgba(255,248,220,0.56)] px-2 py-1">
             <span className="text-[9px] font-bold uppercase tracking-wider text-purple-400">In</span>
-            <span className="font-mono text-[11px] font-semibold text-text-main">{fmt(entry.inputTokens)}</span>
+            <span className="font-mono text-[11px] font-semibold text-text-main dark:!text-white">{fmt(entry.inputTokens)}</span>
           </div>
           <div className="inline-flex items-center gap-1.5 rounded-md border border-[rgba(23,33,27,0.08)] bg-[rgba(255,248,220,0.56)] px-2 py-1">
             <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400">Out</span>
-            <span className="font-mono text-[11px] font-semibold text-text-main">{fmt(entry.outputTokens)}</span>
+            <span className="font-mono text-[11px] font-semibold text-text-main dark:!text-white">{fmt(entry.outputTokens)}</span>
           </div>
           <div className="inline-flex items-center gap-1.5 rounded-md border px-2 py-1" style={{ borderColor: `${color}25`, background: `${color}0d` }}>
             <span className="text-[9px] font-bold uppercase tracking-wider" style={{ color }}>Total</span>
@@ -308,7 +308,7 @@ export default function RequestLogsTable() {
       </div>
 
       {/* toolbar */}
-      <div className="flex flex-wrap items-center gap-2 theme-glass rounded-2xl p-3">
+      <div className="flex flex-wrap items-center gap-2 theme-glass dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 rounded-2xl p-3">
         {/* search */}
         <div style={{ position: "relative", flex: "1 1 180px", minWidth: "140px" }}>
           <span style={{ position: "absolute", left: "10px", top: "50%", transform: "translateY(-50%)", color: "var(--color-text-subtle)", pointerEvents: "none" }}>
@@ -341,17 +341,17 @@ export default function RequestLogsTable() {
           <button
             type="button"
             onClick={() => setProviderDropdownOpen((v) => !v)}
-            className="flex h-9 min-w-[190px] items-center justify-between gap-3 rounded-xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.72)] px-3 text-left text-[12px] text-text-main transition-colors hover:border-[rgba(14,142,142,0.32)] hover:bg-[rgba(255,248,220,0.92)]"
+            className="flex h-9 min-w-[190px] items-center justify-between gap-3 rounded-xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.72)] px-3 text-left text-[12px] text-text-main dark:!text-white transition-colors hover:border-[rgba(14,142,142,0.32)] hover:bg-[rgba(255,248,220,0.92)]"
           >
             <span className="flex min-w-0 items-center gap-2">
               {filterProvider ? (
                 <ProviderIcon src={providerIconPath(filterProvider)} alt={providerLabel(filterProvider)} size={18} className="h-[18px] w-[18px] rounded object-cover" fallbackText={providerLabel(filterProvider).slice(0, 2).toUpperCase()} />
               ) : (
-                <span className="material-symbols-outlined text-[18px] text-text-muted">apps</span>
+                <span className="material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1]">apps</span>
               )}
               <span className="truncate">{filterProvider ? providerLabel(filterProvider) : "All providers"}</span>
             </span>
-            <span className="material-symbols-outlined text-[18px] text-text-muted">expand_more</span>
+            <span className="material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1]">expand_more</span>
           </button>
           {providerDropdownOpen && (
             <>
@@ -361,7 +361,7 @@ export default function RequestLogsTable() {
                   const active = filterProvider === p;
                   const label = p ? providerLabel(p) : "All providers";
                   return (
-                    <button key={p || "all"} type="button" onClick={() => { setFilterProvider(p); setProviderDropdownOpen(false); setPage(0); }} className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${active ? "bg-primary/10 text-primary" : "text-text-main hover:bg-[rgba(23,33,27,0.06)]"}`}>
+                    <button key={p || "all"} type="button" onClick={() => { setFilterProvider(p); setProviderDropdownOpen(false); setPage(0); }} className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${active ? "bg-primary/10 text-primary" : "text-text-main dark:!text-white hover:bg-[rgba(23,33,27,0.06)]"}`}>
                       {p ? <ProviderIcon src={providerIconPath(p)} alt={label} size={22} className="h-[22px] w-[22px] rounded object-cover" fallbackText={label.slice(0, 2).toUpperCase()} /> : <span className="material-symbols-outlined text-[20px]">apps</span>}
                       <span className="min-w-0 flex-1 truncate">{label}</span>
                       {active && <span className="material-symbols-outlined text-[18px]">check</span>}
@@ -375,16 +375,16 @@ export default function RequestLogsTable() {
 
         {/* status filter */}
         <div className="relative">
-          <button type="button" onClick={() => setStatusDropdownOpen((v) => !v)} className="flex h-9 min-w-[120px] items-center justify-between gap-2 rounded-xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.72)] px-3 text-[12px] text-text-main transition-colors hover:border-[rgba(14,142,142,0.32)] hover:bg-[rgba(255,248,220,0.92)]">
+          <button type="button" onClick={() => setStatusDropdownOpen((v) => !v)} className="flex h-9 min-w-[120px] items-center justify-between gap-2 rounded-xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.72)] px-3 text-[12px] text-text-main dark:!text-white transition-colors hover:border-[rgba(14,142,142,0.32)] hover:bg-[rgba(255,248,220,0.92)]">
             <span>{filterStatus ? (filterStatus === "ok" ? "OK only" : "Error only") : "All status"}</span>
-            <span className="material-symbols-outlined text-[18px] text-text-muted">expand_more</span>
+            <span className="material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1]">expand_more</span>
           </button>
           {statusDropdownOpen && (
             <>
               <button type="button" className="fixed inset-0 z-[100] bg-transparent" onClick={() => setStatusDropdownOpen(false)} aria-label="Close status filter" />
               <div className="absolute left-0 right-auto z-[110] mt-2 w-[min(70vw,160px)] rounded-2xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.98)] p-1.5 shadow-2xl shadow-[rgba(23,33,27,0.16)] backdrop-blur sm:left-auto sm:right-0 sm:w-[160px]">
                 {[{id:"",label:"All status"},{id:"ok",label:"OK only"},{id:"error",label:"Error only"}].map((item) => (
-                  <button key={item.id || "all"} type="button" onClick={() => { setFilterStatus(item.id); setStatusDropdownOpen(false); setPage(0); }} className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${filterStatus === item.id ? "bg-primary/10 text-primary" : "text-text-main hover:bg-[rgba(23,33,27,0.06)]"}`}>
+                  <button key={item.id || "all"} type="button" onClick={() => { setFilterStatus(item.id); setStatusDropdownOpen(false); setPage(0); }} className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${filterStatus === item.id ? "bg-primary/10 text-primary" : "text-text-main dark:!text-white hover:bg-[rgba(23,33,27,0.06)]"}`}>
                     {item.label}
                     {filterStatus === item.id && <span className="material-symbols-outlined text-[18px]">check</span>}
                   </button>
@@ -422,9 +422,9 @@ export default function RequestLogsTable() {
       </div>
 
       {/* logs */}
-      <div className="theme-glass rounded-2xl p-3">
+      <div className="theme-glass dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 rounded-2xl p-3">
         <div className="mb-3 flex flex-wrap items-center gap-3 border-b border-[rgba(23,33,27,0.08)] px-1 pb-3">
-          <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">Sort</span>
+          <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted dark:!text-[#CBD5E1]">Sort</span>
           <SortBtn field="timestamp" label="Time" />
           <SortBtn field="total" label="Total" />
           <SortBtn field="inputTokens" label="Input" />

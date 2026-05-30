@@ -507,15 +507,15 @@ export default function ProviderLimits() {
   // Empty state
   if (!connectionsLoading && sortedConnections.length === 0) {
     return (
-      <Card padding="lg">
+      <Card padding="lg" className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
         <div className="text-center py-12">
-          <span className="material-symbols-outlined text-[64px] text-text-muted opacity-20">
+          <span className="material-symbols-outlined text-[64px] text-text-muted dark:!text-[#CBD5E1] opacity-20">
             cloud_off
           </span>
           <h3 className="mt-4 text-lg font-semibold text-text-primary">
             No Providers Connected
           </h3>
-          <p className="mt-2 text-sm text-text-muted max-w-md mx-auto">
+          <p className="mt-2 text-sm text-text-muted dark:!text-[#CBD5E1] max-w-md mx-auto">
             Connect to providers with OAuth to track your API quota limits and
             usage.
           </p>
@@ -539,14 +539,14 @@ export default function ProviderLimits() {
             <button
               type="button"
               onClick={() => setProviderMenuOpen((prev) => !prev)}
-              className="flex h-8 items-center justify-between gap-1 rounded-lg border border-black/10 bg-black/[0.02] px-2 text-xs text-text-primary transition-colors hover:bg-black/5 dark:border-white/10 dark:bg-white/[0.03] dark:hover:bg-white/10"
+              className="flex h-8 items-center justify-between gap-1 rounded-lg border border-black/10 bg-black/[0.02] px-2 text-xs text-text-primary transition-colors hover:bg-black/5 dark:!border-[#334155] dark:bg-white/[0.03] dark:hover:bg-white/10"
               aria-haspopup="menu"
               aria-expanded={providerMenuOpen}
               title="Filter quota providers"
             >
               <span className="flex min-w-0 items-center gap-1.5">
                 {providerFilter === "all" ? (
-                  <span className="material-symbols-outlined text-[14px] text-text-muted">apps</span>
+                  <span className="material-symbols-outlined text-[14px] text-text-muted dark:!text-[#CBD5E1]">apps</span>
                 ) : (
                   <ProviderIcon
                     src={providerIconPath(providerFilter)}
@@ -558,7 +558,7 @@ export default function ProviderLimits() {
                 )}
                 <span className="truncate capitalize hidden lg:inline">{selectedProviderLabel}</span>
               </span>
-              <span className="material-symbols-outlined text-[14px] text-text-muted">expand_more</span>
+              <span className="material-symbols-outlined text-[14px] text-text-muted dark:!text-[#CBD5E1]">expand_more</span>
             </button>
 
             {providerMenuOpen && (
@@ -569,7 +569,7 @@ export default function ProviderLimits() {
                   aria-label="Close provider filter"
                   onClick={() => setProviderMenuOpen(false)}
                 />
-                <div className="absolute left-0 z-40 mt-2 w-64 overflow-hidden rounded-2xl border border-black/10 bg-surface/95 p-1.5 shadow-xl shadow-black/10 backdrop-blur dark:border-white/10 dark:bg-surface/95 sm:w-72">
+                <div className="absolute left-0 z-40 mt-2 w-64 overflow-hidden rounded-2xl border border-black/10 bg-surface dark:!bg-[#111827]/95 p-1.5 shadow-xl shadow-black/10 backdrop-blur dark:!border-[#334155] dark:bg-surface dark:!bg-[#111827]/95 sm:w-72">
                   <button
                     type="button"
                     onClick={() => { setProviderFilter("all"); setProviderMenuOpen(false); }}
@@ -607,7 +607,7 @@ export default function ProviderLimits() {
           <button
             type="button"
             onClick={() => setExpiringFirst((prev) => !prev)}
-            className={`flex h-8 shrink-0 items-center gap-1 rounded-lg border px-2 text-xs transition-colors ${expiringFirst ? "border-amber-500/40 bg-amber-500/10 text-amber-500" : "border-black/10 text-text-primary hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5"}`}
+            className={`flex h-8 shrink-0 items-center gap-1 rounded-lg border px-2 text-xs transition-colors ${expiringFirst ? "border-amber-500/40 bg-amber-500/10 text-amber-500" : "border-black/10 text-text-primary hover:bg-black/5 dark:!border-[#334155] dark:hover:!bg-[#334155]"}`}
             title="Sort accounts by earliest quota reset time"
           >
             <span className="material-symbols-outlined text-[14px]">hourglass_top</span>
@@ -617,19 +617,19 @@ export default function ProviderLimits() {
           {/* Auto-refresh toggle */}
           <button
             onClick={() => setAutoRefresh((prev) => !prev)}
-            className="flex h-8 shrink-0 items-center gap-1 rounded-lg border border-black/10 px-2 text-xs transition-colors hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5"
+            className="flex h-8 shrink-0 items-center gap-1 rounded-lg border border-black/10 px-2 text-xs transition-colors hover:bg-black/5 dark:!border-[#334155] dark:hover:!bg-[#334155]"
             title={autoRefresh ? "Disable auto-refresh" : "Enable auto-refresh"}
           >
             <span
               className={`material-symbols-outlined text-[14px] ${
-                autoRefresh ? "text-primary" : "text-text-muted"
+                autoRefresh ? "text-primary" : "text-text-muted dark:!text-[#CBD5E1]"
               }`}
             >
               {autoRefresh ? "toggle_on" : "toggle_off"}
             </span>
             <span className="hidden text-text-primary sm:inline">Auto-refresh</span>
             {autoRefresh && (
-              <span className="text-[10px] text-text-muted tabular-nums">({countdown}s)</span>
+              <span className="text-[10px] text-text-muted dark:!text-[#CBD5E1] tabular-nums">({countdown}s)</span>
             )}
           </button>
 
@@ -638,7 +638,7 @@ export default function ProviderLimits() {
             type="button"
             onClick={refreshAll}
             disabled={refreshingAll}
-            className="flex h-8 shrink-0 items-center gap-1 rounded-lg border border-black/10 px-2 text-xs text-text-primary transition-colors hover:bg-black/5 dark:border-white/10 dark:hover:bg-white/5 disabled:opacity-50"
+            className="flex h-8 shrink-0 items-center gap-1 rounded-lg border border-black/10 px-2 text-xs text-text-primary transition-colors hover:bg-black/5 dark:!border-[#334155] dark:hover:!bg-[#334155] disabled:opacity-50"
             title="Refresh all"
           >
             <span className={`material-symbols-outlined text-[14px] ${refreshingAll ? "animate-spin" : ""}`}>refresh</span>
@@ -688,7 +688,7 @@ export default function ProviderLimits() {
                           ? quota.raw.profile.data.email : null;
                         const label = mimoEmail || (isEmail(conn.email) ? conn.email : (isEmail(conn.name) ? conn.name : conn.name));
                         return label ? (
-                          <p className="text-xs text-text-muted truncate">{label}</p>
+                          <p className="text-xs text-text-muted dark:!text-[#CBD5E1] truncate">{label}</p>
                         ) : null;
                       })()}
                     </div>
@@ -703,7 +703,7 @@ export default function ProviderLimits() {
                       title="Refresh quota"
                     >
                       <span
-                        className={`material-symbols-outlined text-[18px] text-text-muted ${isLoading ? "animate-spin" : ""}`}
+                        className={`material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1] ${isLoading ? "animate-spin" : ""}`}
                       >
                         refresh
                       </span>
@@ -715,7 +715,7 @@ export default function ProviderLimits() {
                         setShowEditModal(true);
                       }}
                       disabled={rowBusy}
-                      className="p-1.5 rounded-lg hover:bg-[rgba(255,255,255,0.05)] text-text-muted hover:text-primary transition-colors disabled:opacity-50"
+                      className="p-1.5 rounded-lg hover:bg-[rgba(255,255,255,0.05)] text-text-muted dark:!text-[#CBD5E1] hover:text-primary transition-colors disabled:opacity-50"
                       title="Edit connection"
                     >
                       <span className="material-symbols-outlined text-[18px]">
@@ -758,7 +758,7 @@ export default function ProviderLimits() {
 
               <div className="px-2 py-1.5">
                 {isLoading ? (
-                  <div className="text-center py-5 text-text-muted">
+                  <div className="text-center py-5 text-text-muted dark:!text-[#CBD5E1]">
                     <span className="material-symbols-outlined text-[28px] animate-spin">
                       progress_activity
                     </span>
@@ -768,11 +768,11 @@ export default function ProviderLimits() {
                     <span className="material-symbols-outlined text-[28px] text-red-500">
                       error
                     </span>
-                    <p className="mt-1.5 text-xs text-text-muted">{error}</p>
+                    <p className="mt-1.5 text-xs text-text-muted dark:!text-[#CBD5E1]">{error}</p>
                   </div>
                 ) : quota?.message ? (
                   <div className="text-center py-5">
-                    <p className="text-xs text-text-muted">{quota.message}</p>
+                    <p className="text-xs text-text-muted dark:!text-[#CBD5E1]">{quota.message}</p>
                     {conn.provider === "codex" && (conn.hasRefreshToken || conn.refreshToken) && conn.accessTokenExpired && (
                       <button
                         type="button"
@@ -792,7 +792,7 @@ export default function ProviderLimits() {
                     {conn.provider === "xiaomi-mimo-plan-sgp" && (
                       <div className="px-3 py-2 border-t border-[rgba(255,255,255,0.08)]">
                         {quota?.raw?.profile?.data ? (
-                          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted">
+                          <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted dark:!text-[#CBD5E1]">
                             {quota.raw.profile.data.userId && (
                               <span>ID: {quota.raw.profile.data.userId}</span>
                             )}

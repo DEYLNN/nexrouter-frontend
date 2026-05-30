@@ -89,12 +89,12 @@ export default function UsageChart({ period = "7d" }) {
   const formatter = viewMode === "tokens" ? fmtTokens : fmtCost;
 
   return (
-    <Card className="relative flex min-w-0 flex-col gap-3 overflow-hidden p-3 sm:p-4">
+    <Card className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 relative flex min-w-0 flex-col gap-3 overflow-hidden p-3 sm:p-4">
       <div className="pointer-events-none absolute inset-x-8 top-4 h-24 rounded-full bg-[radial-gradient(circle,rgba(79,124,255,0.12),transparent_68%)] blur-2xl" />
       <div className="relative z-10 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div className="min-w-0">
-          <div className="text-xs font-medium uppercase tracking-[0.16em] text-text-muted">Usage trend</div>
-          <div className="text-sm font-semibold text-text-main">Tokens & spend</div>
+          <div className="text-xs font-medium uppercase tracking-[0.16em] text-text-muted dark:!text-[#CBD5E1]">Usage trend</div>
+          <div className="text-sm font-semibold text-text-main dark:!text-white">Tokens & spend</div>
         </div>
         <div className="grid w-full grid-cols-2 items-center gap-1 rounded-xl border border-[rgba(17,24,39,0.06)] bg-white/55 p-1 shadow-[0_8px_22px_-20px_rgba(17,24,39,0.3)] backdrop-blur-sm sm:w-auto">
           {[
@@ -104,7 +104,7 @@ export default function UsageChart({ period = "7d" }) {
             <button
               key={value}
               onClick={() => setViewMode(value)}
-              className={`rounded-lg px-3 py-2 text-xs font-semibold transition-all sm:py-1.5 ${viewMode === value ? "bg-gradient-to-r from-[#4F7CFF] to-[#8B5CF6] text-white shadow-[0_8px_18px_-12px_rgba(79,124,255,0.9)]" : "text-text-muted hover:bg-[rgba(79,124,255,0.06)] hover:text-text-main"}`}
+              className={`rounded-lg px-3 py-2 text-xs font-semibold transition-all sm:py-1.5 ${viewMode === value ? "bg-gradient-to-r from-[#4F7CFF] to-[#8B5CF6] text-white shadow-[0_8px_18px_-12px_rgba(79,124,255,0.9)]" : "text-text-muted dark:!text-[#CBD5E1] hover:bg-[rgba(79,124,255,0.06)] hover:text-text-main dark:!text-white"}`}
             >
               {label}
             </button>
@@ -113,9 +113,9 @@ export default function UsageChart({ period = "7d" }) {
       </div>
 
       {loading ? (
-        <div className="relative z-10 flex h-52 items-center justify-center text-sm text-text-muted">Loading...</div>
+        <div className="relative z-10 flex h-52 items-center justify-center text-sm text-text-muted dark:!text-[#CBD5E1]">Loading...</div>
       ) : !hasData ? (
-        <div className="relative z-10 flex h-52 items-center justify-center text-sm text-text-muted">No data for this period</div>
+        <div className="relative z-10 flex h-52 items-center justify-center text-sm text-text-muted dark:!text-[#CBD5E1]">No data for this period</div>
       ) : (
         <div className="relative z-10 h-[210px] min-w-0 sm:h-[250px]">
           <ResponsiveContainer width="100%" height="100%">

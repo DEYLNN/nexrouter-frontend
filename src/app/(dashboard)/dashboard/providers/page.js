@@ -25,6 +25,7 @@ import Link from "next/link";
 import { getErrorCode, getRelativeTime } from "@/shared/utils";
 import { useNotificationStore } from "@/store/notificationStore";
 import ModelAvailabilityBadge from "./components/ModelAvailabilityBadge";
+import { useTheme } from "@/shared/hooks/useTheme";
 
 function getStatusDisplay(connected, error, errorCode) {
   const parts = [];

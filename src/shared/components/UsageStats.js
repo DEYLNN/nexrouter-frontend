@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback } from "react";
+import { useState, useEffect, useMemo, useCallback, useRef } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { FREE_PROVIDERS, AI_PROVIDERS } from "@/shared/constants/providers";
 
@@ -175,10 +175,10 @@ const ENDPOINT_COLUMNS = [
 ];
 
 const TABLE_OPTIONS = [
-  { value: "model", label: "Usage by Model" },
-  { value: "account", label: "Usage by Account" },
-  { value: "apiKey", label: "Usage by API Key" },
-  { value: "endpoint", label: "Usage by Endpoint" },
+  { value: "model", label: "Usage by Model", icon: "smart_toy", desc: "Group spend per model" },
+  { value: "account", label: "Usage by Account", icon: "account_circle", desc: "Group spend per account" },
+  { value: "apiKey", label: "Usage by API Key", icon: "key", desc: "Group spend per key" },
+  { value: "endpoint", label: "Usage by Endpoint", icon: "api", desc: "Group spend per endpoint" },
 ];
 
 const PERIODS = [
@@ -199,6 +199,8 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
   const [tableView, setTableView] = useState("model");
+  const [tableMenuOpen, setTableMenuOpen] = useState(false);
+  const tableMenuRef = useRef(null);
   const [viewMode, setViewMode] = useState("costs");
   const [providers, setProviders] = useState([]);
   const [periodLocal, setPeriodLocal] = useState("7d");
@@ -244,6 +246,17 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
         setFetching(false);
       });
   }, [period]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!tableMenuOpen) return;
+    const handleClick = (event) => {
+      if (tableMenuRef.current && !tableMenuRef.current.contains(event.target)) {
+        setTableMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, [tableMenuOpen]);
 
   // SSE connection - real-time updates for activeRequests + recentRequests only
   useEffect(() => {
@@ -452,18 +465,53 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
       {/* Table with dropdown selector */}
       <div className="flex flex-col gap-3">
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div className="relative w-full sm:w-[220px]">
-            <select
-              value={tableView}
-              onChange={(e) => setTableView(e.target.value)}
-              className="h-10 w-full appearance-none rounded-xl border border-[rgba(17,24,39,0.07)] bg-white/70 px-3 pr-9 text-sm font-semibold text-text-main shadow-[0_8px_22px_-20px_rgba(17,24,39,0.28)] outline-none backdrop-blur-sm transition-all hover:border-[rgba(79,124,255,0.22)] focus:border-[rgba(79,124,255,0.35)] focus:ring-2 focus:ring-[rgba(79,124,255,0.12)]"
-              style={{ colorScheme: 'auto' }}
+          <div ref={tableMenuRef} className="relative w-full sm:w-[260px]">
+            <button
+              type="button"
+              onClick={() => setTableMenuOpen((v) => !v)}
+              className="flex h-11 w-full items-center justify-between gap-3 rounded-2xl border border-[rgba(17,24,39,0.08)] bg-white/80 px-3 text-left shadow-[0_12px_30px_-24px_rgba(17,24,39,0.45)] transition-all hover:border-[rgba(79,124,255,0.28)] focus:outline-none focus:ring-2 focus:ring-[rgba(79,124,255,0.14)] dark:!border-[#334155] dark:!bg-[#0B1220] dark:!shadow-none dark:hover:!border-[#64748B]"
             >
-              {TABLE_OPTIONS.map((opt) => (
-                <option key={opt.value} value={opt.value}>{opt.label}</option>
-              ))}
-            </select>
-            <span className="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-text-muted">expand_more</span>
+              {(() => {
+                const selected = TABLE_OPTIONS.find((opt) => opt.value === tableView) || TABLE_OPTIONS[0];
+                return (
+                  <>
+                    <span className="flex min-w-0 items-center gap-2">
+                      <span className="material-symbols-outlined grid size-7 shrink-0 place-items-center rounded-lg bg-primary/10 text-[17px] text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]">{selected.icon}</span>
+                      <span className="min-w-0">
+                        <span className="block truncate text-sm font-semibold text-text-main dark:!text-white">{selected.label}</span>
+                        <span className="block truncate text-[10px] text-text-muted dark:!text-[#CBD5E1]">{selected.desc}</span>
+                      </span>
+                    </span>
+                    <span className={`material-symbols-outlined shrink-0 text-[20px] text-text-muted transition-transform dark:!text-[#CBD5E1] ${tableMenuOpen ? "rotate-180" : ""}`}>expand_more</span>
+                  </>
+                );
+              })()}
+            </button>
+            {tableMenuOpen && (
+              <div className="absolute left-0 z-40 mt-2 w-full overflow-hidden rounded-2xl border border-[rgba(17,24,39,0.08)] bg-white/95 p-1.5 shadow-xl shadow-black/10 backdrop-blur dark:!border-[#334155] dark:!bg-[#0B1220] dark:!shadow-black/40">
+                {TABLE_OPTIONS.map((opt) => {
+                  const active = opt.value === tableView;
+                  return (
+                    <button
+                      key={opt.value}
+                      type="button"
+                      onClick={() => {
+                        setTableView(opt.value);
+                        setTableMenuOpen(false);
+                      }}
+                      className={`flex w-full items-center gap-2 rounded-xl px-2.5 py-2 text-left transition-colors ${active ? "bg-primary/10 text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]" : "text-text-muted hover:bg-black/5 hover:text-text-main dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B] dark:hover:!text-white"}`}
+                    >
+                      <span className="material-symbols-outlined text-[18px]">{opt.icon}</span>
+                      <span className="min-w-0 flex-1">
+                        <span className="block truncate text-sm font-semibold">{opt.label}</span>
+                        <span className={`block truncate text-[10px] ${active ? "text-primary/80 dark:!text-[#BFDBFE]" : "text-text-muted dark:!text-[#94A3B8]"}`}>{opt.desc}</span>
+                      </span>
+                      {active && <span className="material-symbols-outlined text-[18px]">check</span>}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
           </div>
           <div className="grid grid-cols-2 items-center gap-1 rounded-lg border border-border bg-bg-subtle p-1 sm:flex dark:!bg-[#0B1220] dark:!border-[#334155]">
             <button

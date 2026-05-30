@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.36] - 2026-05-30
+
+### Improvements
+- Restore dashboard theme switching and default new sessions to dark mode
+- Refine dark-mode navbar and sidebar glass opacity, glow, and active navigation states
+
 ## [0.5.35] - 2026-05-18
 
 ### Features

@@ -637,6 +637,11 @@ export const PROVIDER_MODELS = {
     { id: "minimax/minimax-m2.5", name: "MiniMax M2.5" },
     { id: "zai/glm-5.1", name: "GLM 5.1" },
   ],
+  aimux: [
+    { id: "am/claude-opus-4.7", name: "Claude Opus 4.7" },
+    { id: "am/claude-opus-4.8", name: "Claude Opus 4.8" },
+    { id: "am/glm-5", name: "GLM 5" },
+  ],
   routeway: [
     { id: "ling-2.6-flash:free", name: "Ling 2.6 Flash Free" },
     { id: "gemma-4-31b-it:free", name: "Gemma 4 31B IT Free" },

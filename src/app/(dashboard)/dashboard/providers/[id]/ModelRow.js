@@ -14,7 +14,7 @@ export default function ModelRow({ model, fullModel, alias, copied, onCopy, test
     : undefined;
 
   return (
-    <div className={`group min-w-0 max-w-full rounded-lg border px-3 py-2 ${borderColor} hover:bg-sidebar/50`}>
+    <div className={`group min-w-0 max-w-full rounded-lg border px-3 py-2 ${borderColor} hover:bg-sidebar/50 dark:!bg-[#111827] dark:!border-[#334155] dark:hover:!bg-[#1E293B] dark:hover:!border-[#64748B]`}>
       <div className="flex min-w-0 items-start gap-2 sm:items-center">
         <span
           className="material-symbols-outlined shrink-0 text-base"
@@ -23,21 +23,21 @@ export default function ModelRow({ model, fullModel, alias, copied, onCopy, test
           {testStatus === "ok" ? "check_circle" : testStatus === "error" ? "cancel" : "smart_toy"}
         </span>
         <div className="flex min-w-0 flex-1 flex-col gap-1">
-          <code className="max-w-[72vw] truncate rounded bg-sidebar px-1.5 py-0.5 font-mono text-xs text-text-muted sm:max-w-[360px]">{fullModel}</code>
-          {model.name && <span className="truncate pl-1 text-[9px] italic text-text-muted/70">{model.name}</span>}
+          <code className="max-w-[72vw] truncate rounded bg-sidebar px-1.5 py-0.5 font-mono text-xs text-text-muted sm:max-w-[360px] dark:!bg-[#0B1220] dark:!text-[#E5E7EB]">{fullModel}</code>
+          {model.name && <span className="truncate pl-1 text-[9px] italic text-text-muted/70 dark:!text-[#CBD5E1]">{model.name}</span>}
         </div>
         {onTest && (
           <div className="relative shrink-0 group/btn">
             <button
               onClick={onTest}
               disabled={isTesting}
-              className={`rounded p-0.5 text-text-main transition-colors hover:bg-white/10 hover:text-primary`}
+              className={`rounded p-0.5 text-text-main transition-colors hover:bg-white/10 hover:text-primary dark:!text-[#E5E7EB] dark:hover:!bg-[#334155] dark:hover:!text-white`}
             >
               <span className="material-symbols-outlined text-sm" style={isTesting ? { animation: "spin 1s linear infinite" } : undefined}>
                 {isTesting ? "progress_activity" : "science"}
               </span>
             </button>
-            <span className="pointer-events-none absolute mt-1 top-5 left-1/2 -translate-x-1/2 text-[10px] text-text-muted whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity">
+            <span className="pointer-events-none absolute mt-1 top-5 left-1/2 -translate-x-1/2 text-[10px] text-text-muted whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity dark:!text-[#CBD5E1]">
               {isTesting ? "Testing..." : "Test"}
             </span>
           </div>
@@ -45,13 +45,13 @@ export default function ModelRow({ model, fullModel, alias, copied, onCopy, test
         <div className="relative shrink-0 group/btn">
           <button
             onClick={() => onCopy(fullModel, `model-${model.id}`)}
-            className="rounded p-0.5 text-text-main hover:bg-white/10 hover:text-primary"
+            className="rounded p-0.5 text-text-main hover:bg-white/10 hover:text-primary dark:!text-[#E5E7EB] dark:hover:!bg-[#334155] dark:hover:!text-white"
           >
             <span className="material-symbols-outlined text-sm">
               {copied === `model-${model.id}` ? "check" : "content_copy"}
             </span>
           </button>
-          <span className="pointer-events-none absolute mt-1 top-5 left-1/2 -translate-x-1/2 text-[10px] text-text-muted whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity">
+          <span className="pointer-events-none absolute mt-1 top-5 left-1/2 -translate-x-1/2 text-[10px] text-text-muted whitespace-nowrap opacity-0 group-hover/btn:opacity-100 transition-opacity dark:!text-[#CBD5E1]">
             {copied === `model-${model.id}` ? "Copied!" : "Copy"}
           </span>
         </div>

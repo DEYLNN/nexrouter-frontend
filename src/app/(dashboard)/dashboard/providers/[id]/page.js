@@ -697,7 +697,7 @@ export default function ProviderDetailPage() {
   if (!providerInfo) {
     return (
       <div className="text-center py-20">
-        <p className="text-text-muted">Provider not found</p>
+        <p className="text-text-muted dark:!text-[#E5E7EB]">Provider not found</p>
         <Link href="/dashboard/providers" className="text-primary mt-4 inline-block">
           Back to Providers
         </Link>
@@ -725,7 +725,7 @@ export default function ProviderDetailPage() {
       <div className="min-w-0">
         <Link
           href="/dashboard/providers"
-          className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-primary transition-colors mb-4"
+          className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-primary transition-colors mb-4 dark:!text-[#CBD5E1] dark:hover:!text-[#93C5FD]"
         >
           <span className="material-symbols-outlined text-lg">arrow_back</span>
           Back to Providers
@@ -753,7 +753,7 @@ export default function ProviderDetailPage() {
           </div>
           <div className="min-w-0">
             <div className="flex items-center gap-3 flex-wrap">
-              <h1 className="truncate text-2xl font-semibold tracking-tight sm:text-3xl">{providerInfo.name}</h1>
+              <h1 className="truncate text-2xl font-semibold tracking-tight sm:text-3xl dark:!text-white">{providerInfo.name}</h1>
               {(providerInfo.notice?.apiKeyUrl || providerInfo.notice?.signupUrl || providerInfo.website) && (
                 <a
                   href={providerInfo.notice?.apiKeyUrl || providerInfo.notice?.signupUrl || providerInfo.website}
@@ -766,7 +766,7 @@ export default function ProviderDetailPage() {
                 </a>
               )}
             </div>
-            <p className="text-text-muted">
+            <p className="text-text-muted dark:!text-[#E5E7EB]">
               {isFreeNoAuth ? "No API key required" : `${connections.length} connection${connections.length === 1 ? "" : "s"}`}
             </p>
           </div>
@@ -798,11 +798,11 @@ export default function ProviderDetailPage() {
       )}
 
       {isCompatible && providerNode && (
-        <Card>
+        <Card className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
             <div className="min-w-0">
-              <h2 className="text-lg font-semibold">{isAnthropicCompatible ? "Anthropic Compatible Details" : "OpenAI Compatible Details"}</h2>
-              <p className="break-all text-sm text-text-muted">
+              <h2 className="text-lg font-semibold dark:!text-white">{isAnthropicCompatible ? "Anthropic Compatible Details" : "OpenAI Compatible Details"}</h2>
+              <p className="break-all text-sm text-text-muted dark:!text-[#E5E7EB]">
                 {isAnthropicCompatible ? "Messages API" : (providerNode.apiType === "responses" ? "Responses API" : "Chat Completions")} · {(providerNode.baseUrl || "").replace(/\/$/, "")}/
                 {isAnthropicCompatible ? "messages" : (providerNode.apiType === "responses" ? "responses" : "chat/completions")}
               </p>
@@ -856,14 +856,14 @@ export default function ProviderDetailPage() {
       {isFreeNoAuth ? (
         <NoAuthProxyCard providerId={providerId} />
       ) : (
-        <Card>
+        <Card className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
           <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-            <h2 className="text-lg font-semibold">Connections</h2>
+            <h2 className="text-lg font-semibold dark:!text-white">Connections</h2>
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               {/* Thinking config */}
               {/* {thinkingConfig && (
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-text-muted font-medium">Thinking</span>
+                  <span className="text-xs text-text-muted font-medium dark:!text-[#CBD5E1]">Thinking</span>
                   <select
                     value={thinkingMode}
                     onChange={(e) => handleThinkingModeChange(e.target.value)}
@@ -877,21 +877,21 @@ export default function ProviderDetailPage() {
               )} */}
               {/* Round Robin toggle */}
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs text-text-muted font-medium">Round Robin</span>
+                <span className="text-xs text-text-muted font-medium dark:!text-[#CBD5E1]">Round Robin</span>
                 <Toggle
                   checked={providerStrategy === "round-robin"}
                   onChange={handleRoundRobinToggle}
                 />
                 {providerStrategy === "round-robin" && (
                   <div className="flex items-center gap-1.5">
-                    <span className="text-xs text-text-muted">Sticky:</span>
+                    <span className="text-xs text-text-muted dark:!text-[#CBD5E1]">Sticky:</span>
                     <input
                       type="number"
                       min={1}
                       value={providerStickyLimit}
                       onChange={(e) => handleStickyLimitChange(e.target.value)}
                       placeholder="1"
-                      className="w-14 px-2 py-1 text-xs border border-border rounded-md bg-background focus:outline-none focus:border-primary"
+                      className="w-14 px-2 py-1 text-xs border border-border rounded-md bg-background focus:outline-none focus:border-primary dark:!bg-[#111827] dark:!border-[#475569] dark:!text-white"
                     />
                   </div>
                 )}
@@ -905,7 +905,7 @@ export default function ProviderDetailPage() {
                 <div className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-primary/10 text-primary shrink-0">
                   <span className="material-symbols-outlined text-[18px]">{isOAuth ? "lock" : "key"}</span>
                 </div>
-                <p className="text-sm text-text-muted">No connections yet</p>
+                <p className="text-sm text-text-muted dark:!text-[#E5E7EB]">No connections yet</p>
               </div>
               <div className="flex gap-2">
                 {!isCompatible && providerId === "iflow" && (
@@ -969,9 +969,9 @@ export default function ProviderDetailPage() {
       )}
 
       {/* Models */}
-      <Card>
+      <Card className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
         <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <h2 className="text-lg font-semibold">
+          <h2 className="text-lg font-semibold dark:!text-white">
             {"Available Models"}
           </h2>
           {!isCompatible && (() => {

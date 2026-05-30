@@ -570,10 +570,10 @@ button {
   --theme-shell-border-strong: #334155;
   --theme-shell-hover: #1E293B;
   --theme-shell-active-bg: #172554;
-  --theme-shell-text: #F8FAFC;
-  --theme-shell-text-muted: #CBD5E1;
-  --theme-shell-text-subtle: #94A3B8;
-  --theme-shell-accent: #60A5FA;
+  --theme-shell-text: #F9FAFB;
+  --theme-shell-text-muted: #E5E7EB;
+  --theme-shell-text-subtle: #CBD5E1;
+  --theme-shell-accent: #93C5FD;
   --theme-shell-glow: transparent;
 }
 

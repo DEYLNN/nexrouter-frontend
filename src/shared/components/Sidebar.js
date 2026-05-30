@@ -82,7 +82,7 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
         padding: collapsed ? "0 10px" : "0 12px",
         borderRadius: "11px",
         fontSize: "13px",
-        fontWeight: active ? 650 : 500,
+        fontWeight: active ? 700 : 600,
         textDecoration: "none",
         color: active ? "var(--theme-shell-accent)" : "var(--theme-shell-text-muted)",
         background: active ? "var(--theme-shell-active-bg)" : "transparent",
@@ -108,7 +108,7 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
         flexShrink: 0,
         display: "flex",
         color: active ? "var(--theme-shell-accent)" : "inherit",
-        opacity: active ? 1 : 0.8,
+        opacity: 1,
       }}>
         {Icon}
       </span>

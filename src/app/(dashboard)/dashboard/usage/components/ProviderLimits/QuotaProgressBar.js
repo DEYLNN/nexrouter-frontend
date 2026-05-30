@@ -104,7 +104,7 @@ export default function QuotaProgressBar({
       )}
 
       {/* Usage details and countdown */}
-      <div className="flex items-center justify-between text-xs text-text-muted">
+      <div className="flex items-center justify-between text-xs text-text-muted dark:!text-[#CBD5E1]">
         <span>
           {used.toLocaleString()} / {total.toLocaleString()} requests
         </span>
@@ -118,7 +118,7 @@ export default function QuotaProgressBar({
 
       {/* Reset time display */}
       {resetDisplay && (
-        <div className="text-xs text-text-muted/70">
+        <div className="text-xs text-text-muted dark:!text-[#CBD5E1]/70 dark:!text-[#94A3B8]">
           Reset at {resetDisplay}
         </div>
       )}

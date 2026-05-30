@@ -107,13 +107,13 @@ export default function QuotaTable({ quotas = [], compact = false }) {
             return (
               <tr 
                 key={index}
-                className="border-b border-black/5 dark:border-white/5 hover:bg-black/[0.02] dark:hover:bg-white/[0.02] transition-colors"
+                className="border-b border-black/5 dark:!border-[#334155] hover:bg-black/[0.02] dark:hover:!bg-[#1E293B] transition-colors"
               >
                 {/* Model Name with Status Emoji */}
                 <td className={`${cellPad} w-[30%]`}>
                   <div className="flex items-center gap-1.5 min-w-0">
                     <span className="text-[10px] shrink-0">{colors.emoji}</span>
-                    <span className={`${nameText} font-medium text-text-primary truncate`}>
+                    <span className={`${nameText} font-medium text-text-primary dark:!text-white truncate`}>
                       {quota.name}
                     </span>
                   </div>
@@ -124,7 +124,7 @@ export default function QuotaTable({ quotas = [], compact = false }) {
                   <div className={compact ? "space-y-1" : "space-y-1.5"}>
                     {/* Progress bar - always show with border for visibility */}
                     <div className={`${compact ? "h-1" : "h-1.5"} rounded-full overflow-hidden border ${colors.bgLight} ${
-                      remaining === 0 ? 'border-black/10 dark:border-white/10' : 'border-transparent'
+                      remaining === 0 ? 'border-black/10 dark:!border-[#475569]' : 'border-transparent'
                     }`}>
                       <div
                         className={`h-full transition-all duration-300 ${colors.bg}`}
@@ -134,7 +134,7 @@ export default function QuotaTable({ quotas = [], compact = false }) {
                     
                     {/* Numbers */}
                     <div className={`flex items-center justify-between ${compact ? "text-[10px]" : "text-xs"}`}>
-                      <span className="text-text-muted">
+                      <span className="text-text-muted dark:!text-[#CBD5E1]">
                         {formatCompact(quota.used)} / {quota.total > 0 ? formatCompact(quota.total) : "∞"}
                       </span>
                       <span className={`font-medium ${colors.text}`}>
@@ -149,7 +149,7 @@ export default function QuotaTable({ quotas = [], compact = false }) {
                   {countdown !== "-" || resetDisplay ? (
                     compact ? (
                       <div
-                        className={`${resetPrimary} text-text-primary font-medium truncate`}
+                        className={`${resetPrimary} text-text-primary dark:!text-white font-medium truncate`}
                         title={resetDisplay || ""}
                       >
                         {countdown !== "-" ? `in ${countdown}` : resetDisplay}
@@ -157,19 +157,19 @@ export default function QuotaTable({ quotas = [], compact = false }) {
                     ) : (
                       <div className="space-y-0.5">
                         {countdown !== "-" && (
-                          <div className={`${resetPrimary} text-text-primary font-medium`}>
+                          <div className={`${resetPrimary} text-text-primary dark:!text-white font-medium`}>
                             in {countdown}
                           </div>
                         )}
                         {resetDisplay && (
-                          <div className={`${resetSecondary} text-text-muted`}>
+                          <div className={`${resetSecondary} text-text-muted dark:!text-[#CBD5E1]`}>
                             {resetDisplay}
                           </div>
                         )}
                       </div>
                     )
                   ) : (
-                    <div className={`${resetPrimary} text-text-muted italic`}>N/A</div>
+                    <div className={`${resetPrimary} text-text-muted dark:!text-[#CBD5E1] italic`}>N/A</div>
                   )}
                 </td>
               </tr>

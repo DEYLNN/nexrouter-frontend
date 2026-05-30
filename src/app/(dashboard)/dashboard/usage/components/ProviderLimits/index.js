@@ -529,7 +529,7 @@ export default function ProviderLimits() {
       {/* Header Controls */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:gap-3">
-          <h2 className="text-xl font-semibold text-text-primary">
+          <h2 className="text-xl font-semibold text-text-primary dark:!text-white">
             Provider Limits
           </h2>
         </div>
@@ -539,7 +539,7 @@ export default function ProviderLimits() {
             <button
               type="button"
               onClick={() => setProviderMenuOpen((prev) => !prev)}
-              className="flex h-8 items-center justify-between gap-1 rounded-lg border border-black/10 bg-black/[0.02] px-2 text-xs text-text-primary transition-colors hover:bg-black/5 dark:!border-[#334155] dark:bg-white/[0.03] dark:hover:bg-white/10"
+              className="flex h-8 items-center justify-between gap-1 rounded-lg border border-black/10 bg-black/[0.02] px-2 text-xs text-text-primary transition-colors hover:bg-black/5 dark:!border-[#334155] dark:!bg-[#111827] dark:hover:!bg-[#1E293B] dark:!text-white"
               aria-haspopup="menu"
               aria-expanded={providerMenuOpen}
               title="Filter quota providers"
@@ -569,24 +569,24 @@ export default function ProviderLimits() {
                   aria-label="Close provider filter"
                   onClick={() => setProviderMenuOpen(false)}
                 />
-                <div className="absolute left-0 z-40 mt-2 w-64 overflow-hidden rounded-2xl border border-black/10 bg-surface dark:!bg-[#111827]/95 p-1.5 shadow-xl shadow-black/10 backdrop-blur dark:!border-[#334155] dark:bg-surface dark:!bg-[#111827]/95 sm:w-72">
+                <div className="absolute left-0 z-40 mt-2 w-64 overflow-hidden rounded-2xl border border-black/10 bg-surface dark:!bg-[#0B1220] p-1.5 shadow-xl shadow-black/10 backdrop-blur dark:!border-[#334155] dark:bg-surface dark:!bg-[#0B1220] sm:w-72">
                   <button
                     type="button"
                     onClick={() => { setProviderFilter("all"); setProviderMenuOpen(false); }}
-                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${providerFilter === "all" ? "bg-primary/10 text-primary" : "text-text-primary hover:bg-black/5 dark:hover:bg-white/10"}`}
+                    className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${providerFilter === "all" ? "bg-primary/10 text-primary" : "text-text-primary hover:bg-black/5 dark:hover:!bg-[#1E293B]"}`}
                   >
                     <span className="material-symbols-outlined text-[22px]">apps</span>
                     <span className="font-medium">All providers</span>
                     {providerFilter === "all" && <span className="material-symbols-outlined ml-auto text-[20px]">check</span>}
                   </button>
-                  <div className="my-1 h-px bg-black/10 dark:bg-white/10" />
+                  <div className="my-1 h-px bg-black/10 dark:!bg-[#1E293B]" />
                   <div className="max-h-72 overflow-y-auto pr-1">
                     {providerOptions.map((provider) => (
                       <button
                         key={provider}
                         type="button"
                         onClick={() => { setProviderFilter(provider); setProviderMenuOpen(false); }}
-                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${providerFilter === provider ? "bg-primary/10 text-primary" : "text-text-primary hover:bg-black/5 dark:hover:bg-white/10"}`}
+                        className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${providerFilter === provider ? "bg-primary/10 text-primary" : "text-text-primary hover:bg-black/5 dark:hover:!bg-[#1E293B]"}`}
                       >
                         <ProviderIcon
                           src={providerIconPath(provider)}
@@ -617,7 +617,7 @@ export default function ProviderLimits() {
           {/* Auto-refresh toggle */}
           <button
             onClick={() => setAutoRefresh((prev) => !prev)}
-            className="flex h-8 shrink-0 items-center gap-1 rounded-lg border border-black/10 px-2 text-xs transition-colors hover:bg-black/5 dark:!border-[#334155] dark:hover:!bg-[#334155]"
+            className="flex h-8 shrink-0 items-center gap-1 rounded-lg border border-black/10 px-2 text-xs transition-colors hover:bg-black/5 dark:!border-[#334155] dark:!bg-[#111827] dark:!text-white dark:hover:!bg-[#1E293B]"
             title={autoRefresh ? "Disable auto-refresh" : "Enable auto-refresh"}
           >
             <span
@@ -627,7 +627,7 @@ export default function ProviderLimits() {
             >
               {autoRefresh ? "toggle_on" : "toggle_off"}
             </span>
-            <span className="hidden text-text-primary sm:inline">Auto-refresh</span>
+            <span className="hidden text-text-primary sm:inline dark:!text-white">Auto-refresh</span>
             {autoRefresh && (
               <span className="text-[10px] text-text-muted dark:!text-[#CBD5E1] tabular-nums">({countdown}s)</span>
             )}
@@ -638,7 +638,7 @@ export default function ProviderLimits() {
             type="button"
             onClick={refreshAll}
             disabled={refreshingAll}
-            className="flex h-8 shrink-0 items-center gap-1 rounded-lg border border-black/10 px-2 text-xs text-text-primary transition-colors hover:bg-black/5 dark:!border-[#334155] dark:hover:!bg-[#334155] disabled:opacity-50"
+            className="flex h-8 shrink-0 items-center gap-1 rounded-lg border border-black/10 px-2 text-xs text-text-primary transition-colors hover:bg-black/5 dark:!border-[#334155] dark:!bg-[#111827] dark:!text-white dark:hover:!bg-[#1E293B] disabled:opacity-50"
             title="Refresh all"
           >
             <span className={`material-symbols-outlined text-[14px] ${refreshingAll ? "animate-spin" : ""}`}>refresh</span>
@@ -661,9 +661,9 @@ export default function ProviderLimits() {
             <Card
               key={conn.id}
               padding="none"
-              className={`min-w-0 ${isInactive ? "opacity-60" : ""}`}
+              className={`min-w-0 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 ${isInactive ? "opacity-60" : ""}`}
             >
-              <div className="px-3 py-2 border-b border-[rgba(255,255,255,0.08)]">
+              <div className="px-3 py-2 border-b border-[rgba(255,255,255,0.08)] dark:!border-[#334155]">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2 min-w-0">
                     <div className="w-8 h-8 shrink-0 rounded-md flex items-center justify-center overflow-hidden">
@@ -678,7 +678,7 @@ export default function ProviderLimits() {
                       />
                     </div>
                     <div className="min-w-0">
-                      <h3 className="text-sm font-semibold text-text-primary capitalize truncate">
+                      <h3 className="text-sm font-semibold text-text-primary capitalize truncate dark:!text-white">
                         {conn.provider}
                       </h3>
                       {(() => {
@@ -699,7 +699,7 @@ export default function ProviderLimits() {
                       type="button"
                       onClick={() => refreshProvider(conn.id, conn.provider)}
                       disabled={isLoading || rowBusy}
-                      className="p-1.5 rounded-lg hover:bg-[rgba(255,255,255,0.05)] transition-colors disabled:opacity-50"
+                      className="p-1.5 rounded-lg hover:bg-[rgba(255,255,255,0.05)] transition-colors disabled:opacity-50 dark:hover:!bg-[#1E293B]"
                       title="Refresh quota"
                     >
                       <span
@@ -715,7 +715,7 @@ export default function ProviderLimits() {
                         setShowEditModal(true);
                       }}
                       disabled={rowBusy}
-                      className="p-1.5 rounded-lg hover:bg-[rgba(255,255,255,0.05)] text-text-muted dark:!text-[#CBD5E1] hover:text-primary transition-colors disabled:opacity-50"
+                      className="p-1.5 rounded-lg hover:bg-[rgba(255,255,255,0.05)] text-text-muted dark:!text-[#CBD5E1] hover:text-primary transition-colors disabled:opacity-50 dark:hover:!bg-[#1E293B]"
                       title="Edit connection"
                     >
                       <span className="material-symbols-outlined text-[18px]">
@@ -790,7 +790,7 @@ export default function ProviderLimits() {
                     <QuotaTable quotas={quota?.quotas} compact />
                     {/* MiMo SGP: show ID + handle expired/error */}
                     {conn.provider === "xiaomi-mimo-plan-sgp" && (
-                      <div className="px-3 py-2 border-t border-[rgba(255,255,255,0.08)]">
+                      <div className="px-3 py-2 border-t border-[rgba(255,255,255,0.08)] dark:!border-[#334155]">
                         {quota?.raw?.profile?.data ? (
                           <div className="flex flex-wrap gap-x-4 gap-y-1 text-xs text-text-muted dark:!text-[#CBD5E1]">
                             {quota.raw.profile.data.userId && (

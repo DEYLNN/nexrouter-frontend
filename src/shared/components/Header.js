@@ -268,12 +268,12 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
                 display: "flex", alignItems: "center", justifyContent: "center",
                 width: "34px", height: "34px", borderRadius: "9px",
                 background: "transparent", border: "none",
-                color: "var(--theme-shell-text-muted)", cursor: "pointer",
+                color: isDark ? "#E5E7EB" : "var(--theme-shell-text-muted)", cursor: "pointer",
                 transition: "all 150ms ease", flexShrink: 0,
               }}
               className="lg:hidden"
-              onMouseEnter={e => { e.currentTarget.style.background = "var(--theme-shell-hover)"; e.currentTarget.style.color = "var(--theme-shell-text)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--theme-shell-text-muted)"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = isDark ? "#1E293B" : "var(--theme-shell-hover)"; e.currentTarget.style.color = isDark ? "#FFFFFF" : "var(--theme-shell-text)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = isDark ? "#E5E7EB" : "var(--theme-shell-text-muted)"; }}
             >
               {I.menu}
             </button>
@@ -294,11 +294,11 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
                 </div>
               )}
               <div style={{ minWidth: 0 }}>
-                <div style={{ fontSize: "14px", fontWeight: 600, color: "var(--theme-shell-text)", letterSpacing: "-0.02em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                <div style={{ fontSize: "14px", fontWeight: 700, color: isDark ? "#FFFFFF" : "var(--theme-shell-text)", letterSpacing: "-0.02em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                   {translate(current.label)}
                 </div>
                 {parent && (
-                  <div className="hidden lg:block" style={{ fontSize: "12px", color: "var(--theme-shell-text-subtle)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                  <div className="hidden lg:block" style={{ fontSize: "12px", color: isDark ? "#CBD5E1" : "var(--theme-shell-text-subtle)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                     {translate(parent.label)} settings
                   </div>
                 )}
@@ -307,11 +307,11 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
           );
         })() : title ? (
           <div style={{ display: "flex", alignItems: "center", gap: "8px", minWidth: 0 }}>
-            <span style={{ fontSize: "14px", fontWeight: 600, color: "var(--theme-shell-text)", letterSpacing: "-0.02em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <span style={{ fontSize: "14px", fontWeight: 700, color: isDark ? "#FFFFFF" : "var(--theme-shell-text)", letterSpacing: "-0.02em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
               {translate(title)}
             </span>
             {description && (
-              <span className="hidden lg:block" style={{ fontSize: "12px", color: "var(--theme-shell-text-subtle)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+              <span className="hidden lg:block" style={{ fontSize: "12px", color: isDark ? "#CBD5E1" : "var(--theme-shell-text-subtle)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {translate(description)}
               </span>
             )}

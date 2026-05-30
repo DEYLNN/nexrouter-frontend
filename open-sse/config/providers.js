@@ -139,6 +139,10 @@ export const PROVIDERS = {
     baseUrl: "https://api.routeway.ai/v1/chat/completions",
     format: "openai"
   },
+  am: {
+    baseUrl: "https://aimux.id/v1/chat/completions",
+    format: "openai"
+  },
   aimux: {
     baseUrl: "https://aimux.id/v1/chat/completions",
     format: "openai"

@@ -564,14 +564,17 @@ button {
 
 .dark {
   /* Shell variables (sidebar + header) — cool dark glass */
-  --theme-shell-bg: rgba(7, 10, 18, 0.82);
+  --theme-shell-bg: rgba(6, 10, 18, 0.78);
+  --theme-shell-bg-strong: rgba(9, 14, 25, 0.92);
   --theme-shell-border: rgba(148, 163, 184, 0.14);
+  --theme-shell-border-strong: rgba(96, 165, 250, 0.22);
   --theme-shell-hover: rgba(148, 163, 184, 0.10);
-  --theme-shell-active-bg: rgba(59, 130, 246, 0.16);
+  --theme-shell-active-bg: linear-gradient(135deg, rgba(59, 130, 246, 0.22), rgba(14, 165, 233, 0.10));
   --theme-shell-text: #F8FAFC;
   --theme-shell-text-muted: #CBD5E1;
   --theme-shell-text-subtle: rgba(148, 163, 184, 0.74);
   --theme-shell-accent: #60A5FA;
+  --theme-shell-glow: rgba(59, 130, 246, 0.24);
 }
 
 /* Reusable theme utilities — opt-in only; not applied globally in Step 1 */

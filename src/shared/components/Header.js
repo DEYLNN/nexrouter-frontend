@@ -244,16 +244,26 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
       margin: "10px 12px 0",
       padding: "0 clamp(12px, 2vw, 18px)",
       background: "var(--theme-shell-bg)",
-      backdropFilter: "blur(14px)",
-      WebkitBackdropFilter: "blur(14px)",
+      backdropFilter: "blur(18px) saturate(1.35)",
+      WebkitBackdropFilter: "blur(18px) saturate(1.35)",
       border: "1px solid var(--theme-shell-border)",
-      borderRadius: "12px",
-      boxShadow: "var(--shadow-elevated)",
+      borderRadius: "14px",
+      boxShadow: "0 18px 42px -30px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)",
       flexShrink: 0,
       zIndex: 20,
       position: "sticky",
       top: 12,
+      overflow: "hidden",
     }}>
+      <div aria-hidden="true" className="hidden dark:block" style={{
+        position: "absolute", inset: 0, pointerEvents: "none",
+        background: "linear-gradient(90deg, rgba(59,130,246,0.10), transparent 34%, rgba(14,165,233,0.08))",
+        opacity: 0.8,
+      }} />
+      <div aria-hidden="true" className="hidden dark:block" style={{
+        position: "absolute", left: 18, right: 18, bottom: -1, height: 1,
+        background: "linear-gradient(90deg, transparent, var(--theme-shell-border-strong), transparent)",
+      }} />
 
       {/* Left */}
       <div style={{ display: "flex", alignItems: "center", gap: "10px", minWidth: 0, flex: 1 }}>

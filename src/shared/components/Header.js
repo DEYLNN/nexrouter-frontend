@@ -244,11 +244,11 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
       margin: "10px 12px 0",
       padding: "0 clamp(12px, 2vw, 18px)",
       background: "var(--theme-shell-bg)",
-      backdropFilter: "blur(18px) saturate(1.35)",
-      WebkitBackdropFilter: "blur(18px) saturate(1.35)",
+      backdropFilter: "blur(10px) saturate(1.1)",
+      WebkitBackdropFilter: "blur(10px) saturate(1.1)",
       border: "1px solid var(--theme-shell-border)",
       borderRadius: "14px",
-      boxShadow: "0 18px 42px -30px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.06)",
+      boxShadow: "0 18px 44px -32px rgba(0,0,0,0.82), inset 0 1px 0 rgba(255,255,255,0.025)",
       flexShrink: 0,
       zIndex: 20,
       position: "sticky",
@@ -257,8 +257,8 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
     }}>
       <div aria-hidden="true" className="hidden dark:block" style={{
         position: "absolute", inset: 0, pointerEvents: "none",
-        background: "linear-gradient(90deg, rgba(59,130,246,0.10), transparent 34%, rgba(14,165,233,0.08))",
-        opacity: 0.8,
+        background: "linear-gradient(90deg, rgba(37,99,235,0.08), transparent 38%, rgba(15,23,42,0.22))",
+        opacity: 0.55,
       }} />
       <div aria-hidden="true" className="hidden dark:block" style={{
         position: "absolute", left: 18, right: 18, bottom: -1, height: 1,

@@ -208,22 +208,22 @@ export default function Sidebar({ onClose, forceExpanded }) {
         height: "100%",
         margin: "0",
         background: "var(--theme-shell-bg)",
-        backdropFilter: "blur(18px) saturate(1.35)",
-        WebkitBackdropFilter: "blur(18px) saturate(1.35)",
+        backdropFilter: "blur(10px) saturate(1.1)",
+        WebkitBackdropFilter: "blur(10px) saturate(1.1)",
         border: "1px solid var(--theme-shell-border)",
         borderLeft: "none",
         borderTop: "none",
         borderBottom: "none",
         borderRadius: "0",
-        boxShadow: "14px 0 44px -34px rgba(0,0,0,0.62), inset -1px 0 0 rgba(255,255,255,0.03)",
+        boxShadow: "16px 0 48px -34px rgba(0,0,0,0.86), inset -1px 0 0 rgba(255,255,255,0.02)",
         transition: "width 180ms cubic-bezier(0.4,0,0.2,1)",
         overflow: "hidden",
         flexShrink: 0,
       }}>
         <div aria-hidden="true" className="hidden dark:block" style={{
           position: "absolute", inset: 0, pointerEvents: "none",
-          background: "radial-gradient(circle at 50% 0%, rgba(59,130,246,0.16), transparent 34%), linear-gradient(180deg, rgba(255,255,255,0.045), transparent 22%)",
-          opacity: 0.9,
+          background: "radial-gradient(circle at 50% 0%, rgba(37,99,235,0.10), transparent 32%), linear-gradient(180deg, rgba(255,255,255,0.018), transparent 22%)",
+          opacity: 0.62,
         }} />
         <div aria-hidden="true" className="hidden dark:block" style={{
           position: "absolute", top: 0, right: 0, bottom: 0, width: 1,

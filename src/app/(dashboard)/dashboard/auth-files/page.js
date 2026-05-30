@@ -211,19 +211,19 @@ export default function AuthFilesPage() {
 
   return (
     <div className="space-y-5">
-      <Card className="p-5 bg-gradient-to-br from-sidebar to-bg border-border">
+      <Card className="p-5 bg-gradient-to-br from-sidebar to-bg border-border dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
           <div>
             <div className="flex items-center gap-2">
               <span className="material-symbols-outlined text-primary">vpn_key</span>
-              <h2 className="text-xl font-semibold text-text-main">Auth Files</h2>
-              <span className="rounded-full bg-sidebar px-2 py-0.5 text-xs text-text-muted">{payload.total}</span>
+              <h2 className="text-xl font-semibold text-text-main dark:!text-white">Auth Files</h2>
+              <span className="rounded-full bg-sidebar px-2 py-0.5 text-xs text-text-muted dark:!bg-[#111827] dark:!text-[#CBD5E1]">{payload.total}</span>
             </div>
-            <p className="mt-1 text-sm text-text-muted">Map provider accounts from the local database with secrets safely masked.</p>
-            <code className="mt-3 block truncate rounded-lg bg-bg px-3 py-2 text-xs text-text-muted">{payload.dataPath || "Loading data path..."}</code>
+            <p className="mt-1 text-sm text-text-muted dark:!text-[#E5E7EB]">Map provider accounts from the local database with secrets safely masked.</p>
+            <code className="mt-3 block truncate rounded-lg bg-bg px-3 py-2 text-xs text-text-muted dark:!bg-[#111827] dark:!text-[#CBD5E1]">{payload.dataPath || "Loading data path..."}</code>
           </div>
           <div className="flex flex-wrap gap-2">
-            <label className="inline-flex h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-border bg-sidebar px-4 text-sm font-medium text-text-main transition hover:border-primary/50 disabled:opacity-50">
+            <label className="inline-flex h-10 cursor-pointer items-center justify-center gap-2 rounded-lg border border-border bg-sidebar px-4 text-sm font-medium text-text-main transition hover:border-primary/50 disabled:opacity-50 dark:!bg-[#111827] dark:!border-[#334155] dark:!text-white dark:hover:!border-[#64748B]">
               <span className="material-symbols-outlined text-[18px]">upload_file</span>
               {importing ? "Importing..." : "Upload JSON"}
               <input type="file" accept="application/json,.json" multiple className="hidden" onChange={importAuthFiles} disabled={importing} />
@@ -235,7 +235,7 @@ export default function AuthFilesPage() {
         {deleteMessage && <p className={`mt-3 rounded-lg p-2 text-xs ${deleteMessage.type === "ok" ? "bg-emerald-500/10 text-emerald-500" : "bg-red-500/10 text-red-500"}`}>{deleteMessage.text}</p>}
       </Card>
 
-      <Card className="p-4">
+      <Card className="p-4 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
         <div className="grid gap-3 lg:grid-cols-[1fr_260px_190px]">
           <Input value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Filter by name, type, provider. Use * as wildcard" />
 
@@ -243,29 +243,29 @@ export default function AuthFilesPage() {
             <button
               type="button"
               onClick={() => setProviderDropdownOpen((v) => !v)}
-              className="flex h-10 w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface px-3 text-left text-sm text-text-main transition-colors hover:border-primary/40 hover:bg-primary/5"
+              className="flex h-10 w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface px-3 text-left text-sm text-text-main transition-colors hover:border-primary/40 hover:bg-primary/5 dark:!bg-[#111827] dark:!border-[#334155] dark:!text-white dark:hover:!border-[#64748B] dark:hover:!bg-[#1E293B]"
             >
               <span className="flex min-w-0 items-center gap-2">
                 {selectedProvider.id === "all" ? (
-                  <span className="material-symbols-outlined text-[18px] text-text-muted">apps</span>
+                  <span className="material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1]">apps</span>
                 ) : (
                   <ProviderIcon src={`/providers/${selectedProvider.id}.png`} alt={selectedProvider.label} size={20} className="size-5 rounded object-contain" fallbackText={selectedProvider.label.slice(0, 2).toUpperCase()} />
                 )}
                 <span className="truncate">{selectedProvider.label}</span>
-                <span className="rounded-full bg-sidebar px-1.5 py-0.5 text-[10px] text-text-muted">{selectedProvider.count}</span>
+                <span className="rounded-full bg-sidebar px-1.5 py-0.5 text-[10px] text-text-muted dark:!bg-[#0B1220] dark:!text-[#CBD5E1]">{selectedProvider.count}</span>
               </span>
-              <span className="material-symbols-outlined text-[18px] text-text-muted">expand_more</span>
+              <span className="material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1]">expand_more</span>
             </button>
             {providerDropdownOpen && (
               <>
                 <button type="button" className="fixed inset-0 z-30 bg-transparent" onClick={() => setProviderDropdownOpen(false)} aria-label="Close provider filter" />
-                <div className="absolute left-0 right-0 z-40 mt-2 max-h-80 overflow-y-auto rounded-2xl border border-border bg-surface/95 p-1.5 shadow-xl shadow-black/10 backdrop-blur">
+                <div className="absolute left-0 right-0 z-40 mt-2 max-h-80 overflow-y-auto rounded-2xl border border-border bg-surface/95 p-1.5 shadow-xl shadow-black/10 backdrop-blur dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-black/40">
                   {[{ id: "all", label: "All provider types", count: payload.total }, ...providerTypes].map((item) => (
                     <button
                       key={item.id}
                       type="button"
                       onClick={() => { setProviderType(item.id); setProviderDropdownOpen(false); }}
-                      className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${providerType === item.id ? "bg-primary/10 text-primary" : "text-text-main hover:bg-primary/5"}`}
+                      className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${providerType === item.id ? "bg-primary/10 text-primary" : "text-text-main hover:bg-primary/5 dark:!text-white dark:hover:!bg-[#1E293B]"}`}
                     >
                       {item.id === "all" ? (
                         <span className="material-symbols-outlined text-[20px]">apps</span>
@@ -273,7 +273,7 @@ export default function AuthFilesPage() {
                         <ProviderIcon src={`/providers/${item.id}.png`} alt={item.label} size={22} className="size-[22px] rounded object-contain" fallbackText={item.label.slice(0, 2).toUpperCase()} />
                       )}
                       <span className="min-w-0 flex-1 truncate">{item.label}</span>
-                      <span className="rounded-full bg-sidebar px-1.5 py-0.5 text-[10px] text-text-muted">{item.count}</span>
+                      <span className="rounded-full bg-sidebar px-1.5 py-0.5 text-[10px] text-text-muted dark:!bg-[#0B1220] dark:!text-[#CBD5E1]">{item.count}</span>
                       {providerType === item.id && <span className="material-symbols-outlined text-[18px]">check</span>}
                     </button>
                   ))}
@@ -288,15 +288,15 @@ export default function AuthFilesPage() {
               onClick={() => setSortDropdownOpen((v) => !v)}
               className="flex h-10 w-full items-center justify-between gap-3 rounded-xl border border-border bg-surface px-3 text-sm text-text-main transition-colors hover:border-primary/40 hover:bg-primary/5"
             >
-              <span className="flex items-center gap-2"><span className="material-symbols-outlined text-[18px] text-text-muted">sort</span>{sortLabels[sort]}</span>
-              <span className="material-symbols-outlined text-[18px] text-text-muted">expand_more</span>
+              <span className="flex items-center gap-2"><span className="material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1]">sort</span>{sortLabels[sort]}</span>
+              <span className="material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1]">expand_more</span>
             </button>
             {sortDropdownOpen && (
               <>
                 <button type="button" className="fixed inset-0 z-30 bg-transparent" onClick={() => setSortDropdownOpen(false)} aria-label="Close sort filter" />
-                <div className="absolute left-0 right-0 z-40 mt-2 rounded-2xl border border-border bg-surface/95 p-1.5 shadow-xl shadow-black/10 backdrop-blur">
+                <div className="absolute left-0 right-0 z-40 mt-2 rounded-2xl border border-border bg-surface/95 p-1.5 shadow-xl shadow-black/10 backdrop-blur dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-black/40">
                   {Object.entries(sortLabels).map(([key, label]) => (
-                    <button key={key} type="button" onClick={() => { setSort(key); setSortDropdownOpen(false); }} className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${sort === key ? "bg-primary/10 text-primary" : "text-text-main hover:bg-primary/5"}`}>
+                    <button key={key} type="button" onClick={() => { setSort(key); setSortDropdownOpen(false); }} className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${sort === key ? "bg-primary/10 text-primary" : "text-text-main hover:bg-primary/5 dark:!text-white dark:hover:!bg-[#1E293B]"}`}>
                       {label}
                       {sort === key && <span className="material-symbols-outlined text-[18px]">check</span>}
                     </button>
@@ -307,41 +307,41 @@ export default function AuthFilesPage() {
           </div>
         </div>
         <div className="mt-3 flex flex-wrap gap-2 text-xs">
-          <button onClick={() => setOnlyProblem((v) => !v)} className={`rounded-full px-3 py-1 ${onlyProblem ? "bg-red-500 text-white" : "bg-sidebar text-text-muted"}`}>Problematic {problemCount}</button>
-          <button onClick={() => setOnlyDisabled((v) => !v)} className={`rounded-full px-3 py-1 ${onlyDisabled ? "bg-amber-500 text-white" : "bg-sidebar text-text-muted"}`}>Disabled {disabledCount}</button>
+          <button onClick={() => setOnlyProblem((v) => !v)} className={`rounded-full px-3 py-1 ${onlyProblem ? "bg-red-500 text-white" : "bg-sidebar text-text-muted dark:!bg-[#111827] dark:!text-[#CBD5E1]"}`}>Problematic {problemCount}</button>
+          <button onClick={() => setOnlyDisabled((v) => !v)} className={`rounded-full px-3 py-1 ${onlyDisabled ? "bg-amber-500 text-white" : "bg-sidebar text-text-muted dark:!bg-[#111827] dark:!text-[#CBD5E1]"}`}>Disabled {disabledCount}</button>
         </div>
       </Card>
 
       <div className="grid min-w-0 grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
         {files.map((file) => (
-          <Card key={file.id} className="min-w-0 overflow-hidden p-3 sm:p-4">
+          <Card key={file.id} className="min-w-0 overflow-hidden p-3 sm:p-4 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
             <div className="flex min-w-0 items-start gap-3">
               <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary sm:size-11">
                 <span className="material-symbols-outlined">key</span>
               </div>
               <div className="min-w-0 flex-1">
                 <div className="flex flex-wrap items-center gap-2">
-                  <span className="max-w-full truncate rounded bg-sidebar px-2 py-0.5 text-[10px] font-semibold text-text-muted">{file.providerLabel}</span>
+                  <span className="max-w-full truncate rounded bg-sidebar px-2 py-0.5 text-[10px] font-semibold text-text-muted dark:!bg-[#111827] dark:!text-[#CBD5E1]">{file.providerLabel}</span>
                   <span className={`rounded px-2 py-0.5 text-[10px] font-semibold ${badgeClass(file.isActive ? "ok" : "warn")}`}>{file.isActive ? "Enabled" : "Disabled"}</span>
                   {file.problem && <span className="rounded bg-red-500/15 px-2 py-0.5 text-[10px] font-semibold text-red-500">{file.problem}</span>}
                 </div>
-                <h3 className="mt-2 break-all text-sm font-semibold text-text-main sm:truncate sm:text-base" title={file.filename}>{file.filename}</h3>
-                <p className="text-xs text-text-muted">{file.authType} / priority {file.priority} / {file.secretCount} secret fields</p>
+                <h3 className="mt-2 break-all text-sm font-semibold text-text-main sm:truncate sm:text-base dark:!text-white" title={file.filename}>{file.filename}</h3>
+                <p className="text-xs text-text-muted dark:!text-[#CBD5E1]">{file.authType} / priority {file.priority} / {file.secretCount} secret fields</p>
               </div>
             </div>
 
-            <div className="mt-4 grid grid-cols-1 gap-2 text-xs text-text-muted sm:grid-cols-2">
-              <div className="min-w-0">Updated<br /><span className="break-words text-text-main">{fmtDate(file.updatedAt)}</span></div>
-              <div className="min-w-0">Status<br /><span className="break-words text-text-main">{file.testStatus}</span></div>
+            <div className="mt-4 grid grid-cols-1 gap-2 text-xs text-text-muted sm:grid-cols-2 dark:!text-[#CBD5E1]">
+              <div className="min-w-0">Updated<br /><span className="break-words text-text-main dark:!text-white">{fmtDate(file.updatedAt)}</span></div>
+              <div className="min-w-0">Status<br /><span className="break-words text-text-main dark:!text-white">{file.testStatus}</span></div>
             </div>
 
             {file.jwtMeta && (
-              <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-3 text-xs">
+              <div className="mt-4 rounded-xl border border-primary/20 bg-primary/5 p-3 text-xs dark:!bg-[#111827] dark:!border-[#334155]">
                 <div className="mb-2 flex items-center justify-between gap-2">
-                  <span className="font-semibold text-text-main">Access token profile</span>
+                  <span className="font-semibold text-text-main dark:!text-white">Access token profile</span>
                   {file.jwtMeta.planType && <span className={`rounded-full px-2 py-0.5 font-semibold ${planBadgeClass(file.jwtMeta.planType)}`}>{file.jwtMeta.planType}</span>}
                 </div>
-                <div className="grid gap-2 text-text-muted">
+                <div className="grid gap-2 text-text-muted dark:!text-[#CBD5E1]">
                   <div>Email<br /><span className="break-all text-text-main">{file.jwtMeta.email || "-"}</span></div>
                   <div>Subject<br /><span className="break-all font-mono text-text-main">{file.jwtMeta.subject || "-"}</span></div>
                   <div>Token expires<br /><span className={file.jwtMeta.isExpired ? "text-red-500" : "text-text-main"}>{fmtDate(file.jwtMeta.expiresAt)} ({fmtDuration(file.jwtMeta.expiresInSeconds)})</span></div>
@@ -365,14 +365,14 @@ export default function AuthFilesPage() {
 
             <div className="mt-4 space-y-2">
               {file.secrets.length ? file.secrets.map((secret) => (
-                <div key={secret.field} className="flex min-w-0 flex-col gap-2 rounded-lg bg-sidebar px-3 py-2 text-xs sm:flex-row sm:items-center sm:justify-between">
-                  <span className="font-mono text-text-main">{secret.field}</span>
+                <div key={secret.field} className="flex min-w-0 flex-col gap-2 rounded-lg bg-sidebar px-3 py-2 text-xs sm:flex-row sm:items-center sm:justify-between dark:!bg-[#111827]">
+                  <span className="font-mono text-text-main dark:!text-white">{secret.field}</span>
                   <div className="flex min-w-0 items-center gap-2 sm:justify-end">
-                    <span className="min-w-0 flex-1 break-all font-mono text-text-muted sm:text-right">{secret.preview} / {secret.length} chars</span>
+                    <span className="min-w-0 flex-1 break-all font-mono text-text-muted sm:text-right dark:!text-[#CBD5E1]">{secret.preview} / {secret.length} chars</span>
                     <button
                       type="button"
                       onClick={() => handleCopy(`${file.id}:${secret.field}`, secret.value)}
-                      className="flex size-7 shrink-0 items-center justify-center rounded-md text-text-muted transition-colors hover:bg-bg hover:text-primary"
+                      className="flex size-7 shrink-0 items-center justify-center rounded-md text-text-muted transition-colors hover:bg-bg hover:text-primary dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B]"
                       title={`Copy ${secret.field}`}
                     >
                       <span className="material-symbols-outlined text-[16px]">
@@ -381,14 +381,14 @@ export default function AuthFilesPage() {
                     </button>
                   </div>
                 </div>
-              )) : <div className="rounded-lg bg-sidebar px-3 py-2 text-xs text-text-muted">No secret fields detected</div>}
+              )) : <div className="rounded-lg bg-sidebar px-3 py-2 text-xs text-text-muted dark:!bg-[#111827] dark:!text-[#CBD5E1]">No secret fields detected</div>}
             </div>
 
             <div className="mt-4 grid grid-cols-1 gap-2 sm:grid-cols-2">
               <button
                 type="button"
                 onClick={() => downloadJson(file.filename, file.exportJson)}
-                className="flex w-full items-center justify-center gap-2 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-text-muted transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
+                className="flex w-full items-center justify-center gap-2 rounded-lg border border-border px-3 py-2 text-xs font-semibold text-text-muted transition-colors hover:border-primary/40 hover:bg-primary/10 hover:text-primary dark:!border-[#334155] dark:!text-[#CBD5E1] dark:hover:!border-[#64748B] dark:hover:!bg-[#1E293B] dark:hover:!text-white"
               >
                 <span className="material-symbols-outlined text-[16px]">download</span>
                 Download JSON

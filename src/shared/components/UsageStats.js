@@ -39,40 +39,40 @@ function TimeAgo({ timestamp }) {
 
 function RecentRequests({ requests = [] }) {
   return (
-    <Card className="flex min-w-0 flex-col overflow-hidden" padding="sm" style={{ height: 480 }}>
+    <Card className="flex min-w-0 flex-col overflow-hidden dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0" padding="sm" style={{ height: 480 }}>
       {/* Header */}
-      <div className="px-1 py-2 border-b border-border shrink-0">
-        <span className="text-xs font-semibold text-text-muted uppercase tracking-wide">Recent Requests</span>
+      <div className="px-1 py-2 border-b border-border dark:!border-[#334155] shrink-0">
+        <span className="text-xs font-semibold text-text-muted uppercase tracking-wide dark:!text-[#E5E7EB]">Recent Requests</span>
       </div>
 
       {!requests.length ? (
-        <div className="flex-1 flex items-center justify-center text-text-muted text-sm">No requests yet.</div>
+        <div className="flex-1 flex items-center justify-center text-text-muted text-sm dark:!text-[#CBD5E1]">No requests yet.</div>
       ) : (
         <div className="flex-1 overflow-y-auto">
           <table className="w-full min-w-[300px] border-collapse text-xs">
-            <thead className="sticky top-0 bg-bg z-10">
-              <tr className="border-b border-border">
-                <th className="py-1.5 text-left font-semibold text-text-muted w-2"></th>
-                <th className="py-1.5 text-left font-semibold text-text-muted">Model</th>
-                <th className="py-1.5 text-right font-semibold text-text-muted whitespace-nowrap">In / Out</th>
-                <th className="py-1.5 text-right font-semibold text-text-muted">When</th>
+            <thead className="sticky top-0 bg-bg dark:!bg-[#111827] z-10">
+              <tr className="border-b border-border dark:!border-[#334155]">
+                <th className="py-1.5 text-left font-semibold text-text-muted dark:!text-[#CBD5E1] w-2"></th>
+                <th className="py-1.5 text-left font-semibold text-text-muted dark:!text-[#CBD5E1]">Model</th>
+                <th className="py-1.5 text-right font-semibold text-text-muted dark:!text-[#CBD5E1] whitespace-nowrap">In / Out</th>
+                <th className="py-1.5 text-right font-semibold text-text-muted dark:!text-[#CBD5E1]">When</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-border/50">
+            <tbody className="divide-y divide-border/50 dark:divide-[#334155]">
               {requests.map((r, i) => {
                 const ok = !r.status || r.status === "ok" || r.status === "success";
                 return (
-                  <tr key={i} className="hover:bg-bg-subtle transition-colors">
+                  <tr key={i} className="hover:bg-bg-subtle dark:hover:!bg-[#1E293B] transition-colors">
                     <td className="py-1.5">
                       <span className={`block w-1.5 h-1.5 rounded-full ${ok ? "bg-success" : "bg-error"}`} />
                     </td>
-                    <td className="py-1.5 font-mono truncate max-w-[120px]" title={r.model}>{r.model}</td>
+                    <td className="py-1.5 font-mono truncate max-w-[120px] dark:!text-white" title={r.model}>{r.model}</td>
                     <td className="py-1.5 text-right whitespace-nowrap">
                       <span className="text-primary">{fmt(r.promptTokens)}↑</span>
                       {" "}
                       <span className="text-success">{fmt(r.completionTokens)}↓</span>
                     </td>
-                    <td className="py-1.5 text-right text-text-muted whitespace-nowrap"><TimeAgo timestamp={r.timestamp} /></td>
+                    <td className="py-1.5 text-right text-text-muted dark:!text-[#CBD5E1] whitespace-nowrap"><TimeAgo timestamp={r.timestamp} /></td>
                   </tr>
                 );
               })}
@@ -465,16 +465,16 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
             </select>
             <span className="material-symbols-outlined pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 text-[18px] text-text-muted">expand_more</span>
           </div>
-          <div className="grid grid-cols-2 items-center gap-1 rounded-lg border border-border bg-bg-subtle p-1 sm:flex">
+          <div className="grid grid-cols-2 items-center gap-1 rounded-lg border border-border bg-bg-subtle p-1 sm:flex dark:!bg-[#0B1220] dark:!border-[#334155]">
             <button
               onClick={() => setViewMode("costs")}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${viewMode === "costs" ? "bg-primary text-white shadow-sm" : "text-text-muted hover:text-text hover:bg-bg-hover"}`}
+              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${viewMode === "costs" ? "bg-primary text-white shadow-sm dark:!bg-[#1D4ED8]" : "text-text-muted hover:text-text hover:bg-bg-hover dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B] dark:hover:!text-white"}`}
             >
               Costs
             </button>
             <button
               onClick={() => setViewMode("tokens")}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${viewMode === "tokens" ? "bg-primary text-white shadow-sm" : "text-text-muted hover:text-text hover:bg-bg-hover"}`}
+              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${viewMode === "tokens" ? "bg-primary text-white shadow-sm dark:!bg-[#1D4ED8]" : "text-text-muted hover:text-text hover:bg-bg-hover dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B] dark:hover:!text-white"}`}
             >
               Tokens
             </button>

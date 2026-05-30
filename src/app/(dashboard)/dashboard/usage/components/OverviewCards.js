@@ -10,8 +10,8 @@ export default function OverviewCards({ stats }) {
   return (
     <div className="grid min-w-0 grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-4 sm:gap-4">
       <Card className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 flex min-w-0 flex-col gap-1 px-4 py-3.5">
-        <span className="text-[11px] tracking-[0.12em] text-text-muted dark:!text-[#CBD5E1] uppercase font-semibold">Total Requests</span>
-        <span className="truncate text-[26px] font-semibold theme-mono">{fmt(stats.totalRequests)}</span>
+        <span className="text-[11px] tracking-[0.12em] text-text-muted dark:!text-[#E5E7EB] uppercase font-semibold">Total Requests</span>
+        <span className="truncate text-[26px] font-semibold theme-mono dark:!text-white">{fmt(stats.totalRequests)}</span>
       </Card>
       <Card className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 flex min-w-0 flex-col gap-1 px-4 py-3.5">
         <span className="text-[11px] tracking-[0.12em] text-text-muted dark:!text-[#CBD5E1] uppercase font-semibold">Input Tokens</span>
@@ -24,7 +24,7 @@ export default function OverviewCards({ stats }) {
       <Card className="dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 flex min-w-0 flex-col gap-1 px-4 py-3.5">
         <span className="text-[11px] tracking-[0.12em] text-text-muted dark:!text-[#CBD5E1] uppercase font-semibold">Est. Cost</span>
         <span className="truncate text-[26px] font-semibold theme-mono" style={{ color: "var(--theme-accent-rose)" }}>~{fmtCost(stats.totalCost)}</span>
-        <span className="text-[10px] text-text-subtle">Estimated, not actual billing</span>
+        <span className="text-[10px] text-text-subtle dark:!text-[#94A3B8]">Estimated, not actual billing</span>
       </Card>
     </div>
   );

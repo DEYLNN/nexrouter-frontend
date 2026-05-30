@@ -114,7 +114,7 @@ const IconX = () => (
 // ─── stat card ───────────────────────────────────────────────────────────────
 function StatCard({ label, value, sub, icon: Icon, accent }) {
   return (
-    <div style={{
+    <div className="dark:!bg-[#0B1220] dark:!border-[#334155]" style={{
       background: "var(--color-surface)",
       border: "1px solid var(--color-border)",
       borderRadius: "10px",
@@ -128,7 +128,7 @@ function StatCard({ label, value, sub, icon: Icon, accent }) {
         <span style={{ fontSize: "11px", fontWeight: 500, color: "var(--color-text-muted)", textTransform: "uppercase", letterSpacing: "0.06em" }}>{label}</span>
         <span style={{ color: accent || "var(--color-primary)", opacity: 0.8 }}><Icon /></span>
       </div>
-      <div style={{ fontSize: "22px", fontWeight: 600, color: "var(--color-text-main)", letterSpacing: "-0.03em", lineHeight: 1 }}>{value}</div>
+      <div style={{ fontSize: "22px", fontWeight: 600, color: isDark ? "#FFFFFF" : "var(--color-text-main)", letterSpacing: "-0.03em", lineHeight: 1 }}>{value}</div>
       {sub && <div style={{ fontSize: "11px", color: "var(--color-text-subtle)" }}>{sub}</div>}
     </div>
   );
@@ -148,7 +148,7 @@ function LogRow({ entry }) {
         <div className="flex h-10 w-10 items-center justify-center rounded-xl shadow-sm" style={{ background: `linear-gradient(135deg, ${color}22, ${color}0a)`, border: `1px solid ${color}30` }}>
           <ProviderIcon src={providerIconPath(entry.provider)} alt={label} size={24} className="h-6 w-6 rounded-lg object-cover" fallbackText={label.slice(0, 2).toUpperCase()} />
         </div>
-        <span className={`absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full ring-2 ring-[rgba(255,248,220,0.95)] ${isOk ? "bg-emerald-500" : "bg-red-500"}`} aria-hidden="true">
+        <span className={`absolute -bottom-0.5 -right-0.5 flex h-3.5 w-3.5 items-center justify-center rounded-full ring-2 ring-[rgba(255,248,220,0.95)] dark:!ring-[#0B1220] ${isOk ? "bg-emerald-500" : "bg-red-500"}`} aria-hidden="true">
           <span className="h-1.5 w-1.5 rounded-full bg-white" />
         </span>
       </div>
@@ -160,7 +160,7 @@ function LogRow({ entry }) {
           <div className="min-w-0 flex-1">
             <div className="truncate font-mono text-[13px] font-semibold text-text-main dark:!text-white">{entry.model}</div>
           </div>
-          <div className="flex flex-shrink-0 items-center gap-1.5 text-[11px] text-text-subtle">
+          <div className="flex flex-shrink-0 items-center gap-1.5 text-[11px] text-text-subtle dark:!text-[#CBD5E1]">
             <IconClock />
             <span>{relativeTime(entry.timestamp)}</span>
           </div>
@@ -171,7 +171,7 @@ function LogRow({ entry }) {
           <span className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider" style={{ color, background: `${color}14` }}>
             {label}
           </span>
-          <span className="inline-flex items-center gap-1 text-[11px] text-text-subtle">
+          <span className="inline-flex items-center gap-1 text-[11px] text-text-subtle dark:!text-[#CBD5E1]">
             <IconUser />
             <span className="truncate">{entry.account}</span>
           </span>
@@ -179,11 +179,11 @@ function LogRow({ entry }) {
 
         {/* Token stats row */}
         <div className="flex flex-wrap items-center gap-2">
-          <div className="inline-flex items-center gap-1.5 rounded-md border border-[rgba(23,33,27,0.08)] bg-[rgba(255,248,220,0.56)] px-2 py-1">
+          <div className="inline-flex items-center gap-1.5 rounded-md border border-[rgba(23,33,27,0.08)] bg-[rgba(255,248,220,0.56)] px-2 py-1 dark:!border-[#334155] dark:!bg-[#111827]">
             <span className="text-[9px] font-bold uppercase tracking-wider text-purple-400">In</span>
             <span className="font-mono text-[11px] font-semibold text-text-main dark:!text-white">{fmt(entry.inputTokens)}</span>
           </div>
-          <div className="inline-flex items-center gap-1.5 rounded-md border border-[rgba(23,33,27,0.08)] bg-[rgba(255,248,220,0.56)] px-2 py-1">
+          <div className="inline-flex items-center gap-1.5 rounded-md border border-[rgba(23,33,27,0.08)] bg-[rgba(255,248,220,0.56)] px-2 py-1 dark:!border-[#334155] dark:!bg-[#111827]">
             <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400">Out</span>
             <span className="font-mono text-[11px] font-semibold text-text-main dark:!text-white">{fmt(entry.outputTokens)}</span>
           </div>
@@ -207,6 +207,7 @@ function LogRowMobile({ entry }) {
 
 // ─── main component ───────────────────────────────────────────────────────────
 export default function RequestLogsTable() {
+  const { isDark } = useTheme();
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -320,12 +321,12 @@ export default function RequestLogsTable() {
             placeholder="Search model, account..."
             style={{
               width: "100%", boxSizing: "border-box",
-              background: "rgba(255,248,220,0.62)",
-              border: "1px solid var(--color-border)",
+              background: isDark ? "#111827" : "rgba(255,248,220,0.62)",
+              border: isDark ? "1px solid #334155" : "1px solid var(--color-border)",
               borderRadius: "7px",
               padding: "7px 10px 7px 30px",
               fontSize: "13px",
-              color: "var(--color-text-main)",
+              color: isDark ? "#FFFFFF" : "var(--color-text-main)",
               outline: "none",
             }}
           />
@@ -341,7 +342,7 @@ export default function RequestLogsTable() {
           <button
             type="button"
             onClick={() => setProviderDropdownOpen((v) => !v)}
-            className="flex h-9 min-w-[190px] items-center justify-between gap-3 rounded-xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.72)] px-3 text-left text-[12px] text-text-main dark:!text-white transition-colors hover:border-[rgba(14,142,142,0.32)] hover:bg-[rgba(255,248,220,0.92)]"
+            className="flex h-9 min-w-[190px] items-center justify-between gap-3 rounded-xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.72)] px-3 text-left text-[12px] text-text-main transition-colors hover:border-[rgba(14,142,142,0.32)] hover:bg-[rgba(255,248,220,0.92)] dark:!border-[#334155] dark:!bg-[#111827] dark:!text-white dark:hover:!border-[#64748B] dark:hover:!bg-[#1E293B]"
           >
             <span className="flex min-w-0 items-center gap-2">
               {filterProvider ? (
@@ -356,12 +357,12 @@ export default function RequestLogsTable() {
           {providerDropdownOpen && (
             <>
               <button type="button" className="fixed inset-0 z-[100] bg-transparent" onClick={() => setProviderDropdownOpen(false)} aria-label="Close provider filter" />
-              <div className="absolute left-0 right-auto z-[110] mt-2 w-[min(82vw,260px)] max-h-80 overflow-y-auto rounded-2xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.98)] p-1.5 shadow-2xl shadow-[rgba(23,33,27,0.16)] backdrop-blur sm:left-auto sm:right-0 sm:w-[260px]">
+              <div className="absolute left-0 right-auto z-[110] mt-2 w-[min(82vw,260px)] max-h-80 overflow-y-auto rounded-2xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.98)] p-1.5 shadow-2xl shadow-[rgba(23,33,27,0.16)] backdrop-blur sm:left-auto sm:right-0 sm:w-[260px] dark:!border-[#334155] dark:!bg-[#0B1220] dark:!shadow-black/40">
                 {["", ...providers].map((p) => {
                   const active = filterProvider === p;
                   const label = p ? providerLabel(p) : "All providers";
                   return (
-                    <button key={p || "all"} type="button" onClick={() => { setFilterProvider(p); setProviderDropdownOpen(false); setPage(0); }} className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${active ? "bg-primary/10 text-primary" : "text-text-main dark:!text-white hover:bg-[rgba(23,33,27,0.06)]"}`}>
+                    <button key={p || "all"} type="button" onClick={() => { setFilterProvider(p); setProviderDropdownOpen(false); setPage(0); }} className={`flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${active ? "bg-primary/10 text-primary" : "text-text-main dark:!text-white hover:bg-[rgba(23,33,27,0.06)] dark:hover:!bg-[#1E293B]"}`}>
                       {p ? <ProviderIcon src={providerIconPath(p)} alt={label} size={22} className="h-[22px] w-[22px] rounded object-cover" fallbackText={label.slice(0, 2).toUpperCase()} /> : <span className="material-symbols-outlined text-[20px]">apps</span>}
                       <span className="min-w-0 flex-1 truncate">{label}</span>
                       {active && <span className="material-symbols-outlined text-[18px]">check</span>}
@@ -375,16 +376,16 @@ export default function RequestLogsTable() {
 
         {/* status filter */}
         <div className="relative">
-          <button type="button" onClick={() => setStatusDropdownOpen((v) => !v)} className="flex h-9 min-w-[120px] items-center justify-between gap-2 rounded-xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.72)] px-3 text-[12px] text-text-main dark:!text-white transition-colors hover:border-[rgba(14,142,142,0.32)] hover:bg-[rgba(255,248,220,0.92)]">
+          <button type="button" onClick={() => setStatusDropdownOpen((v) => !v)} className="flex h-9 min-w-[120px] items-center justify-between gap-2 rounded-xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.72)] px-3 text-[12px] text-text-main transition-colors hover:border-[rgba(14,142,142,0.32)] hover:bg-[rgba(255,248,220,0.92)] dark:!border-[#334155] dark:!bg-[#111827] dark:!text-white dark:hover:!border-[#64748B] dark:hover:!bg-[#1E293B]">
             <span>{filterStatus ? (filterStatus === "ok" ? "OK only" : "Error only") : "All status"}</span>
             <span className="material-symbols-outlined text-[18px] text-text-muted dark:!text-[#CBD5E1]">expand_more</span>
           </button>
           {statusDropdownOpen && (
             <>
               <button type="button" className="fixed inset-0 z-[100] bg-transparent" onClick={() => setStatusDropdownOpen(false)} aria-label="Close status filter" />
-              <div className="absolute left-0 right-auto z-[110] mt-2 w-[min(70vw,160px)] rounded-2xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.98)] p-1.5 shadow-2xl shadow-[rgba(23,33,27,0.16)] backdrop-blur sm:left-auto sm:right-0 sm:w-[160px]">
+              <div className="absolute left-0 right-auto z-[110] mt-2 w-[min(70vw,160px)] rounded-2xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.98)] p-1.5 shadow-2xl shadow-[rgba(23,33,27,0.16)] backdrop-blur sm:left-auto sm:right-0 sm:w-[160px] dark:!border-[#334155] dark:!bg-[#0B1220] dark:!shadow-black/40">
                 {[{id:"",label:"All status"},{id:"ok",label:"OK only"},{id:"error",label:"Error only"}].map((item) => (
-                  <button key={item.id || "all"} type="button" onClick={() => { setFilterStatus(item.id); setStatusDropdownOpen(false); setPage(0); }} className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${filterStatus === item.id ? "bg-primary/10 text-primary" : "text-text-main dark:!text-white hover:bg-[rgba(23,33,27,0.06)]"}`}>
+                  <button key={item.id || "all"} type="button" onClick={() => { setFilterStatus(item.id); setStatusDropdownOpen(false); setPage(0); }} className={`flex w-full items-center justify-between rounded-xl px-3 py-2.5 text-left text-sm transition-colors ${filterStatus === item.id ? "bg-primary/10 text-primary" : "text-text-main dark:!text-white hover:bg-[rgba(23,33,27,0.06)] dark:hover:!bg-[#1E293B]"}`}>
                     {item.label}
                     {filterStatus === item.id && <span className="material-symbols-outlined text-[18px]">check</span>}
                   </button>
@@ -416,14 +417,14 @@ export default function RequestLogsTable() {
         </button>
 
         {/* count */}
-        <span style={{ fontSize: "12px", color: "var(--color-text-subtle)", marginLeft: "auto" }}>
+        <span style={{ fontSize: "12px", color: isDark ? "#CBD5E1" : "var(--color-text-subtle)", marginLeft: "auto" }}>
           {fmt(filtered.length)} entries
         </span>
       </div>
 
       {/* logs */}
       <div className="theme-glass dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 rounded-2xl p-3">
-        <div className="mb-3 flex flex-wrap items-center gap-3 border-b border-[rgba(23,33,27,0.08)] px-1 pb-3">
+        <div className="mb-3 flex flex-wrap items-center gap-3 border-b border-[rgba(23,33,27,0.08)] dark:!border-[#334155] px-1 pb-3">
           <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted dark:!text-[#CBD5E1]">Sort</span>
           <SortBtn field="timestamp" label="Time" />
           <SortBtn field="total" label="Total" />

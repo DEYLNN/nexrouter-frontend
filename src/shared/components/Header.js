@@ -76,6 +76,7 @@ function getPageInfo(pathname) {
 
 // ─── profile menu ─────────────────────────────────────────────────────────────
 function ProfileMenu({ onLogout }) {
+  const { isDark } = useTheme();
   const [open, setOpen] = useState(false);
   const ref = useRef(null);
 
@@ -92,13 +93,13 @@ function ProfileMenu({ onLogout }) {
         style={{
           display: "flex", alignItems: "center", justifyContent: "center",
           width: "32px", height: "32px", borderRadius: "50%",
-          background: open ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.06)",
-          border: "1px solid var(--theme-shell-border)",
-          color: "var(--theme-shell-text)", cursor: "pointer",
+          background: isDark ? (open ? "#1E293B" : "#111827") : (open ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.62)"),
+          border: isDark ? "1px solid #334155" : "1px solid rgba(17,24,39,0.08)",
+          color: isDark ? "#E5E7EB" : "#111827", cursor: "pointer",
           transition: "all 150ms ease",
         }}
-        onMouseEnter={e => { if (!open) e.currentTarget.style.background = "var(--theme-shell-active-bg)"; }}
-        onMouseLeave={e => { if (!open) e.currentTarget.style.background = "var(--theme-shell-hover)"; }}
+        onMouseEnter={e => { if (!open) e.currentTarget.style.background = isDark ? "#1E293B" : "rgba(79,124,255,0.08)"; }}
+        onMouseLeave={e => { if (!open) e.currentTarget.style.background = isDark ? "#111827" : "rgba(255,255,255,0.62)"; }}
       >
         {I.user}
       </button>
@@ -107,17 +108,17 @@ function ProfileMenu({ onLogout }) {
         <div style={{
           position: "absolute", top: "calc(100% + 8px)", right: 0,
           width: "180px", borderRadius: "10px",
-          background: "rgba(255,255,255,0.94)",
-          backdropFilter: "blur(10px)",
-          WebkitBackdropFilter: "blur(10px)",
-          border: "1px solid rgba(17,24,39,0.08)",
-          boxShadow: "0 12px 28px -22px rgba(17,24,39,0.32)",
+          background: isDark ? "#0B1220" : "rgba(255,255,255,0.94)",
+          backdropFilter: isDark ? "none" : "blur(10px)",
+          WebkitBackdropFilter: isDark ? "none" : "blur(10px)",
+          border: isDark ? "1px solid #334155" : "1px solid rgba(17,24,39,0.08)",
+          boxShadow: isDark ? "0 18px 34px -24px rgba(0,0,0,0.85)" : "0 12px 28px -22px rgba(17,24,39,0.32)",
           zIndex: 100, overflow: "hidden",
           animation: "fadeIn 100ms ease",
         }}>
-          <div style={{ padding: "10px 12px", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-            <div style={{ fontSize: "12px", fontWeight: 600, color: "var(--theme-shell-text)" }}>AI Gateway</div>
-            <div style={{ fontSize: "11px", color: "var(--theme-shell-text-subtle)", marginTop: "1px" }}>Premium AI Console</div>
+          <div style={{ padding: "10px 12px", borderBottom: isDark ? "1px solid #334155" : "1px solid rgba(17,24,39,0.08)" }}>
+            <div style={{ fontSize: "12px", fontWeight: 600, color: isDark ? "#FFFFFF" : "#111827" }}>AI Gateway</div>
+            <div style={{ fontSize: "11px", color: isDark ? "#CBD5E1" : "var(--theme-shell-text-subtle)", marginTop: "1px" }}>Premium AI Console</div>
           </div>
           <div style={{ padding: "6px" }}>
             <Link
@@ -126,11 +127,11 @@ function ProfileMenu({ onLogout }) {
               style={{
                 display: "flex", alignItems: "center", gap: "8px",
                 padding: "7px 8px", borderRadius: "6px",
-                fontSize: "13px", color: "var(--theme-shell-text-muted)",
+                fontSize: "13px", color: isDark ? "#CBD5E1" : "var(--theme-shell-text-muted)",
                 textDecoration: "none", transition: "all 150ms ease",
               }}
-              onMouseEnter={e => { e.currentTarget.style.background = "var(--theme-shell-hover)"; e.currentTarget.style.color = "var(--theme-shell-text)"; }}
-              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = "var(--theme-shell-text-muted)"; }}
+              onMouseEnter={e => { e.currentTarget.style.background = isDark ? "#1E293B" : "var(--theme-shell-hover)"; e.currentTarget.style.color = isDark ? "#FFFFFF" : "var(--theme-shell-text)"; }}
+              onMouseLeave={e => { e.currentTarget.style.background = "transparent"; e.currentTarget.style.color = isDark ? "#CBD5E1" : "var(--theme-shell-text-muted)"; }}
             >
               {I.settings} Settings
             </Link>

@@ -63,6 +63,7 @@ const NAV_SYSTEM = [
 // ─── nav item ─────────────────────────────────────────────────────────────────
 function NavItem({ href, label, icon, onClose, collapsed }) {
   const pathname = usePathname();
+  const { isDark } = useTheme();
   const active = href === "/dashboard/endpoint"
     ? pathname === "/dashboard" || pathname.startsWith("/dashboard/endpoint")
     : pathname.startsWith(href);
@@ -84,22 +85,22 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
         fontSize: "13px",
         fontWeight: active ? 700 : 600,
         textDecoration: "none",
-        color: active ? "var(--theme-shell-accent)" : "var(--theme-shell-text-muted)",
-        background: active ? "var(--theme-shell-active-bg)" : "transparent",
-        border: active ? "1px solid var(--theme-shell-border-strong)" : "1px solid transparent",
+        color: isDark ? (active ? "#FFFFFF" : "#E5E7EB") : (active ? "var(--theme-shell-accent)" : "var(--theme-shell-text-muted)"),
+        background: isDark ? (active ? "#1D4ED8" : "transparent") : (active ? "var(--theme-shell-active-bg)" : "transparent"),
+        border: isDark ? (active ? "1px solid #2563EB" : "1px solid transparent") : (active ? "1px solid var(--theme-shell-border-strong)" : "1px solid transparent"),
         boxShadow: "none",
         transition: "background 140ms ease, color 140ms ease, border-color 140ms ease, box-shadow 140ms ease",
         marginBottom: "5px",
       }}
       onMouseEnter={e => {
         if (!active) {
-          e.currentTarget.style.color = "var(--theme-shell-text)";
-          e.currentTarget.style.background = "var(--theme-shell-hover)";
+          e.currentTarget.style.color = isDark ? "#FFFFFF" : "var(--theme-shell-text)";
+          e.currentTarget.style.background = isDark ? "#1E293B" : "var(--theme-shell-hover)";
         }
       }}
       onMouseLeave={e => {
         if (!active) {
-          e.currentTarget.style.color = "var(--theme-shell-text-muted)";
+          e.currentTarget.style.color = isDark ? "#E5E7EB" : "var(--theme-shell-text-muted)";
           e.currentTarget.style.background = "transparent";
         }
       }}
@@ -107,7 +108,7 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
       <span style={{
         flexShrink: 0,
         display: "flex",
-        color: active ? "var(--theme-shell-accent)" : "inherit",
+        color: isDark ? (active ? "#FFFFFF" : "#CBD5E1") : (active ? "var(--theme-shell-accent)" : "inherit"),
         opacity: 1,
       }}>
         {Icon}
@@ -123,12 +124,13 @@ function NavItem({ href, label, icon, onClose, collapsed }) {
 
 // ─── section label ────────────────────────────────────────────────────────────
 function SectionLabel({ label, collapsed }) {
-  if (collapsed) return <div style={{ height: "1px", background: "var(--theme-shell-border)", margin: "12px 8px" }} />;
+  const { isDark } = useTheme();
+  if (collapsed) return <div style={{ height: "1px", background: isDark ? "#334155" : "var(--theme-shell-border)", margin: "12px 8px" }} />;
   return (
     <div style={{ padding: "0 10px", marginTop: "20px", marginBottom: "7px" }}>
       <span style={{
         fontSize: "10px", fontWeight: 600,
-        color: "var(--theme-shell-text-subtle)",
+        color: isDark ? "#CBD5E1" : "var(--theme-shell-text-subtle)",
         textTransform: "uppercase", letterSpacing: "0.09em",
       }}>
         {label}
@@ -244,10 +246,10 @@ export default function Sidebar({ onClose, forceExpanded }) {
                   {I.logo}
                 </div>
                 <div>
-                  <div style={{ fontSize: "14px", fontWeight: 720, color: "var(--theme-shell-text)", letterSpacing: "-0.03em", lineHeight: 1.1 }}>
+                  <div style={{ fontSize: "14px", fontWeight: 750, color: isDark ? "#FFFFFF" : "var(--theme-shell-text)", letterSpacing: "-0.03em", lineHeight: 1.1 }}>
                     {APP_CONFIG.name}
                   </div>
-                  <div style={{ fontSize: "10px", color: "var(--theme-shell-text-subtle)", marginTop: "1px" }}>
+                  <div style={{ fontSize: "10px", color: isDark ? "#CBD5E1" : "var(--theme-shell-text-subtle)", marginTop: "1px" }}>
                     v{APP_CONFIG.version}
                   </div>
                 </div>

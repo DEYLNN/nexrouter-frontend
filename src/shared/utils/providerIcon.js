@@ -21,7 +21,6 @@ Object.assign(ALIASES, {
   glb: "gitlawb",
   oc: "opencode",
   rwy: "routeway",
-  aim: "aimurah",
 });
 
 export function canonicalProviderId(provider) {

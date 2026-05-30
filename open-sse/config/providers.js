@@ -135,14 +135,6 @@ export const PROVIDERS = {
     baseUrl: "https://api.gmi-serving.com/v1/chat/completions",
     format: "openai"
   },
-  aim: {
-    baseUrl: "https://aimurah.my.id/api/v1/chat/completions",
-    format: "openai"
-  },
-  aimurah: {
-    baseUrl: "https://aimurah.my.id/api/v1/chat/completions",
-    format: "openai"
-  },
   routeway: {
     baseUrl: "https://api.routeway.ai/v1/chat/completions",
     format: "openai"

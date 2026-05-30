@@ -637,20 +637,6 @@ export const PROVIDER_MODELS = {
     { id: "minimax/minimax-m2.5", name: "MiniMax M2.5" },
     { id: "zai/glm-5.1", name: "GLM 5.1" },
   ],
-  aim: [
-    { id: "claude-haiku-4.5", name: "Claude Haiku 4.5" },
-    { id: "claude-sonnet-4.5", name: "Claude Sonnet 4.5" },
-    { id: "claude-sonnet-4.5-1m", name: "Claude Sonnet 4.5 1M" },
-    { id: "deepseek-v4-flash", name: "DeepSeek V4 Flash" },
-    { id: "minimax-m2.5", name: "MiniMax M2.5" },
-  ],
-  aimurah: [
-    { id: "claude-haiku-4.5", name: "Claude Haiku 4.5" },
-    { id: "claude-sonnet-4.5", name: "Claude Sonnet 4.5" },
-    { id: "claude-sonnet-4.5-1m", name: "Claude Sonnet 4.5 1M" },
-    { id: "deepseek-v4-flash", name: "DeepSeek V4 Flash" },
-    { id: "minimax-m2.5", name: "MiniMax M2.5" },
-  ],
   routeway: [
     { id: "ling-2.6-flash:free", name: "Ling 2.6 Flash Free" },
     { id: "gemma-4-31b-it:free", name: "Gemma 4 31B IT Free" },

@@ -9,6 +9,7 @@ import { useHeaderSearchStore } from "@/store/headerSearchStore";
 import { OAUTH_PROVIDERS, APIKEY_PROVIDERS } from "@/shared/constants/config";
 import { AI_PROVIDERS } from "@/shared/constants/providers";
 import { translate } from "@/i18n/runtime";
+import ThemeToggle from "./ThemeToggle";
 
 // ─── icons ────────────────────────────────────────────────────────────────────
 const I = {
@@ -242,12 +243,12 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
       height: "52px",
       margin: "10px 12px 0",
       padding: "0 clamp(12px, 2vw, 18px)",
-      background: "rgba(255,255,255,0.68)",
-      backdropFilter: "blur(10px)",
-      WebkitBackdropFilter: "blur(10px)",
-      border: "1px solid rgba(17,24,39,0.06)",
+      background: "var(--theme-shell-bg)",
+      backdropFilter: "blur(14px)",
+      WebkitBackdropFilter: "blur(14px)",
+      border: "1px solid var(--theme-shell-border)",
       borderRadius: "12px",
-      boxShadow: "0 8px 20px -18px rgba(17,24,39,0.22)",
+      boxShadow: "var(--shadow-elevated)",
       flexShrink: 0,
       zIndex: 20,
       position: "sticky",
@@ -320,6 +321,7 @@ export default function Header({ onMenuClick, showMenuButton = true }) {
           <StatusDot />
         </div>
         <HeaderSearch />
+        <ThemeToggle />
         <ProfileMenu onLogout={handleLogout} />
       </div>
     </header>

@@ -1,7 +1,8 @@
 "use client";
 
-// Light-mode-only build: ThemeProvider is a no-op shell.
-// Kept exported so existing imports in src/app/layout.js keep working.
+import { useTheme } from "@/shared/hooks/useTheme";
+
 export function ThemeProvider({ children }) {
+  useTheme();
   return <>{children}</>;
 }

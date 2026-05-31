@@ -101,13 +101,9 @@ export const PROVIDERS = {
     authUrl: "https://iflow.cn/oauth"
   },
   qoder: {
-    baseUrl: "https://api.qoder.com/v1/chat/completions",
+    baseUrl: "https://api3.qoder.sh/algo/api/v2/service/pro/sse/agent_chat_generation",
     format: "openai",
-    headers: { "User-Agent": "Qoder-Cli" },
-    clientId: process.env.QODER_OAUTH_CLIENT_ID || "10009311001",
-    clientSecret: process.env.QODER_OAUTH_CLIENT_SECRET || "4Z3YjXycVsQvyGF1etiNlIBB4RsqSDtW",
-    tokenUrl: "https://api.qoder.com/oauth/token",
-    authUrl: "https://qoder.com/oauth/authorize"
+    headers: {},
   },
   antigravity: {
     baseUrls: [

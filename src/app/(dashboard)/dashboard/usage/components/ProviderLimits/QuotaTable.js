@@ -135,7 +135,7 @@ export default function QuotaTable({ quotas = [], compact = false }) {
                     {/* Numbers */}
                     <div className={`flex items-center justify-between ${compact ? "text-[10px]" : "text-xs"}`}>
                       <span className="text-text-muted dark:!text-[#CBD5E1]">
-                        {formatCompact(quota.used)} / {quota.total > 0 ? formatCompact(quota.total) : "∞"}
+                        {formatCompact(quota.used)} / {quota.total > 0 ? formatCompact(quota.total) : "0"}
                       </span>
                       <span className={`font-medium ${colors.text}`}>
                         {remaining}%

@@ -154,7 +154,7 @@ export default function ProviderLimitCard({
               quota.remainingPercentage !== undefined
                 ? Math.round(((quota.total - quota.used) / quota.total) * 100)
                 : calculatePercentage(quota.used, quota.total);
-            const unlimited = quota.total === 0 || quota.total === null;
+            const unlimited = quota.unlimited === true;
 
             return (
               <QuotaProgressBar

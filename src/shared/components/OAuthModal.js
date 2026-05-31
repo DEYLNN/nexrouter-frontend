@@ -133,7 +133,7 @@ export default function OAuthModal({ isOpen, provider, providerInfo, onSuccess, 
       setError(null);
 
       // Device code flow providers
-      const deviceCodeProviders = ["github", "qwen", "kiro", "kimi-coding", "kilocode", "codebuddy", "nous-portal", "freebuff"];
+      const deviceCodeProviders = ["github", "qwen", "qoder", "kiro", "kimi-coding", "kilocode", "codebuddy", "nous-portal", "freebuff"];
       if (deviceCodeProviders.includes(provider)) {
         setIsDeviceCode(true);
         setStep("waiting");
@@ -165,6 +165,11 @@ export default function OAuthModal({ isOpen, provider, providerInfo, onSuccess, 
             _region: data._region,
             _authMethod: data._authMethod,
             _startUrl: data._startUrl,
+          };
+        } else if (provider === "qoder") {
+          extraData = {
+            _qoderNonce: data._qoderNonce,
+            _qoderMachineId: data._qoderMachineId,
           };
         } else if (provider === "freebuff") {
           extraData = {

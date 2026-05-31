@@ -188,6 +188,8 @@ export default function OAuthModal({ isOpen, provider, providerInfo, onSuccess, 
       let redirectUri;
       if (provider === "codex") {
         redirectUri = "http://localhost:1455/auth/callback";
+      } else if (provider === "xai") {
+        redirectUri = "http://127.0.0.1:56121/callback";
       } else {
         redirectUri = `http://localhost:${appPort}/callback`;
       }
@@ -223,7 +225,11 @@ export default function OAuthModal({ isOpen, provider, providerInfo, onSuccess, 
 
       setAuthData({ ...data, redirectUri, codexServerSide });
 
-      if (provider === "codex" && codexProxyActive) {
+      if (provider === "xai") {
+        // xAI: loopback port on user's machine — always manual code paste
+        setStep("input");
+        window.open(data.authUrl, "_blank");
+      } else if (provider === "codex" && codexProxyActive) {
         // Proxy active: callback will be handled server-side (auto-exchange) or via channels (fallback)
         setStep("waiting");
         popupRef.current = window.open(data.authUrl, "oauth_popup", "width=600,height=700");

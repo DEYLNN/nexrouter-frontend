@@ -1,8 +1,9 @@
 # Changelog
 
-## [0.5.37] - 2026-06-01
+## [0.5.38] - 2026-06-01
 
 ### Chore
+- Tighten project rules: every change must bump package version and CHANGELOG.md together
 - Add repository rule requiring CHANGELOG.md updates for every future frontend change
 - Add changelog generation helper script
 - Rebrand frontend UI and metadata from AI Gateway/9Router to NexRouter

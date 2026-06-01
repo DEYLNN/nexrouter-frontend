@@ -6,6 +6,7 @@
 - Add repository rule requiring CHANGELOG.md updates for every future frontend change
 - Add changelog generation helper script
 - Rebrand frontend UI and metadata from AI Gateway/9Router to NexRouter
+- Point dashboard changelog fetch URLs to the renamed NexRouter frontend repository
 
 ## [0.5.36] - 2026-05-30
 

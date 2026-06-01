@@ -117,7 +117,7 @@ function ProfileMenu({ onLogout }) {
           animation: "fadeIn 100ms ease",
         }}>
           <div style={{ padding: "10px 12px", borderBottom: isDark ? "1px solid #334155" : "1px solid rgba(17,24,39,0.08)" }}>
-            <div style={{ fontSize: "12px", fontWeight: 600, color: isDark ? "#FFFFFF" : "#111827" }}>AI Gateway</div>
+            <div style={{ fontSize: "12px", fontWeight: 600, color: isDark ? "#FFFFFF" : "#111827" }}>NexRouter</div>
             <div style={{ fontSize: "11px", color: isDark ? "#CBD5E1" : "var(--theme-shell-text-subtle)", marginTop: "1px" }}>Premium AI Console</div>
           </div>
           <div style={{ padding: "6px" }}>

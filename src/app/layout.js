@@ -30,7 +30,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata = {
-  title: "AI Gateway - Premium AI Infrastructure Console",
+  title: "NexRouter - Premium AI Infrastructure Console",
   description: "A premium AI gateway dashboard to route models, manage providers, monitor usage, and control API access from one place.",
   icons: {
     icon: "/favicon.svg",

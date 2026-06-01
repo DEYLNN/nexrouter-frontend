@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.37] - 2026-06-01
+
+### Chore
+- Add repository rule requiring CHANGELOG.md updates for every future frontend change
+- Add changelog generation helper script
+- Rebrand frontend UI and metadata from AI Gateway/9Router to NexRouter
+
 ## [0.5.36] - 2026-05-30
 
 ### Improvements

@@ -1,7 +1,7 @@
 export default function manifest() {
   return {
-    name: 'AI Gateway - Premium AI Infrastructure Console',
-    short_name: 'AI Gateway',
+    name: 'NexRouter - Premium AI Infrastructure Console',
+    short_name: 'NexRouter',
     description: 'Route AI models, manage providers, monitor usage, and control API access from one premium dashboard.',
     start_url: '/',
     display: 'standalone',

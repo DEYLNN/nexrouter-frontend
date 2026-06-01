@@ -9,7 +9,7 @@
   <img src="public/providers/codex.png" width="48" height="48" alt="Codex" style="border-radius:12px">
 </p>
 
-<h1 align="center">AI Gateway</h1>
+<h1 align="center">NexRouter</h1>
 
 <p align="center">
   <strong>Unified AI provider proxy & dashboard</strong><br>

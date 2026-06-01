@@ -127,7 +127,7 @@ export default function LoginPage() {
           </div>
           <div style={{ textAlign: "center" }}>
             <h1 className="theme-display" style={{ fontSize: "clamp(28px, 6vw, 34px)", margin: 0, color: "#FAFAFA" }}>
-              AI Gateway
+              NexRouter
             </h1>
             <p className="theme-mono" style={{ fontSize: "12px", letterSpacing: "0.12em", textTransform: "uppercase", marginTop: "6px", color: "rgba(250,250,250,0.45)" }}>
               Premium AI Infrastructure Console
@@ -271,7 +271,7 @@ export default function LoginPage() {
 
         {/* Footer */}
         <div style={{ display: "flex", justifyContent: "center", gap: "10px", fontSize: "11px", letterSpacing: "0.14em", textTransform: "uppercase", color: "rgba(250,250,250,0.32)" }} className="theme-mono">
-          <span>AI Gateway</span>
+          <span>NexRouter</span>
           <span style={{ opacity: 0.4 }}>·</span>
           <span>secure access</span>
           <span style={{ opacity: 0.4 }}>·</span>

@@ -2,7 +2,7 @@ import pkg from "../../../package.json" with { type: "json" };
 
 // App configuration
 export const APP_CONFIG = {
-  name: "AI Gateway",
+  name: "NexRouter",
   description: "Premium AI Infrastructure Console",
   version: pkg.version,
 };

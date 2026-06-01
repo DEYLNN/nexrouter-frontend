@@ -7,6 +7,7 @@
 - Add changelog generation helper script
 - Rebrand frontend UI and metadata from AI Gateway/9Router to NexRouter
 - Point dashboard changelog fetch URLs to the renamed NexRouter frontend repository
+- Bump frontend package version to 0.5.37 so UI version matches changelog
 
 ## [0.5.36] - 2026-05-30
 

@@ -716,7 +716,10 @@ export default function ProviderDetailPage() {
     if (isAnthropicCompatible) {
       return "/providers/anthropic.png";
     }
-    return `/providers/${providerInfo.id}.png`;
+    // Icon alias: if provider has a different canonical icon id, use that
+    const iconAliases = { "xai-apikey": "xai" };
+    const resolvedId = iconAliases[providerInfo.id] || providerInfo.id;
+    return `/providers/${resolvedId}.png`;
   };
 
   return (

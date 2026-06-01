@@ -21,6 +21,8 @@ Object.assign(ALIASES, {
   glb: "gitlawb",
   oc: "opencode",
   rwy: "routeway",
+  "xai-apikey": "xai",
+  "xai-ak": "xai",
 });
 
 export function canonicalProviderId(provider) {

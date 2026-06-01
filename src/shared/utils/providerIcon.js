@@ -23,6 +23,8 @@ Object.assign(ALIASES, {
   rwy: "routeway",
   "xai-apikey": "xai",
   "xai-ak": "xai",
+  "cline-apikey": "cline",
+  "cl-ak": "cline",
 });
 
 export function canonicalProviderId(provider) {

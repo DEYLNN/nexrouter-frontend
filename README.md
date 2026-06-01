@@ -153,9 +153,9 @@ npm start          # Serve production build
 
 ## Deployment
 
-- **Frontend:** Vercel (`ai.dkzhen.org`)
-- **Backend:** PM2 on VPS (Bun + Hono, port 18323)
-- **Database:** SQLite at `/root/.9router/db/data.sqlite`
+- **Frontend:** Deploy to your own Vercel/Netlify instance
+- **Backend:** Self-hosted Node.js/Bun with Hono proxy
+- **Database:** SQLite (file-based, no external DB required)
 
 ---
 

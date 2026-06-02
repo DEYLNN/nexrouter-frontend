@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.39] - 2026-06-02
+
+### Features
+- Add Gitlawb MiMo provider entry with Gitlawb assets and `/v1/xiaomi-mimo` endpoint display
+- Register 343 Gitlawb MiMo catalog models from OpenGateway, including `minimax/minimax-m3`
+- Keep existing global Gitlawb provider entry unchanged
+
 ## [0.5.38] - 2026-06-01
 
 ### Chore

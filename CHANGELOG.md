@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.47] - 2026-06-02
+
+### Changed
+- Restore Ocenza static models to `gpt-oss-120b` and `step-3.5-flash-2603`.
+
 ## [0.5.46] - 2026-06-02
 
 ### Fixed

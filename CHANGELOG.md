@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.43] - 2026-06-02
+
+### Features
+- Register Zenmux provider in the frontend provider catalog
+- Add Zenmux icon asset and constant model list
+
 ## [0.5.42] - 2026-06-02
 
 ### Features

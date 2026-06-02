@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.40] - 2026-06-02
+
+### Fixes
+- Restrict Gitlawb MiMo provider model picker to upstream-supported `xiaomi/mimo-*` chat models
+- Remove unsupported MiniMax/OpenRouter catalog entries from the Gitlawb MiMo static list
+
 ## [0.5.39] - 2026-06-02
 
 ### Features

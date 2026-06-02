@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.44] - 2026-06-02
+
+### Improvements
+- Replace the Kiro/Husada live model native select with a modern searchable picker
+- Show selected model metadata, blocked badge, and active check state in the live model test dropdown
+
 ## [0.5.43] - 2026-06-02
 
 ### Features

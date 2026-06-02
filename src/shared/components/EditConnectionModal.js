@@ -33,6 +33,8 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
   const [validationResult, setValidationResult] = useState(null);
   const [saving, setSaving] = useState(false);
   const [liveProbeModel, setLiveProbeModel] = useState("");
+  const [liveProbePickerOpen, setLiveProbePickerOpen] = useState(false);
+  const [liveProbeQuery, setLiveProbeQuery] = useState("");
   const [liveProbeTesting, setLiveProbeTesting] = useState(false);
   const [liveProbeResult, setLiveProbeResult] = useState(null);
 
@@ -75,6 +77,8 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
       setValidationResult(null);
       setLiveProbeResult(null);
       setLiveProbeModel("");
+      setLiveProbePickerOpen(false);
+      setLiveProbeQuery("");
     }
   }, [connection]);
 
@@ -93,6 +97,11 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
   const providerModels = hasBlockedModels && !isCodex
     ? getModelsByProviderId(connection?.provider || "").filter((m) => !m.type || m.type === "llm")
     : [];
+  const selectedLiveProbeModel = providerModels.find((model) => model.id === liveProbeModel);
+  const liveProbeNeedle = liveProbeQuery.trim().toLowerCase();
+  const filteredLiveProbeModels = liveProbeNeedle
+    ? providerModels.filter((model) => [model.id, model.name].some((value) => String(value || "").toLowerCase().includes(liveProbeNeedle)))
+    : providerModels;
   const defaultBlockedModels = [];
   const effectiveBlockedModels = new Set([...defaultBlockedModels, ...codexData.blockedModels]);
   const toggleBlockedModel = (modelId) => {
@@ -362,18 +371,77 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
                     )}
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row">
-                    <select
-                      value={liveProbeModel}
-                      onChange={(e) => { setLiveProbeModel(e.target.value); setLiveProbeResult(null); }}
-                      className="min-h-[42px] flex-1 rounded-xl border border-border bg-bg px-3 text-sm text-text-main outline-none transition-colors hover:border-primary/40 focus:border-primary"
-                    >
-                      <option value="">Select model…</option>
-                      {providerModels.map((model) => (
-                        <option key={model.id} value={model.id}>
-                          {model.name || model.id}
-                        </option>
-                      ))}
-                    </select>
+                    <div className="relative flex-1">
+                      <button
+                        type="button"
+                        onClick={() => setLiveProbePickerOpen((open) => !open)}
+                        className="group flex min-h-[46px] w-full items-center justify-between gap-3 rounded-2xl border border-border bg-bg px-3 py-2 text-left shadow-sm transition-all hover:border-primary/40 hover:bg-primary/5 focus:outline-none focus:ring-2 focus:ring-primary/20"
+                      >
+                        <span className="flex min-w-0 items-center gap-3">
+                          <span className="flex size-8 shrink-0 items-center justify-center rounded-xl bg-primary/10 text-primary transition-colors group-hover:bg-primary/15">
+                            <span className="material-symbols-outlined text-[18px]">smart_toy</span>
+                          </span>
+                          <span className="min-w-0">
+                            <span className="block truncate text-sm font-semibold text-text-main">
+                              {selectedLiveProbeModel?.name || selectedLiveProbeModel?.id || "Select model"}
+                            </span>
+                            <span className="block truncate text-[11px] text-text-muted">
+                              {selectedLiveProbeModel?.id || `${providerModels.length} model${providerModels.length === 1 ? "" : "s"} available`}
+                            </span>
+                          </span>
+                        </span>
+                        <span className="material-symbols-outlined text-[18px] text-text-muted transition-transform group-hover:text-primary">
+                          {liveProbePickerOpen ? "expand_less" : "expand_more"}
+                        </span>
+                      </button>
+
+                      {liveProbePickerOpen && (
+                        <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-50 overflow-hidden rounded-2xl border border-border bg-surface shadow-2xl shadow-black/10 ring-1 ring-black/5">
+                          <div className="border-b border-border bg-bg/80 p-2">
+                            <div className="flex items-center gap-2 rounded-xl border border-border bg-surface px-3 py-2">
+                              <span className="material-symbols-outlined text-[16px] text-text-muted">search</span>
+                              <input
+                                value={liveProbeQuery}
+                                onChange={(e) => setLiveProbeQuery(e.target.value)}
+                                placeholder="Search model…"
+                                className="w-full bg-transparent text-sm text-text-main outline-none placeholder:text-text-muted"
+                                autoFocus
+                              />
+                            </div>
+                          </div>
+                          <div className="max-h-64 overflow-y-auto p-1.5">
+                            {filteredLiveProbeModels.length === 0 ? (
+                              <p className="px-3 py-4 text-center text-xs text-text-muted">No matching models.</p>
+                            ) : filteredLiveProbeModels.map((model) => {
+                              const active = model.id === liveProbeModel;
+                              const blocked = effectiveBlockedModels.has(model.id);
+                              return (
+                                <button
+                                  key={model.id}
+                                  type="button"
+                                  onClick={() => {
+                                    setLiveProbeModel(model.id);
+                                    setLiveProbeResult(null);
+                                    setLiveProbePickerOpen(false);
+                                    setLiveProbeQuery("");
+                                  }}
+                                  className={`flex w-full items-center justify-between gap-3 rounded-xl px-3 py-2 text-left transition-colors ${active ? "bg-primary/10 text-primary" : "text-text-main hover:bg-primary/5"}`}
+                                >
+                                  <span className="min-w-0">
+                                    <span className="block truncate text-sm font-semibold">{model.name || model.id}</span>
+                                    <span className="block truncate text-[11px] text-text-muted">{model.id}</span>
+                                  </span>
+                                  <span className="flex shrink-0 items-center gap-1">
+                                    {blocked && <span className="rounded-full bg-red-500/10 px-2 py-0.5 text-[10px] font-semibold text-red-500">blocked</span>}
+                                    {active && <span className="material-symbols-outlined text-[18px]">check_circle</span>}
+                                  </span>
+                                </button>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      )}
+                    </div>
                     <Button onClick={handleLiveModelProbe} disabled={!liveProbeModel || liveProbeTesting || saving} variant="secondary">
                       {liveProbeTesting ? "Testing..." : "Test Model"}
                     </Button>

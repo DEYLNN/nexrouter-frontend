@@ -2,14 +2,14 @@ import pkg from "../../../package.json" with { type: "json" };
 
 // App configuration
 export const APP_CONFIG = {
-  name: "NexRouter",
-  description: "Premium AI Infrastructure Console",
+  name: "NexRouter Proxy",
+  description: "AI Infrastructure Management",
   version: pkg.version,
 };
 
 // GitHub configuration
 export const GITHUB_CONFIG = {
-  changelogUrl: "https://raw.githubusercontent.com/DEYLNN/nexrouter-frontend/main/CHANGELOG.md",
+  changelogUrl: "https://raw.githubusercontent.com/decolua/9router/refs/heads/master/CHANGELOG.md",
 };
 
 // Updater configuration
@@ -34,7 +34,7 @@ export const UPDATER_CONFIG = {
 // Theme configuration
 export const THEME_CONFIG = {
   storageKey: "theme",
-  defaultTheme: "dark", // "light" | "dark" | "system"
+  defaultTheme: "system", // "light" | "dark" | "system"
 };
 
 // Subscription
@@ -64,11 +64,18 @@ export const CLIENT_STORE_TTL_MS = 60000;
 // Provider API endpoints (for display only)
 export const PROVIDER_ENDPOINTS = {
   openrouter: "https://openrouter.ai/api/v1/chat/completions",
+  "freemodel-dev": "https://api.freemodel.dev/v1/chat/completions",
+  fmd: "https://api.freemodel.dev/v1/chat/completions",
+  am: "https://aimux.id/v1/chat/completions",
+  aimux: "https://aimux.id/v1/chat/completions",
   bai: "https://api.b.ai/v1/chat/completions",
   qiniu: "https://api.qnaigc.com/v1/chat/completions",
   morph: "https://api.morphllm.com/v1/chat/completions",
   gmi: "https://api.gmi-serving.com/v1/chat/completions",
+  husada: "https://husada.net/v1/chat/completions",
   "gmi-cloud": "https://api.gmi-serving.com/v1/chat/completions",
+  gitlawb: "https://opengateway.gitlawb.com/v1/chat/completions",
+  glb: "https://opengateway.gitlawb.com/v1/chat/completions",
   "cline-apikey": "https://api.cline.bot/api/v1/chat/completions",
   glm: "https://api.z.ai/api/anthropic/v1/messages",
   "glm-cn": "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.45] - 2026-06-02
+
+### Added
+- Add Ocenza provider with constant models `gpt-oss-120b` and `step-3.5-flash-2603`.
+
 ## [0.5.44] - 2026-06-02
 
 ### Improvements

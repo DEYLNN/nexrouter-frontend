@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.42] - 2026-06-02
+
+### Features
+- Add Auth Files bulk selection controls for filtered/visible accounts
+- Add delete selected action so problematic credentials can be removed in batches from the UI
+
 ## [0.5.41] - 2026-06-02
 
 ### Features

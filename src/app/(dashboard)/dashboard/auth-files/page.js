@@ -85,6 +85,8 @@ export default function AuthFilesPage() {
   const [refreshMessage, setRefreshMessage] = useState({ fileId: null, type: null, text: "" });
   const [importing, setImporting] = useState(false);
   const [deletingId, setDeletingId] = useState(null);
+  const [bulkDeleting, setBulkDeleting] = useState(false);
+  const [selectedIds, setSelectedIds] = useState(() => new Set());
   const [deleteMessage, setDeleteMessage] = useState(null);
   const [importMessage, setImportMessage] = useState(null);
   const [providerDropdownOpen, setProviderDropdownOpen] = useState(false);
@@ -158,6 +160,13 @@ export default function AuthFilesPage() {
     }
   };
 
+  const deleteProviderAccount = async (id) => {
+    const res = await fetch(`/api/providers/${encodeURIComponent(id)}`, { method: "DELETE" });
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || "Failed to delete account");
+    return data;
+  };
+
   const deleteAuthFile = async (file) => {
     const label = file.email || file.name || file.filename || file.id;
     const ok = window.confirm(`Delete ${label}?\n\nThis removes the provider account/credential from the database. This cannot be undone.`);
@@ -166,9 +175,8 @@ export default function AuthFilesPage() {
     setDeletingId(file.id);
     setDeleteMessage(null);
     try {
-      const res = await fetch(`/api/providers/${encodeURIComponent(file.id)}`, { method: "DELETE" });
-      const data = await res.json().catch(() => ({}));
-      if (!res.ok) throw new Error(data.error || "Failed to delete account");
+      await deleteProviderAccount(file.id);
+      setSelectedIds((current) => { const next = new Set(current); next.delete(file.id); return next; });
       setDeleteMessage({ type: "ok", text: `Deleted ${label}` });
       await load();
     } catch (error) {
@@ -208,6 +216,67 @@ export default function AuthFilesPage() {
 
   const problemCount = payload.files.filter((file) => file.problem).length;
   const disabledCount = payload.files.filter((file) => !file.isActive).length;
+  const visibleIds = useMemo(() => files.map((file) => file.id), [files]);
+  const selectedVisibleCount = useMemo(() => visibleIds.filter((id) => selectedIds.has(id)).length, [visibleIds, selectedIds]);
+  const selectedFiles = useMemo(() => payload.files.filter((file) => selectedIds.has(file.id)), [payload.files, selectedIds]);
+
+  const toggleSelected = (id) => {
+    setSelectedIds((current) => {
+      const next = new Set(current);
+      if (next.has(id)) next.delete(id); else next.add(id);
+      return next;
+    });
+  };
+
+  const selectVisible = () => {
+    setSelectedIds((current) => {
+      const next = new Set(current);
+      visibleIds.forEach((id) => next.add(id));
+      return next;
+    });
+  };
+
+  const clearVisibleSelection = () => {
+    setSelectedIds((current) => {
+      const next = new Set(current);
+      visibleIds.forEach((id) => next.delete(id));
+      return next;
+    });
+  };
+
+  const deleteSelected = async () => {
+    if (!selectedFiles.length) return;
+    const ok = window.confirm(`Delete ${selectedFiles.length} selected account(s)?\n\nBackup/export first if needed. This removes selected provider credentials from the database.`);
+    if (!ok) return;
+
+    setBulkDeleting(true);
+    setDeleteMessage(null);
+    const failed = [];
+    let deleted = 0;
+    try {
+      for (const file of selectedFiles) {
+        try {
+          await deleteProviderAccount(file.id);
+          deleted += 1;
+        } catch (error) {
+          failed.push(`${file.email || file.name || file.filename || file.id}: ${error.message || "failed"}`);
+        }
+      }
+      setSelectedIds((current) => {
+        const next = new Set(current);
+        selectedFiles.forEach((file) => { if (!failed.some((item) => item.startsWith(file.email || file.name || file.filename || file.id))) next.delete(file.id); });
+        return next;
+      });
+      setDeleteMessage({
+        type: failed.length ? "bad" : "ok",
+        text: failed.length ? `Deleted ${deleted}, failed ${failed.length}: ${failed.slice(0, 3).join(" | ")}${failed.length > 3 ? " ..." : ""}` : `Deleted ${deleted} selected account(s)`,
+      });
+      await load();
+    } finally {
+      setBulkDeleting(false);
+    }
+  };
+
 
   return (
     <div className="space-y-5">
@@ -306,9 +375,13 @@ export default function AuthFilesPage() {
             )}
           </div>
         </div>
-        <div className="mt-3 flex flex-wrap gap-2 text-xs">
+        <div className="mt-3 flex flex-wrap items-center gap-2 text-xs">
           <button onClick={() => setOnlyProblem((v) => !v)} className={`rounded-full px-3 py-1 ${onlyProblem ? "bg-red-500 text-white" : "bg-sidebar text-text-muted dark:!bg-[#111827] dark:!text-[#CBD5E1]"}`}>Problematic {problemCount}</button>
           <button onClick={() => setOnlyDisabled((v) => !v)} className={`rounded-full px-3 py-1 ${onlyDisabled ? "bg-amber-500 text-white" : "bg-sidebar text-text-muted dark:!bg-[#111827] dark:!text-[#CBD5E1]"}`}>Disabled {disabledCount}</button>
+          <span className="mx-1 h-5 w-px bg-border" />
+          <button onClick={selectVisible} disabled={!visibleIds.length || bulkDeleting} className="rounded-full bg-sidebar px-3 py-1 text-text-muted disabled:opacity-50 dark:!bg-[#111827] dark:!text-[#CBD5E1]">Select visible {files.length}</button>
+          <button onClick={clearVisibleSelection} disabled={!selectedVisibleCount || bulkDeleting} className="rounded-full bg-sidebar px-3 py-1 text-text-muted disabled:opacity-50 dark:!bg-[#111827] dark:!text-[#CBD5E1]">Clear visible {selectedVisibleCount}</button>
+          <button onClick={deleteSelected} disabled={!selectedFiles.length || bulkDeleting} className="rounded-full bg-red-500 px-3 py-1 font-semibold text-white disabled:opacity-50">{bulkDeleting ? "Deleting..." : `Delete selected ${selectedFiles.length}`}</button>
         </div>
       </Card>
 
@@ -316,6 +389,15 @@ export default function AuthFilesPage() {
         {files.map((file) => (
           <Card key={file.id} className="min-w-0 overflow-hidden p-3 sm:p-4 dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0">
             <div className="flex min-w-0 items-start gap-3">
+              <label className="mt-2 flex shrink-0 cursor-pointer items-center">
+                <input
+                  type="checkbox"
+                  checked={selectedIds.has(file.id)}
+                  onChange={() => toggleSelected(file.id)}
+                  className="size-4 accent-primary"
+                  aria-label={`Select ${file.filename}`}
+                />
+              </label>
               <div className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-primary/15 text-primary sm:size-11">
                 <span className="material-symbols-outlined">key</span>
               </div>

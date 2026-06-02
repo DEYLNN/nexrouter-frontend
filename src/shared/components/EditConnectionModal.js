@@ -10,7 +10,7 @@ import { isOpenAICompatibleProvider, isAnthropicCompatibleProvider } from "@/sha
 import { getModelsByProviderId } from "open-sse/config/providerModels.js";
 
 // Providers that support per-account blocked model filtering
-const BLOCKED_MODELS_PROVIDERS = ["codex", "kiro", "canopywave"];
+const BLOCKED_MODELS_PROVIDERS = ["codex", "kiro", "canopywave", "husada"];
 
 export default function EditConnectionModal({ isOpen, connection, onSave, onClose }) {
   const [formData, setFormData] = useState({
@@ -32,9 +32,9 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
   const [validating, setValidating] = useState(false);
   const [validationResult, setValidationResult] = useState(null);
   const [saving, setSaving] = useState(false);
-  const [kiroProbeModel, setKiroProbeModel] = useState("");
-  const [kiroProbeTesting, setKiroProbeTesting] = useState(false);
-  const [kiroProbeResult, setKiroProbeResult] = useState(null);
+  const [liveProbeModel, setLiveProbeModel] = useState("");
+  const [liveProbeTesting, setLiveProbeTesting] = useState(false);
+  const [liveProbeResult, setLiveProbeResult] = useState(null);
 
   useEffect(() => {
     if (connection) {
@@ -73,8 +73,8 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
       }
       setTestResult(null);
       setValidationResult(null);
-      setKiroProbeResult(null);
-      setKiroProbeModel("");
+      setLiveProbeResult(null);
+      setLiveProbeModel("");
     }
   }, [connection]);
 
@@ -83,7 +83,8 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
   const isCloudflareAi = connection?.provider === "cloudflare-ai";
   const isMimoSgp = connection?.provider === "xiaomi-mimo-plan-sgp";
   const isCodex = connection?.provider === "codex";
-  const isKiro = connection?.provider === "kiro";
+  const supportsLiveModelProbe = ["kiro", "husada"].includes(connection?.provider);
+  const liveProbeProviderName = connection?.provider === "husada" ? "Husada" : "Kiro";
   const hasBlockedModels = connection ? BLOCKED_MODELS_PROVIDERS.includes(connection.provider) : false;
   const isCompatible = connection
     ? (isOpenAICompatibleProvider(connection.provider) || isAnthropicCompatibleProvider(connection.provider))
@@ -102,22 +103,22 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
     });
   };
 
-  const handleKiroProbe = async () => {
-    if (!connection?.id || !kiroProbeModel) return;
-    setKiroProbeTesting(true);
-    setKiroProbeResult(null);
+  const handleLiveModelProbe = async () => {
+    if (!connection?.id || !liveProbeModel) return;
+    setLiveProbeTesting(true);
+    setLiveProbeResult(null);
     try {
       const res = await fetch(`/api/providers/${connection.id}/test-model`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ model: kiroProbeModel }),
+        body: JSON.stringify({ model: liveProbeModel }),
       });
       const data = await res.json();
-      setKiroProbeResult(data);
+      setLiveProbeResult(data);
     } catch (error) {
-      setKiroProbeResult({ ok: false, error: error.message || "Test failed" });
+      setLiveProbeResult({ ok: false, error: error.message || "Test failed" });
     } finally {
-      setKiroProbeTesting(false);
+      setLiveProbeTesting(false);
     }
   };
 
@@ -347,44 +348,44 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
               </div>
               <p className="text-xs text-text-muted">Red = blocked for this account. Default is allow all.</p>
 
-              {isKiro && (
+              {supportsLiveModelProbe && (
                 <div className="mt-3 rounded-2xl border border-primary/15 bg-surface/70 p-3">
                   <div className="mb-2 flex items-center justify-between gap-3">
                     <div>
                       <p className="text-sm font-semibold">Live model test</p>
-                      <p className="text-xs text-text-muted">Runs a real chat completion using this exact Kiro key.</p>
+                      <p className="text-xs text-text-muted">Runs a real chat completion using this exact {liveProbeProviderName} key.</p>
                     </div>
-                    {kiroProbeResult && (
-                      <Badge variant={kiroProbeResult.ok ? "success" : "error"}>
-                        {kiroProbeResult.ok ? "Working" : "Failed"}
+                    {liveProbeResult && (
+                      <Badge variant={liveProbeResult.ok ? "success" : "error"}>
+                        {liveProbeResult.ok ? "Working" : "Failed"}
                       </Badge>
                     )}
                   </div>
                   <div className="flex flex-col gap-2 sm:flex-row">
                     <select
-                      value={kiroProbeModel}
-                      onChange={(e) => { setKiroProbeModel(e.target.value); setKiroProbeResult(null); }}
+                      value={liveProbeModel}
+                      onChange={(e) => { setLiveProbeModel(e.target.value); setLiveProbeResult(null); }}
                       className="min-h-[42px] flex-1 rounded-xl border border-border bg-bg px-3 text-sm text-text-main outline-none transition-colors hover:border-primary/40 focus:border-primary"
                     >
-                      <option value="">Select Kiro model…</option>
+                      <option value="">Select model…</option>
                       {providerModels.map((model) => (
                         <option key={model.id} value={model.id}>
                           {model.name || model.id}
                         </option>
                       ))}
                     </select>
-                    <Button onClick={handleKiroProbe} disabled={!kiroProbeModel || kiroProbeTesting || saving} variant="secondary">
-                      {kiroProbeTesting ? "Testing..." : "Test Model"}
+                    <Button onClick={handleLiveModelProbe} disabled={!liveProbeModel || liveProbeTesting || saving} variant="secondary">
+                      {liveProbeTesting ? "Testing..." : "Test Model"}
                     </Button>
                   </div>
-                  {kiroProbeResult && (
+                  {liveProbeResult && (
                     <div className="mt-2 rounded-xl border border-border bg-bg p-3 text-xs">
                       <div className="flex flex-wrap gap-x-4 gap-y-1 text-text-muted">
-                        <span>Status: <b className={kiroProbeResult.ok ? "text-green-600" : "text-red-600"}>{kiroProbeResult.status || "ERR"}</b></span>
-                        {kiroProbeResult.latencyMs !== undefined && <span>Latency: {kiroProbeResult.latencyMs}ms</span>}
+                        <span>Status: <b className={liveProbeResult.ok ? "text-green-600" : "text-red-600"}>{liveProbeResult.status || "ERR"}</b></span>
+                        {liveProbeResult.latencyMs !== undefined && <span>Latency: {liveProbeResult.latencyMs}ms</span>}
                       </div>
-                      {kiroProbeResult.content && <p className="mt-2 text-text-main">Response: {kiroProbeResult.content}</p>}
-                      {kiroProbeResult.error && <p className="mt-2 break-words text-red-600">{kiroProbeResult.error}</p>}
+                      {liveProbeResult.content && <p className="mt-2 text-text-main">Response: {liveProbeResult.content}</p>}
+                      {liveProbeResult.error && <p className="mt-2 break-words text-red-600">{liveProbeResult.error}</p>}
                     </div>
                   )}
                 </div>

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.41] - 2026-06-02
+
+### Features
+- Add Husada live model test UI to the edit connection modal
+- Show Husada models in the per-key blocked model list so individual keys can be tested like Kiro
+
 ## [0.5.40] - 2026-06-02
 
 ### Fixes

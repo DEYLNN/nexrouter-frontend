@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.48] - 2026-06-03
+
+### Added
+- Add Anuma provider to the frontend API-key provider catalog.
+- Show Anuma as API-key-only UX; NexRouter injects the required `X-User-ID` header server-side.
+- Register tested Anuma models in the model picker: ChatGPT 5.4, Claude Sonnet 4.6, Gemini 3.1 Pro, Gemini 3.5 Flash, Grok 4.3, Qwen 3.6 Max Preview, Kimi 2.6, Kimi 2.5, Qwen 3.6 Plus, MiniMax 2.7.
+
 ## [0.5.47] - 2026-06-02
 
 ### Changed

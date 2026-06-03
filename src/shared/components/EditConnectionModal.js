@@ -10,7 +10,7 @@ import { isOpenAICompatibleProvider, isAnthropicCompatibleProvider } from "@/sha
 import { getModelsByProviderId } from "open-sse/config/providerModels.js";
 
 // Providers that support per-account blocked model filtering
-const BLOCKED_MODELS_PROVIDERS = ["codex", "kiro", "canopywave", "husada"];
+const BLOCKED_MODELS_PROVIDERS = ["codex", "kiro", "canopywave", "husada", "anuma"];
 
 export default function EditConnectionModal({ isOpen, connection, onSave, onClose }) {
   const [formData, setFormData] = useState({
@@ -87,8 +87,8 @@ export default function EditConnectionModal({ isOpen, connection, onSave, onClos
   const isCloudflareAi = connection?.provider === "cloudflare-ai";
   const isMimoSgp = connection?.provider === "xiaomi-mimo-plan-sgp";
   const isCodex = connection?.provider === "codex";
-  const supportsLiveModelProbe = ["kiro", "husada"].includes(connection?.provider);
-  const liveProbeProviderName = connection?.provider === "husada" ? "Husada" : "Kiro";
+  const supportsLiveModelProbe = ["kiro", "husada", "anuma"].includes(connection?.provider);
+  const liveProbeProviderName = connection?.provider === "husada" ? "Husada" : connection?.provider === "anuma" ? "Anuma" : "Kiro";
   const hasBlockedModels = connection ? BLOCKED_MODELS_PROVIDERS.includes(connection.provider) : false;
   const isCompatible = connection
     ? (isOpenAICompatibleProvider(connection.provider) || isAnthropicCompatibleProvider(connection.provider))

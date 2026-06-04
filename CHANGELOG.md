@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.49] - 2026-06-04
+
+### Fixed
+- Add Morph provider FE constant model `morph-dsv4flash` / Morph DeepSeek V4 Flash so `/dashboard/providers/morph` can display it.
+
 ## [0.5.48] - 2026-06-03
 
 ### Added

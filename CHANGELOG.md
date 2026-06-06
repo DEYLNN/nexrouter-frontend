@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.50] - 2026-06-06
+
+### Fixed
+- Scope Auth Files `Problematic` and `Disabled` counters to the selected provider dropdown, so status filters are provider-specific instead of all-file totals.
+
 ## [0.5.49] - 2026-06-04
 
 ### Fixed

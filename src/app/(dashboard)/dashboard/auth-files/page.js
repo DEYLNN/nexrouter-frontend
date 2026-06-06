@@ -214,8 +214,12 @@ export default function AuthFilesPage() {
       .sort(SORTERS[sort] || SORTERS.priority);
   }, [payload.files, query, providerType, sort, onlyProblem, onlyDisabled]);
 
-  const problemCount = payload.files.filter((file) => file.problem).length;
-  const disabledCount = payload.files.filter((file) => !file.isActive).length;
+  const providerScopedFiles = useMemo(() => {
+    return payload.files.filter((file) => providerType === "all" || file.provider === providerType);
+  }, [payload.files, providerType]);
+
+  const problemCount = providerScopedFiles.filter((file) => file.problem).length;
+  const disabledCount = providerScopedFiles.filter((file) => !file.isActive).length;
   const visibleIds = useMemo(() => files.map((file) => file.id), [files]);
   const selectedVisibleCount = useMemo(() => visibleIds.filter((id) => selectedIds.has(id)).length, [visibleIds, selectedIds]);
   const selectedFiles = useMemo(() => payload.files.filter((file) => selectedIds.has(file.id)), [payload.files, selectedIds]);

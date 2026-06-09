@@ -267,6 +267,12 @@ export const PROVIDER_MODELS = {
   "freemodel-dev": [
     { id: "gpt-5.5", name: "GPT-5.5" },
   ],
+  kimchi: [
+    { id: "kimi-k2.6", name: "Kimi K2.6" },
+    { id: "kimi-k2.5", name: "Kimi K2.5" },
+    { id: "minimax-m2.7", name: "MiniMax M2.7" },
+    { id: "nemotron-3-super-fp4", name: "Nemotron 3 Super FP4" },
+  ],
   bai: [
     { id: "glm-5.1", name: "GLM 5.1" },
     { id: "minimax-m2.7", name: "MiniMax M2.7" },

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.51] - 2026-06-09
+
+### Changed
+- Update FreeBuff frontend model catalog to expose MiniMax M3, MiMo V2.5, MiMo V2.5 Pro, Kimi K2.6, DeepSeek V4 Pro, and DeepSeek V4 Flash queues.
+- Refresh FreeBuff provider notice so the dashboard no longer describes the free tier as DeepSeek V4 Flash-only.
+
 ## [0.5.50] - 2026-06-06
 
 ### Fixed

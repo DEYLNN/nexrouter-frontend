@@ -139,7 +139,7 @@ function StatCard({ label, value, sub, icon: Icon, accent }) {
 // ─── log row (message bubble style) ─────────────────────────────────────────
 function LogRow({ entry }) {
   const color = providerColor(entry.provider);
-  const isOk = entry.status === "ok";
+  const isOk = ["ok", "success", "200 ok"].includes(String(entry.status || "").toLowerCase()) || String(entry.status || "").startsWith("200");
   const total = entry.inputTokens + entry.outputTokens;
   const label = providerLabel(entry.provider);
 
@@ -194,7 +194,7 @@ function LogRow({ entry }) {
             <span className="font-mono text-[11px] font-semibold" style={{ color }}>{fmt(total)}</span>
           </div>
           <div className={`ml-auto inline-flex rounded-full border px-2 py-0.5 text-[10px] font-semibold ${isOk ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-400" : "border-red-500/25 bg-red-500/10 text-red-400"}`}>
-            {isOk ? "OK" : "ERR"}
+            {isOk ? "OK" : String(entry.status || "ERR").toUpperCase()}
           </div>
         </div>
       </div>

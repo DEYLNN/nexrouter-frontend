@@ -1081,6 +1081,10 @@ export default function ProviderDetailPage() {
           isOpen={showAddCustomModel}
           providerAlias={providerStorageAlias}
           providerDisplayAlias={providerDisplayAlias}
+          modelsFetcher={providerId === "opencode" ? providerInfo?.modelsFetcher : undefined}
+          existingModelIds={Object.values(modelAliases)
+            .filter((fullModel) => fullModel.startsWith(`${providerStorageAlias}/`))
+            .map((fullModel) => fullModel.slice(`${providerStorageAlias}/`.length))}
           onSave={async (modelId) => {
             // For passthrough providers (OpenRouter), use last segment as alias to avoid slash conflicts
             const alias = providerInfo?.passthroughModels

@@ -208,7 +208,7 @@ function LogRowMobile({ entry }) {
 }
 
 // ─── main component ───────────────────────────────────────────────────────────
-export default function RequestLogsTable() {
+export default function RequestLogsTable({ hideStats = false } = {}) {
   const { isDark } = useTheme();
   const [logs, setLogs] = useState([]);
   const [stats, setStats] = useState(null);
@@ -303,12 +303,14 @@ export default function RequestLogsTable() {
     <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
 
       {/* stat cards */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "10px" }}>
-        <StatCard label="Requests" value={fmt(stats?.totalRequests || 0)} sub="all time" icon={IconActivity} accent="#3B82F6" />
-        <StatCard label="Input tokens" value={fmt(stats?.totalPromptTokens || 0)} sub="prompt" icon={IconZap} accent="#A855F7" />
-        <StatCard label="Output tokens" value={fmt(stats?.totalCompletionTokens || 0)} sub="completion" icon={IconCpu} accent="#10B981" />
-        <StatCard label="Total cost" value={`$${(stats?.totalCost || 0).toFixed(2)}`} sub="estimated" icon={IconActivity} accent="#F59E0B" />
-      </div>
+      {!hideStats && (
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: "10px" }}>
+          <StatCard label="Requests" value={fmt(stats?.totalRequests || 0)} sub="all time" icon={IconActivity} accent="#3B82F6" />
+          <StatCard label="Input tokens" value={fmt(stats?.totalPromptTokens || 0)} sub="prompt" icon={IconZap} accent="#A855F7" />
+          <StatCard label="Output tokens" value={fmt(stats?.totalCompletionTokens || 0)} sub="completion" icon={IconCpu} accent="#10B981" />
+          <StatCard label="Total cost" value={`$${(stats?.totalCost || 0).toFixed(2)}`} sub="estimated" icon={IconActivity} accent="#F59E0B" />
+        </div>
+      )}
 
       {/* toolbar */}
       <div className="flex flex-wrap items-center gap-2 theme-glass dark:!bg-[#0B1220] dark:!border-[#334155] dark:!shadow-none dark:!backdrop-blur-0 rounded-2xl p-3">

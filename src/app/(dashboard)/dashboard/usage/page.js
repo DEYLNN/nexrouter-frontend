@@ -1,8 +1,7 @@
 "use client";
 
 import { Suspense, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { UsageStats, RequestLogger, CardSkeleton, SegmentedControl } from "@/shared/components";
+import { UsageStats, CardSkeleton, SegmentedControl } from "@/shared/components";
 import RequestLogsTable from "./components/RequestLogsTable";
 
 const PERIODS = [
@@ -21,10 +20,6 @@ export default function UsagePage() {
 }
 
 function UsageContent() {
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  const [tabLoading, setTabLoading] = useState(false);
   const [period, setPeriod] = useState("7d");
   const [clearOpen, setClearOpen] = useState(false);
   const [clearScope, setClearScope] = useState("all");
@@ -32,19 +27,6 @@ function UsageContent() {
   const [clearResult, setClearResult] = useState(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
-  const tabFromUrl = searchParams.get("tab");
-  const activeTab = tabFromUrl && ["overview", "logs"].includes(tabFromUrl)
-    ? tabFromUrl
-    : "overview";
-
-  const handleTabChange = (value) => {
-    if (value === activeTab) return;
-    setTabLoading(true);
-    const params = new URLSearchParams(searchParams);
-    params.set("tab", value);
-    router.push(`/dashboard/usage?${params.toString()}`, { scroll: false });
-    setTimeout(() => setTabLoading(false), 300);
-  };
 
   const handleClearUsage = async () => {
     setClearBusy(true);
@@ -68,27 +50,20 @@ function UsageContent() {
 
   return (
     <div className="flex min-w-0 flex-col gap-6 px-1 sm:px-0">
-      {/* Tabs + period selector on same row */}
+      {/* Header controls */}
       <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <SegmentedControl
-          options={[
-            { value: "overview", label: "Overview" },
-            { value: "logs", label: "Logs" },
-          ]}
-          value={activeTab}
-          onChange={handleTabChange}
-          className="w-full sm:w-auto"
-        />
+        <div>
+          <h1 className="text-xl font-semibold text-text-main dark:!text-white">Usage</h1>
+          <p className="text-sm text-text-muted dark:!text-[#CBD5E1]">Overview, trend, recent activity, and searchable request logs.</p>
+        </div>
         <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-end">
-          {activeTab === "overview" && (
-            <SegmentedControl
-              options={PERIODS}
-              value={period}
-              onChange={setPeriod}
-              size="sm"
-              className="w-full sm:w-auto"
-            />
-          )}
+          <SegmentedControl
+            options={PERIODS}
+            value={period}
+            onChange={setPeriod}
+            size="sm"
+            className="w-full sm:w-auto"
+          />
           <button
             type="button"
             onClick={() => { setClearOpen(true); setClearResult(null); }}
@@ -100,22 +75,19 @@ function UsageContent() {
         </div>
       </div>
 
-      {tabLoading ? (
-        <CardSkeleton />
-      ) : (
-        <>
-          {activeTab === "overview" && (
-            <Suspense fallback={<CardSkeleton />}>
-              <UsageStats key={refreshKey} period={period} setPeriod={setPeriod} hidePeriodSelector />
-            </Suspense>
-          )}
-          {activeTab === "logs" && (
-            <Suspense fallback={<CardSkeleton />}>
-              <RequestLogsTable key={refreshKey} />
-            </Suspense>
-          )}
-        </>
-      )}
+      <Suspense fallback={<CardSkeleton />}>
+        <UsageStats key={`stats-${refreshKey}`} period={period} setPeriod={setPeriod} hidePeriodSelector />
+      </Suspense>
+
+      <section className="flex flex-col gap-3">
+        <div>
+          <h2 className="text-base font-semibold text-text-main dark:!text-white">Request logs</h2>
+          <p className="text-sm text-text-muted dark:!text-[#CBD5E1]">Search/filter raw usage entries. Summary cards above already cover totals.</p>
+        </div>
+        <Suspense fallback={<CardSkeleton />}>
+          <RequestLogsTable key={`logs-${refreshKey}`} hideStats />
+        </Suspense>
+      </section>
 
 
       {clearOpen && (

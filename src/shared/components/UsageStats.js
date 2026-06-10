@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useEffect, useMemo, useCallback, useRef } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 import { FREE_PROVIDERS, AI_PROVIDERS } from "@/shared/constants/providers";
 
 // Keep providers without serviceKinds (default LLM) or with "llm" in serviceKinds
@@ -10,12 +9,12 @@ function isLLMProvider(id) {
   if (!p?.serviceKinds) return true;
   return p.serviceKinds.includes("llm");
 }
-import Badge from "./Badge";
 import Card from "./Card";
 import OverviewCards from "@/app/(dashboard)/dashboard/usage/components/OverviewCards";
-import UsageTable, { fmt, fmtTime } from "@/app/(dashboard)/dashboard/usage/components/UsageTable";
 import ProviderTopology from "@/app/(dashboard)/dashboard/usage/components/ProviderTopology";
 import UsageChart from "@/app/(dashboard)/dashboard/usage/components/UsageChart";
+
+const fmt = (n) => new Intl.NumberFormat().format(n || 0);
 
 function timeAgo(timestamp) {
   const diff = Math.floor((Date.now() - new Date(timestamp)) / 1000);
@@ -84,103 +83,6 @@ function RecentRequests({ requests = [] }) {
   );
 }
 
-function sortData(dataMap, pendingMap = {}, sortBy, sortOrder) {
-  return Object.entries(dataMap || {})
-    .map(([key, data]) => {
-      const totalTokens = (data.promptTokens || 0) + (data.completionTokens || 0);
-      const totalCost = data.cost || 0;
-      const inputCost = totalTokens > 0 ? (data.promptTokens || 0) * (totalCost / totalTokens) : 0;
-      const outputCost = totalTokens > 0 ? (data.completionTokens || 0) * (totalCost / totalTokens) : 0;
-      return { ...data, key, totalTokens, totalCost, inputCost, outputCost, pending: pendingMap[key] || 0 };
-    })
-    .sort((a, b) => {
-      let valA = a[sortBy];
-      let valB = b[sortBy];
-      if (typeof valA === "string") valA = valA.toLowerCase();
-      if (typeof valB === "string") valB = valB.toLowerCase();
-      if (valA < valB) return sortOrder === "asc" ? -1 : 1;
-      if (valA > valB) return sortOrder === "asc" ? 1 : -1;
-      return 0;
-    });
-}
-
-function getGroupKey(item, keyField) {
-  switch (keyField) {
-    case "rawModel": return item.rawModel || "Unknown Model";
-    case "accountName": return item.accountName || `Account ${item.connectionId?.slice(0, 8)}...` || "Unknown Account";
-    case "keyName": return item.keyName || "Unknown Key";
-    case "endpoint": return item.endpoint || "Unknown Endpoint";
-    default: return item[keyField] || "Unknown";
-  }
-}
-
-function groupDataByKey(data, keyField) {
-  if (!Array.isArray(data)) return [];
-  const groups = {};
-  data.forEach((item) => {
-    const gk = getGroupKey(item, keyField);
-    if (!groups[gk]) {
-      groups[gk] = {
-        groupKey: gk,
-        summary: { requests: 0, promptTokens: 0, completionTokens: 0, totalTokens: 0, cost: 0, inputCost: 0, outputCost: 0, lastUsed: null, pending: 0 },
-        items: [],
-      };
-    }
-    const s = groups[gk].summary;
-    s.requests += item.requests || 0;
-    s.promptTokens += item.promptTokens || 0;
-    s.completionTokens += item.completionTokens || 0;
-    s.totalTokens += item.totalTokens || 0;
-    s.cost += item.cost || 0;
-    s.inputCost += item.inputCost || 0;
-    s.outputCost += item.outputCost || 0;
-    s.pending += item.pending || 0;
-    if (item.lastUsed && (!s.lastUsed || new Date(item.lastUsed) > new Date(s.lastUsed))) {
-      s.lastUsed = item.lastUsed;
-    }
-    groups[gk].items.push(item);
-  });
-  return Object.values(groups);
-}
-
-const MODEL_COLUMNS = [
-  { field: "rawModel", label: "Model" },
-  { field: "provider", label: "Provider" },
-  { field: "requests", label: "Requests", align: "right" },
-  { field: "lastUsed", label: "Last Used", align: "right" },
-];
-
-const ACCOUNT_COLUMNS = [
-  { field: "rawModel", label: "Model" },
-  { field: "provider", label: "Provider" },
-  { field: "accountName", label: "Account" },
-  { field: "requests", label: "Requests", align: "right" },
-  { field: "lastUsed", label: "Last Used", align: "right" },
-];
-
-const API_KEY_COLUMNS = [
-  { field: "keyName", label: "API Key Name" },
-  { field: "rawModel", label: "Model" },
-  { field: "provider", label: "Provider" },
-  { field: "requests", label: "Requests", align: "right" },
-  { field: "lastUsed", label: "Last Used", align: "right" },
-];
-
-const ENDPOINT_COLUMNS = [
-  { field: "endpoint", label: "Endpoint" },
-  { field: "rawModel", label: "Model" },
-  { field: "provider", label: "Provider" },
-  { field: "requests", label: "Requests", align: "right" },
-  { field: "lastUsed", label: "Last Used", align: "right" },
-];
-
-const TABLE_OPTIONS = [
-  { value: "model", label: "Usage by Model", icon: "smart_toy", desc: "Group spend per model" },
-  { value: "account", label: "Usage by Account", icon: "account_circle", desc: "Group spend per account" },
-  { value: "apiKey", label: "Usage by API Key", icon: "key", desc: "Group spend per key" },
-  { value: "endpoint", label: "Usage by Endpoint", icon: "api", desc: "Group spend per endpoint" },
-];
-
 const PERIODS = [
   { value: "24h", label: "24h" },
   { value: "7d", label: "7D" },
@@ -189,19 +91,9 @@ const PERIODS = [
 ];
 
 export default function UsageStats({ period: periodProp, setPeriod: setPeriodProp, hidePeriodSelector = false } = {}) {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-
-  const sortBy = searchParams.get("sortBy") || "rawModel";
-  const sortOrder = searchParams.get("sortOrder") || "asc";
-
   const [stats, setStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [fetching, setFetching] = useState(false);
-  const [tableView, setTableView] = useState("model");
-  const [tableMenuOpen, setTableMenuOpen] = useState(false);
-  const tableMenuRef = useRef(null);
-  const [viewMode, setViewMode] = useState("costs");
   const [providers, setProviders] = useState([]);
   const [periodLocal, setPeriodLocal] = useState("7d");
   const period = periodProp ?? periodLocal;
@@ -247,17 +139,6 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
       });
   }, [period]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  useEffect(() => {
-    if (!tableMenuOpen) return;
-    const handleClick = (event) => {
-      if (tableMenuRef.current && !tableMenuRef.current.contains(event.target)) {
-        setTableMenuOpen(false);
-      }
-    };
-    document.addEventListener("mousedown", handleClick);
-    return () => document.removeEventListener("mousedown", handleClick);
-  }, [tableMenuOpen]);
-
   // SSE connection - real-time updates for activeRequests + recentRequests only
   useEffect(() => {
     const es = new EventSource("/api/usage/stream");
@@ -283,134 +164,6 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
 
     return () => es.close();
   }, []);
-
-  const toggleSort = useCallback((tableType, field) => {
-    const params = new URLSearchParams(searchParams.toString());
-    if (params.get("sortBy") === field) {
-      params.set("sortOrder", params.get("sortOrder") === "asc" ? "desc" : "asc");
-    } else {
-      params.set("sortBy", field);
-      params.set("sortOrder", "asc");
-    }
-    router.replace(`?${params.toString()}`, { scroll: false });
-  }, [searchParams, router]);
-
-  // Compute active table data
-  const activeTableConfig = useMemo(() => {
-    if (!stats) return null;
-    switch (tableView) {
-      case "model": {
-        const pendingMap = stats.pending?.byModel || {};
-        return {
-          columns: MODEL_COLUMNS,
-          groupedData: groupDataByKey(sortData(stats.byModel, pendingMap, sortBy, sortOrder), "rawModel"),
-          storageKey: "usage-stats:expanded-models",
-          emptyMessage: "No usage recorded yet.",
-          renderSummaryCells: (group) => (
-            <>
-              <td className="px-4 py-3.5 text-text-muted">—</td>
-              <td className="px-4 py-3.5 text-right font-mono text-[12px]">{fmt(group.summary.requests)}</td>
-              <td className="px-4 py-3.5 text-right text-text-muted whitespace-nowrap">{fmtTime(group.summary.lastUsed)}</td>
-            </>
-          ),
-          renderDetailCells: (item) => (
-            <>
-              <td className={`px-4 py-3.5 font-medium transition-colors ${item.pending > 0 ? "text-primary" : ""}`}>{item.rawModel}</td>
-              <td className="px-4 py-3.5"><Badge variant={item.pending > 0 ? "primary" : "neutral"} size="sm">{item.provider}</Badge></td>
-              <td className="px-4 py-3.5 text-right font-mono text-[12px]">{fmt(item.requests)}</td>
-              <td className="px-4 py-3.5 text-right text-text-muted whitespace-nowrap">{fmtTime(item.lastUsed)}</td>
-            </>
-          ),
-        };
-      }
-      case "account": {
-        const pendingMap = {};
-        if (stats?.pending?.byAccount) {
-          Object.entries(stats.byAccount || {}).forEach(([accountKey, data]) => {
-            const connPending = stats.pending.byAccount[data.connectionId];
-            if (connPending) {
-              const modelKey = data.provider ? `${data.rawModel} (${data.provider})` : data.rawModel;
-              pendingMap[accountKey] = connPending[modelKey] || 0;
-            }
-          });
-        }
-        return {
-          columns: ACCOUNT_COLUMNS,
-          groupedData: groupDataByKey(sortData(stats.byAccount, pendingMap, sortBy, sortOrder), "accountName"),
-          storageKey: "usage-stats:expanded-accounts",
-          emptyMessage: "No account-specific usage recorded yet.",
-          renderSummaryCells: (group) => (
-            <>
-              <td className="px-4 py-3.5 text-text-muted">—</td>
-              <td className="px-4 py-3.5 text-text-muted">—</td>
-              <td className="px-4 py-3.5 text-right font-mono text-[12px]">{fmt(group.summary.requests)}</td>
-              <td className="px-4 py-3.5 text-right text-text-muted whitespace-nowrap">{fmtTime(group.summary.lastUsed)}</td>
-            </>
-          ),
-          renderDetailCells: (item) => (
-            <>
-              <td className={`px-4 py-3.5 font-medium transition-colors ${item.pending > 0 ? "text-primary" : ""}`}>{item.accountName || `Account ${item.connectionId?.slice(0, 8)}...`}</td>
-              <td className={`px-4 py-3.5 font-medium transition-colors ${item.pending > 0 ? "text-primary" : ""}`}>{item.rawModel}</td>
-              <td className="px-4 py-3.5"><Badge variant={item.pending > 0 ? "primary" : "neutral"} size="sm">{item.provider}</Badge></td>
-              <td className="px-4 py-3.5 text-right font-mono text-[12px]">{fmt(item.requests)}</td>
-              <td className="px-4 py-3.5 text-right text-text-muted whitespace-nowrap">{fmtTime(item.lastUsed)}</td>
-            </>
-          ),
-        };
-      }
-      case "apiKey": {
-        return {
-          columns: API_KEY_COLUMNS,
-          groupedData: groupDataByKey(sortData(stats.byApiKey, {}, sortBy, sortOrder), "keyName"),
-          storageKey: "usage-stats:expanded-apikeys",
-          emptyMessage: "No API key usage recorded yet.",
-          renderSummaryCells: (group) => (
-            <>
-              <td className="px-4 py-3.5 text-text-muted">—</td>
-              <td className="px-4 py-3.5 text-text-muted">—</td>
-              <td className="px-4 py-3.5 text-right font-mono text-[12px]">{fmt(group.summary.requests)}</td>
-              <td className="px-4 py-3.5 text-right text-text-muted whitespace-nowrap">{fmtTime(group.summary.lastUsed)}</td>
-            </>
-          ),
-          renderDetailCells: (item) => (
-            <>
-              <td className="px-4 py-3.5 font-medium">{item.keyName}</td>
-              <td className="px-4 py-3.5">{item.rawModel}</td>
-              <td className="px-4 py-3.5"><Badge variant="neutral" size="sm">{item.provider}</Badge></td>
-              <td className="px-4 py-3.5 text-right font-mono text-[12px]">{fmt(item.requests)}</td>
-              <td className="px-4 py-3.5 text-right text-text-muted whitespace-nowrap">{fmtTime(item.lastUsed)}</td>
-            </>
-          ),
-        };
-      }
-      case "endpoint":
-      default: {
-        return {
-          columns: ENDPOINT_COLUMNS,
-          groupedData: groupDataByKey(sortData(stats.byEndpoint, {}, sortBy, sortOrder), "endpoint"),
-          storageKey: "usage-stats:expanded-endpoints",
-          emptyMessage: "No endpoint usage recorded yet.",
-          renderSummaryCells: (group) => (
-            <>
-              <td className="px-4 py-3.5 text-text-muted">—</td>
-              <td className="px-4 py-3.5 text-text-muted">—</td>
-              <td className="px-4 py-3.5 text-right font-mono text-[12px]">{fmt(group.summary.requests)}</td>
-              <td className="px-4 py-3.5 text-right text-text-muted whitespace-nowrap">{fmtTime(group.summary.lastUsed)}</td>
-            </>
-          ),
-          renderDetailCells: (item) => (
-            <>
-              <td className="px-6 py-3 font-medium font-mono text-sm">{item.endpoint}</td>
-              <td className="px-4 py-3.5">{item.rawModel}</td>
-              <td className="px-4 py-3.5"><Badge variant="neutral" size="sm">{item.provider}</Badge></td>
-              <td className="px-4 py-3.5 text-right font-mono text-[12px]">{fmt(item.requests)}</td>
-              <td className="px-4 py-3.5 text-right text-text-muted whitespace-nowrap">{fmtTime(item.lastUsed)}</td>
-            </>
-          ),
-        };
-      }
-    }
-  }, [stats, tableView, sortBy, sortOrder]);
 
   if (!stats && !loading) return <div className="text-text-muted">Failed to load usage statistics.</div>;
 
@@ -462,95 +215,6 @@ export default function UsageStats({ period: periodProp, setPeriod: setPeriodPro
       {/* Token / Cost chart - sync period */}
       {loading ? spinner : <UsageChart period={period} />}
 
-      {/* Table with dropdown selector */}
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <div ref={tableMenuRef} className="relative w-full sm:w-[260px]">
-            <button
-              type="button"
-              onClick={() => setTableMenuOpen((v) => !v)}
-              className="flex h-12 w-full items-center justify-between gap-3 rounded-2xl border border-[rgba(17,24,39,0.08)] bg-white/80 px-3 text-left shadow-[0_12px_30px_-24px_rgba(17,24,39,0.45)] transition-all hover:border-[rgba(79,124,255,0.28)] focus:outline-none focus:ring-2 focus:ring-[rgba(79,124,255,0.14)] dark:!border-[#334155] dark:!bg-[#0B1220] dark:!shadow-none dark:hover:!border-[#64748B]"
-            >
-              {(() => {
-                const selected = TABLE_OPTIONS.find((opt) => opt.value === tableView) || TABLE_OPTIONS[0];
-                return (
-                  <>
-                    <span className="flex min-w-0 items-center gap-2">
-                      <span className="grid size-8 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]">
-                        <span className="material-symbols-outlined block translate-y-[1px] text-[18px] leading-none">{selected.icon}</span>
-                      </span>
-                      <span className="min-w-0">
-                        <span className="block truncate text-sm font-semibold text-text-main dark:!text-white">{selected.label}</span>
-                        <span className="block truncate text-[10px] text-text-muted dark:!text-[#CBD5E1]">{selected.desc}</span>
-                      </span>
-                    </span>
-                    <span className={`material-symbols-outlined shrink-0 text-[20px] text-text-muted transition-transform dark:!text-[#CBD5E1] ${tableMenuOpen ? "rotate-180" : ""}`}>expand_more</span>
-                  </>
-                );
-              })()}
-            </button>
-            {tableMenuOpen && (
-              <div className="absolute left-0 z-40 mt-2 w-full overflow-hidden rounded-2xl border border-[rgba(17,24,39,0.08)] bg-white/95 p-1.5 shadow-xl shadow-black/10 backdrop-blur dark:!border-[#334155] dark:!bg-[#0B1220] dark:!shadow-black/40">
-                {TABLE_OPTIONS.map((opt) => {
-                  const active = opt.value === tableView;
-                  return (
-                    <button
-                      key={opt.value}
-                      type="button"
-                      onClick={() => {
-                        setTableView(opt.value);
-                        setTableMenuOpen(false);
-                      }}
-                      className={`flex w-full items-center gap-3 rounded-xl px-2.5 py-2.5 text-left transition-colors ${active ? "bg-primary/10 text-primary dark:!bg-[#172554] dark:!text-[#93C5FD]" : "text-text-muted hover:bg-black/5 hover:text-text-main dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B] dark:hover:!text-white"}`}
-                    >
-                      <span className="grid size-8 shrink-0 place-items-center rounded-lg bg-black/5 dark:!bg-[#111827]">
-                        <span className="material-symbols-outlined block translate-y-[1px] text-[18px] leading-none">{opt.icon}</span>
-                      </span>
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm font-semibold">{opt.label}</span>
-                        <span className={`block truncate text-[10px] ${active ? "text-primary/80 dark:!text-[#BFDBFE]" : "text-text-muted dark:!text-[#94A3B8]"}`}>{opt.desc}</span>
-                      </span>
-                      {active && <span className="grid size-6 shrink-0 place-items-center">
-                        <span className="material-symbols-outlined block translate-y-[1px] text-[18px] leading-none">check</span>
-                      </span>}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
-          </div>
-          <div className="grid grid-cols-2 items-center gap-1 rounded-lg border border-border bg-bg-subtle p-1 sm:flex dark:!bg-[#0B1220] dark:!border-[#334155]">
-            <button
-              onClick={() => setViewMode("costs")}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${viewMode === "costs" ? "bg-primary text-white shadow-sm dark:!bg-[#1D4ED8]" : "text-text-muted hover:text-text hover:bg-bg-hover dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B] dark:hover:!text-white"}`}
-            >
-              Costs
-            </button>
-            <button
-              onClick={() => setViewMode("tokens")}
-              className={`px-3 py-1 rounded-md text-sm font-medium transition-colors ${viewMode === "tokens" ? "bg-primary text-white shadow-sm dark:!bg-[#1D4ED8]" : "text-text-muted hover:text-text hover:bg-bg-hover dark:!text-[#CBD5E1] dark:hover:!bg-[#1E293B] dark:hover:!text-white"}`}
-            >
-              Tokens
-            </button>
-          </div>
-        </div>
-        {loading ? spinner : activeTableConfig && (
-          <UsageTable
-            title=""
-            columns={activeTableConfig.columns}
-            groupedData={activeTableConfig.groupedData}
-            tableType={tableView}
-            sortBy={sortBy}
-            sortOrder={sortOrder}
-            onToggleSort={toggleSort}
-            viewMode={viewMode}
-            storageKey={activeTableConfig.storageKey}
-            renderSummaryCells={activeTableConfig.renderSummaryCells}
-            renderDetailCells={activeTableConfig.renderDetailCells}
-            emptyMessage={activeTableConfig.emptyMessage}
-          />
-        )}
-      </div>
     </div>
   );
 }

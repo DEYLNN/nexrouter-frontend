@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.2] - 2026-06-11
+
+### Fixed
+- Show request-log error details and status codes for failed provider calls instead of only a bare ERROR badge.
+
 ## [0.5.51] - 2026-06-09
 
 ### Changed

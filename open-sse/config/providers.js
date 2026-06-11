@@ -194,6 +194,14 @@ export const PROVIDERS = {
     baseUrl: "https://api.b.ai/v1/chat/completions",
     format: "openai"
   },
+  tokenrouter: {
+    baseUrl: "https://api.tokenrouter.com/v1/chat/completions",
+    format: "openai"
+  },
+  tr: {
+    baseUrl: "https://api.tokenrouter.com/v1/chat/completions",
+    format: "openai"
+  },
   qiniu: {
     baseUrl: "https://api.qnaigc.com/v1/chat/completions",
     format: "openai"

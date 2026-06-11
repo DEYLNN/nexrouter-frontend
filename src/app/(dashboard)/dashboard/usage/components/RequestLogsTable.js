@@ -12,7 +12,7 @@ function parseLogLine(line) {
   if (!line) return null;
   const parts = line.split(" | ");
   if (parts.length < 6) return null;
-  const [timestamp, model, providerRaw, account, inputTokens, outputTokens, status] = parts;
+  const [timestamp, model, providerRaw, account, inputTokens, outputTokens, status, ...errorParts] = parts;
   return {
     timestamp,
     model: model?.trim(),
@@ -21,6 +21,7 @@ function parseLogLine(line) {
     inputTokens: parseInt(inputTokens) || 0,
     outputTokens: parseInt(outputTokens) || 0,
     status: status?.trim() || "ok",
+    error: errorParts.join(" | ").trim(),
   };
 }
 
@@ -197,6 +198,11 @@ function LogRow({ entry }) {
             {isOk ? "OK" : String(entry.status || "ERR").toUpperCase()}
           </div>
         </div>
+        {!isOk && entry.error && (
+          <div className="mt-2 rounded-lg border border-red-500/20 bg-red-500/10 px-2 py-1.5 font-mono text-[11px] leading-snug text-red-500 dark:!text-red-300" title={entry.error}>
+            {entry.error}
+          </div>
+        )}
       </div>
     </div>
   );

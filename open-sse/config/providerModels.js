@@ -283,6 +283,12 @@ export const PROVIDER_MODELS = {
     { id: "deepseek-v4-pro", name: "DeepSeek V4 Pro" },
     { id: "deepseek-v3.2", name: "DeepSeek V3.2" },
   ],
+  tokenrouter: [
+    { id: "MiniMax-M3", name: "MiniMax M3" },
+  ],
+  tr: [
+    { id: "MiniMax-M3", name: "MiniMax M3" },
+  ],
   qiniu: [
     { id: "deepseek-v3", name: "DeepSeek V3" },
   ],
@@ -1000,6 +1006,7 @@ const OAUTH_ALIASES = {
   canopywave: "cwv",
   "xiaomi-mimo-plan-sgp": "mimo-sgp",
   swiftrouter: "sr",
+  tokenrouter: "tr",
   freebuff: "fb",
 };
 

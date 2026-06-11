@@ -778,6 +778,7 @@ export const PROVIDER_MODELS = {
     { id: "qwen3-coder", name: "Qwen3 Coder" },
   ],
   "xiaomi-mimo": [
+    { id: "mimo-v2.5-pro-ultraspeed", name: "MiMo V2.5 Pro UltraSpeed" },
     { id: "mimo-v2.5-pro", name: "MiMo V2.5 Pro" },
     { id: "mimo-v2.5", name: "MiMo V2.5" },
     { id: "mimo-v2-omni", name: "MiMo V2 Omni" },

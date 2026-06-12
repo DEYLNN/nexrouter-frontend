@@ -261,7 +261,7 @@ export const PROVIDER_MODELS = {
     { id: "xiaomi/mimo-v2.5", name: "Xiaomi: MiMo-V2.5" },
     { id: "xiaomi/mimo-v2-flash", name: "Xiaomi: MiMo-V2-Flash" },
   ],
-  ambient: [
+  amb: [
     { id: "zai-org/GLM-5.1-FP8", name: "GLM 5.1" },
     { id: "z-ai/glm-4.5-air", name: "GLM 4.5 Air" },
     { id: "google/gemma-4-31b-it", name: "Gemma 4 31B" },

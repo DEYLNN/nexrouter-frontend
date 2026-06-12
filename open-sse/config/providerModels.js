@@ -263,16 +263,6 @@ export const PROVIDER_MODELS = {
   ],
   amb: [
     { id: "zai-org/GLM-5.1-FP8", name: "GLM 5.1" },
-    { id: "z-ai/glm-4.5-air", name: "GLM 4.5 Air" },
-    { id: "google/gemma-4-31b-it", name: "Gemma 4 31B" },
-    { id: "openai/gpt-oss-120b", name: "gpt-oss-120b" },
-    { id: "openai/gpt-oss-20b", name: "gpt-oss-20b" },
-    { id: "moonshotai/kimi-k2.6", name: "Kimi K2.6" },
-    { id: "nvidia/nemotron-3-nano-30b-a3b", name: "Nemotron 3 Nano 30B A3B" },
-    { id: "qwen/qwen3-coder-30b-a3b-instruct", name: "Qwen3 Coder 30B A3B Instruct" },
-    { id: "qwen/qwen3.5-35b-a3b", name: "Qwen3.5 35B A3B" },
-    { id: "qwen/qwen3.6-27b", name: "Qwen3.6 27B" },
-    { id: "qwen/qwen3.6-35b-a3b", name: "Qwen3.6 35B A3B" },
     { id: "ambient/large", name: "GLM 5.1" },
   ],
   fmd: [

@@ -62,6 +62,7 @@ export const OAUTH_PROVIDERS = {
 };
 
 export const APIKEY_PROVIDERS = {
+  ambient: { id: "ambient", alias: "amb", name: "Ambient", icon: "/providers/ambient.png", color: "#111827", textIcon: "AM", website: "https://ambient.xyz", notice: { text: "OpenAI-compatible Ambient endpoint. Add your Ambient API key.", apiKeyUrl: "https://ambient.xyz" }, serviceKinds: ["llm"], modelsFetcher: { url: "https://api.ambient.xyz/v1/models", type: "openai" } },
   "freemodel-dev": { id: "freemodel-dev", alias: "fmd", name: "Free Model Dev", icon: "/provider-icons/freemodel-dev.png", color: "#10B981", textIcon: "FM", website: "https://api.freemodel.dev", notice: { apiKeyUrl: "https://api.freemodel.dev" }, serviceKinds: ["llm"] },
   kimchi: { id: "kimchi", alias: "kimchi", name: "Kimchi", icon: "/providers/kimchi.jpg", color: "#FF5A3D", textIcon: "KC", website: "https://llm.kimchi.dev", notice: { text: "OpenAI-compatible Kimchi endpoint. Add your Kimchi/CastAI API key.", apiKeyUrl: "https://llm.kimchi.dev" }, serviceKinds: ["llm"] },
   bai: { id: "bai", alias: "bai", name: "B.AI", icon: "smart_toy", color: "#000000", textIcon: "B", website: "https://b.ai", notice: { apiKeyUrl: "https://b.ai" }, serviceKinds: ["llm"] },

@@ -522,6 +522,10 @@ export const PROVIDERS = {
     baseUrl: "https://api.xiaomimimo.com/v1/chat/completions",
     format: "openai"
   },
+  ambient: {
+    baseUrl: "https://api.ambient.xyz/v1/chat/completions",
+    format: "openai"
+  },
   "xiaomi-mimo-plan-sgp": {
     baseUrl: "https://token-plan-sgp.xiaomimimo.com/v1/chat/completions",
     format: "openai"

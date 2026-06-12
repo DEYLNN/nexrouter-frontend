@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.4] - 2026-06-12
+
+### Added
+- Add Ambient API-key provider with FE/BE OpenSSE registration, static model catalog fetched from `https://api.ambient.xyz/v1/models`, alias `amb`, and dashboard icon asset.
+
 ## [0.5.2] - 2026-06-11
 
 ### Fixed

@@ -115,14 +115,16 @@ export default function ConsoleLogClient() {
         </div>
         <div
           ref={logRef}
-          className="h-[calc(100vh-220px)] overflow-y-auto rounded-b-lg bg-bg p-4 font-mono text-xs leading-relaxed text-text-main dark:!bg-[#020617] dark:!text-[#E5E7EB]"
+          className="h-[calc(100vh-220px)] overflow-y-auto overflow-x-hidden rounded-b-lg bg-bg p-4 font-mono text-xs leading-relaxed text-text-main dark:!bg-[#020617] dark:!text-[#E5E7EB]"
         >
           {logs.length === 0 ? (
             <span className="text-text-muted dark:!text-[#94A3B8]">No console logs yet.</span>
           ) : (
-            <div className="space-y-0.5">
+            <div className="min-w-0 space-y-0.5">
               {logs.map((line, i) => (
-                <div key={i}>{colorLine(line)}</div>
+                <div key={i} className="min-w-0 max-w-full whitespace-pre-wrap break-words [overflow-wrap:anywhere]">
+                  {colorLine(line)}
+                </div>
               ))}
             </div>
           )}

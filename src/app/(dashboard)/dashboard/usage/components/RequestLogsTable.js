@@ -215,7 +215,7 @@ function LogRow({ entry, isDark = false }) {
           </div>
         </div>
         {!isOk && entry.error && (
-          <div className="mt-2 rounded-lg border border-red-500/20 bg-red-500/10 px-2 py-1.5 font-mono text-[11px] leading-snug text-red-500 dark:!text-red-300" title={entry.error}>
+          <div className="mt-2 min-w-0 max-w-full overflow-hidden whitespace-pre-wrap break-words rounded-lg border border-red-500/20 bg-red-500/10 px-2 py-1.5 font-mono text-[11px] leading-snug text-red-500 [overflow-wrap:anywhere] dark:!text-red-300" title={entry.error}>
             {entry.error}
           </div>
         )}

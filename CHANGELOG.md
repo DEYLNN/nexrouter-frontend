@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.5] - 2026-06-13
+
+### Added
+- Add MiMo Code Free no-API-key provider (`mimo-free` / `mmf`) to the frontend provider catalog, provider icon aliases, and suggested-model filter.
+
 ## [0.5.4] - 2026-06-12
 
 ### Added

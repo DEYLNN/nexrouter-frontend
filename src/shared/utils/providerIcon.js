@@ -20,6 +20,7 @@ Object.assign(ALIASES, {
   fmd: "freemodel-dev",
   glb: "gitlawb",
   oc: "opencode",
+  mmf: "mimo-free",
   rwy: "routeway",
   "xai-apikey": "xai",
   "xai-ak": "xai",

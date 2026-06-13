@@ -7,6 +7,11 @@ import { providerDisplayColor, providerDisplayName, providerIconPath } from "@/s
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 const fmt = (n) => new Intl.NumberFormat().format(n || 0);
+const fmtCompact = (n) => {
+  const value = Number(n) || 0;
+  if (Math.abs(value) < 1000) return new Intl.NumberFormat().format(value);
+  return new Intl.NumberFormat("en", { notation: "compact", maximumFractionDigits: 1 }).format(value).toUpperCase();
+};
 
 function parseLogLine(line) {
   if (!line) return null;
@@ -156,6 +161,8 @@ function LogRow({ entry, isDark = false }) {
   const color = providerColor(entry.provider);
   const chipColor = readableProviderColor(color, isDark);
   const chipBg = isDark ? `${chipColor}20` : `${chipColor}12`;
+  const totalChipBg = isDark ? `${chipColor}24` : `${chipColor}10`;
+  const totalChipBorder = isDark ? `${chipColor}80` : `${chipColor}38`;
   const isOk = ["ok", "success", "200 ok"].includes(String(entry.status || "").toLowerCase()) || String(entry.status || "").startsWith("200");
   const total = entry.inputTokens + entry.outputTokens;
   const label = providerLabel(entry.provider);
@@ -200,15 +207,15 @@ function LogRow({ entry, isDark = false }) {
         <div className="flex flex-wrap items-center gap-2">
           <div className="inline-flex items-center gap-1.5 rounded-md border border-[rgba(23,33,27,0.08)] bg-[rgba(255,248,220,0.56)] px-2 py-1 dark:!border-[#334155] dark:!bg-[#111827]">
             <span className="text-[9px] font-bold uppercase tracking-wider text-purple-400">In</span>
-            <span className="font-mono text-[11px] font-semibold text-text-main dark:!text-white">{fmt(entry.inputTokens)}</span>
+            <span className="font-mono text-[11px] font-semibold text-text-main dark:!text-white">{fmtCompact(entry.inputTokens)}</span>
           </div>
           <div className="inline-flex items-center gap-1.5 rounded-md border border-[rgba(23,33,27,0.08)] bg-[rgba(255,248,220,0.56)] px-2 py-1 dark:!border-[#334155] dark:!bg-[#111827]">
             <span className="text-[9px] font-bold uppercase tracking-wider text-emerald-400">Out</span>
-            <span className="font-mono text-[11px] font-semibold text-text-main dark:!text-white">{fmt(entry.outputTokens)}</span>
+            <span className="font-mono text-[11px] font-semibold text-text-main dark:!text-white">{fmtCompact(entry.outputTokens)}</span>
           </div>
-          <div className="inline-flex items-center gap-1.5 rounded-md border px-2 py-1" style={{ borderColor: `${color}25`, background: `${color}0d` }}>
-            <span className="text-[9px] font-bold uppercase tracking-wider" style={{ color }}>Total</span>
-            <span className="font-mono text-[11px] font-semibold" style={{ color }}>{fmt(total)}</span>
+          <div className="inline-flex items-center gap-1.5 rounded-md border px-2 py-1 shadow-[inset_0_0_0_1px_rgba(255,255,255,0.04)]" style={{ borderColor: totalChipBorder, background: totalChipBg }}>
+            <span className="text-[9px] font-bold uppercase tracking-wider" style={{ color: chipColor }}>Total</span>
+            <span className="font-mono text-[11px] font-semibold" style={{ color: chipColor }}>{fmtCompact(total)}</span>
           </div>
           <div className={`ml-auto inline-flex rounded-full border px-2 py-0.5 text-[10px] font-semibold ${isOk ? "border-emerald-500/25 bg-emerald-500/10 text-emerald-400" : "border-red-500/25 bg-red-500/10 text-red-400"}`}>
             {isOk ? "OK" : String(entry.status || "ERR").toUpperCase()}

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.7] - 2026-06-13
+
+### Fixed
+- Improve Request Logs token chips: compact In/Out/Total counts to K/M notation and use dark-safe provider contrast for the Total chip border/text.
+
 ## [0.5.6] - 2026-06-13
 
 ### Fixed

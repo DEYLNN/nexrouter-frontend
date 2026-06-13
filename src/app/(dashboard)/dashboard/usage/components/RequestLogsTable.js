@@ -44,6 +44,20 @@ function providerLabel(provider) {
   return providerDisplayName(provider);
 }
 
+function isDarkHex(hex) {
+  const value = String(hex || "").replace("#", "").trim();
+  if (!/^[0-9a-f]{6}$/i.test(value)) return false;
+  const r = parseInt(value.slice(0, 2), 16);
+  const g = parseInt(value.slice(2, 4), 16);
+  const b = parseInt(value.slice(4, 6), 16);
+  return (0.2126 * r + 0.7152 * g + 0.0722 * b) < 95;
+}
+
+function readableProviderColor(color, isDark) {
+  if (!isDark || !isDarkHex(color)) return color;
+  return "#93C5FD";
+}
+
 function ProviderPill({ provider, color }) {
   const label = providerLabel(provider);
   return (
@@ -140,7 +154,7 @@ function StatCard({ label, value, sub, icon: Icon, accent }) {
 // ─── log row (message bubble style) ─────────────────────────────────────────
 function LogRow({ entry, isDark = false }) {
   const color = providerColor(entry.provider);
-  const chipColor = isDark && color.toLowerCase() === "#111827" ? "#93C5FD" : color;
+  const chipColor = readableProviderColor(color, isDark);
   const chipBg = isDark ? `${chipColor}20` : `${chipColor}12`;
   const chipBorder = isDark ? `${chipColor}45` : `${chipColor}30`;
   const isOk = ["ok", "success", "200 ok"].includes(String(entry.status || "").toLowerCase()) || String(entry.status || "").startsWith("200");

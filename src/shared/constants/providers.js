@@ -9,7 +9,7 @@ export const FREE_PROVIDERS = {
   qoder: { id: "qoder", alias: "qd", name: "Qoder", icon: "/providers/qoder.png", color: "#EC4899", textIcon: "QD", website: "https://qoder.com", notice: { signupUrl: "https://qoder.com", text: "Qoder device-flow OAuth provider. Token lasts ~30 days; re-login if expired." }, serviceKinds: ["llm"] },
   iflow: { id: "iflow", alias: "if", name: "iFlow AI", icon: "water_drop", color: "#6366F1", website: "https://iflow.cn", notice: { signupUrl: "https://iflow.cn" } },
   opencode: { id: "opencode", alias: "oc", name: "OpenCode Free", icon: "terminal", color: "#E87040", textIcon: "OC", noAuth: true, passthroughModels: true, modelsFetcher: { url: "https://opencode.ai/zen/v1/models", type: "opencode-free" } },
-  "mimo-free": { id: "mimo-free", alias: "mmf", name: "MiMo Code Free", icon: "smart_toy", color: "#FF6900", textIcon: "MF", noAuth: true, passthroughModels: true, modelsFetcher: { url: "https://models.dev/api.json", type: "mimo-free" }, serviceKinds: ["llm"] },
+  "mimo-free": { id: "mimo-free", alias: "mmf", name: "MiMo Code Free", icon: "/providers/xiaomi-mimo.png", color: "#FF6900", textIcon: "MF", noAuth: true, passthroughModels: true, models: [{ id: "mimo-auto", name: "MiMo Auto" }], modelsFetcher: { url: "https://models.dev/api.json", type: "mimo-free" }, serviceKinds: ["llm"] },
 
   pollinations: { id: "pollinations", alias: "pollinations", name: "Pollinations", icon: "/provider-icons/pollinations.png", color: "#22C55E", textIcon: "PO", website: "https://pollinations.ai", noAuth: true, notice: { text: "Anonymous OpenAI-compatible text endpoint." }, serviceKinds: ["llm"] },
 };

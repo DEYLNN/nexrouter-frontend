@@ -83,6 +83,8 @@ export const PROVIDER_ENDPOINTS = {
   glb: "https://opengateway.gitlawb.com/v1/chat/completions",
   "gitlawb-mimo": "https://opengateway.gitlawb.com/v1/xiaomi-mimo/chat/completions",
   "glb-mimo": "https://opengateway.gitlawb.com/v1/xiaomi-mimo/chat/completions",
+  "mimo-free": "https://api.xiaomimimo.com/api/free-ai/openai/chat",
+  mmf: "https://api.xiaomimimo.com/api/free-ai/openai/chat",
   "cline-apikey": "https://api.cline.bot/api/v1/chat/completions",
   glm: "https://api.z.ai/api/anthropic/v1/messages",
   "glm-cn": "https://open.bigmodel.cn/api/coding/paas/v4/chat/completions",

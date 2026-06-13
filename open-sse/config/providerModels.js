@@ -205,6 +205,10 @@ export const PROVIDER_MODELS = {
     // { id: "minimax-m2.5-free", name: "MiniMax M2.5", targetFormat: "claude" },
     // { id: "trinity-large-preview-free", name: "Trinity Large Preview" },
   ],
+  mmf: [  // MiMo Free — free channel only serves mimo-auto
+    { id: "mimo-auto", name: "MiMo Auto" },
+  ],
+
 
   cl: [  // Cline — free/low-cost working models only
     { id: "minimax/minimax-m2.5", name: "MiniMax M2.5" },
@@ -1004,6 +1008,7 @@ const OAUTH_ALIASES = {
   kilocode: "kc",
   cline: "cl",
   opencode: "oc",
+  "mimo-free": "mmf",
   gitlawb: "glb",
   "gitlawb-mimo": "glb-mimo",
   vertex: "vertex",

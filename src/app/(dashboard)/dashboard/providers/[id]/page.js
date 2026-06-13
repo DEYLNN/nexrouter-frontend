@@ -1081,7 +1081,7 @@ export default function ProviderDetailPage() {
           isOpen={showAddCustomModel}
           providerAlias={providerStorageAlias}
           providerDisplayAlias={providerDisplayAlias}
-          modelsFetcher={providerId === "opencode" ? providerInfo?.modelsFetcher : undefined}
+          modelsFetcher={providerInfo?.modelsFetcher}
           existingModelIds={Object.values(modelAliases)
             .filter((fullModel) => fullModel.startsWith(`${providerStorageAlias}/`))
             .map((fullModel) => fullModel.slice(`${providerStorageAlias}/`.length))}

@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.5.6] - 2026-06-13
+
+### Fixed
+- Register MiMo Code Free in the frontend OpenSSE provider/model mirrors so `mimo-auto` appears as a constant model.
+- Reuse the Xiaomi MiMo provider asset for MiMo Code Free and allow suggested-model sync for all providers with a `modelsFetcher`.
+
 ## [0.5.5] - 2026-06-13
 
 ### Added

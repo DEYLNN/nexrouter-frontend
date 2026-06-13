@@ -156,7 +156,6 @@ function LogRow({ entry, isDark = false }) {
   const color = providerColor(entry.provider);
   const chipColor = readableProviderColor(color, isDark);
   const chipBg = isDark ? `${chipColor}20` : `${chipColor}12`;
-  const chipBorder = isDark ? `${chipColor}45` : `${chipColor}30`;
   const isOk = ["ok", "success", "200 ok"].includes(String(entry.status || "").toLowerCase()) || String(entry.status || "").startsWith("200");
   const total = entry.inputTokens + entry.outputTokens;
   const label = providerLabel(entry.provider);
@@ -187,17 +186,11 @@ function LogRow({ entry, isDark = false }) {
         </div>
 
         {/* Second row: provider + account */}
-        <div className="mb-2 flex min-w-0 flex-wrap items-center gap-1.5">
-          <span
-            className="inline-flex max-w-full items-center gap-1.5 rounded-xl border px-2.5 py-1 text-[11px] font-semibold shadow-[0_8px_18px_-16px_rgba(23,33,27,0.28)] dark:!shadow-none"
-            style={{ color: chipColor, background: chipBg, borderColor: chipBorder }}
-          >
-            <span className="grid h-5 w-5 shrink-0 place-items-center rounded-lg bg-white/60 dark:!bg-[#0B1220]">
-              <ProviderIcon src={providerIconPath(entry.provider)} alt={label} size={14} className="h-3.5 w-3.5 rounded object-cover" fallbackText={label.slice(0, 2).toUpperCase()} />
-            </span>
-            <span className="truncate">{label}</span>
+        <div className="mb-2 flex flex-wrap items-center gap-1.5">
+          <span className="inline-flex items-center gap-1 rounded-md px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider" style={{ color: chipColor, background: chipBg }}>
+            {label}
           </span>
-          <span className="inline-flex min-w-0 items-center gap-1 text-[11px] text-text-subtle dark:!text-[#CBD5E1]">
+          <span className="inline-flex items-center gap-1 text-[11px] text-text-subtle dark:!text-[#CBD5E1]">
             <IconUser />
             <span className="truncate">{entry.account}</span>
           </span>

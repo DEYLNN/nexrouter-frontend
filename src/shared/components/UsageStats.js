@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { FREE_PROVIDERS, AI_PROVIDERS } from "@/shared/constants/providers";
+import ProviderIcon from "@/shared/components/ProviderIcon";
+import { providerDisplayColor, providerDisplayName, providerIconPath } from "@/shared/utils/providerIcon";
 
 // Keep providers without serviceKinds (default LLM) or with "llm" in serviceKinds
 function isLLMProvider(id) {
@@ -47,36 +49,69 @@ function RecentRequests({ requests = [] }) {
       {!requests.length ? (
         <div className="flex-1 flex items-center justify-center text-text-muted text-sm dark:!text-[#CBD5E1]">No requests yet.</div>
       ) : (
-        <div className="flex-1 overflow-y-auto">
-          <table className="w-full min-w-[300px] border-collapse text-xs">
-            <thead className="sticky top-0 bg-bg dark:!bg-[#111827] z-10">
-              <tr className="border-b border-border dark:!border-[#334155]">
-                <th className="py-1.5 text-left font-semibold text-text-muted dark:!text-[#CBD5E1] w-2"></th>
-                <th className="py-1.5 text-left font-semibold text-text-muted dark:!text-[#CBD5E1]">Model</th>
-                <th className="py-1.5 text-right font-semibold text-text-muted dark:!text-[#CBD5E1] whitespace-nowrap">In / Out</th>
-                <th className="py-1.5 text-right font-semibold text-text-muted dark:!text-[#CBD5E1]">When</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-border/50 dark:divide-[#334155]">
-              {requests.map((r, i) => {
-                const ok = !r.status || r.status === "ok" || r.status === "success";
-                return (
-                  <tr key={i} className="hover:bg-bg-subtle dark:hover:!bg-[#1E293B] transition-colors">
-                    <td className="py-1.5">
-                      <span className={`block w-1.5 h-1.5 rounded-full ${ok ? "bg-success" : "bg-error"}`} />
-                    </td>
-                    <td className="py-1.5 font-mono truncate max-w-[120px] dark:!text-white" title={r.model}>{r.model}</td>
-                    <td className="py-1.5 text-right whitespace-nowrap">
-                      <span className="text-primary">{fmt(r.promptTokens)}↑</span>
-                      {" "}
-                      <span className="text-success">{fmt(r.completionTokens)}↓</span>
-                    </td>
-                    <td className="py-1.5 text-right text-text-muted dark:!text-[#CBD5E1] whitespace-nowrap"><TimeAgo timestamp={r.timestamp} /></td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+        <div className="flex-1 space-y-2 overflow-y-auto py-2 pr-1">
+          {requests.map((r, i) => {
+            const ok = !r.status || r.status === "ok" || r.status === "success";
+            const providerName = providerDisplayName(r.provider || "unknown");
+            const providerColor = providerDisplayColor(r.provider || "unknown");
+            const totalTokens = (r.promptTokens || 0) + (r.completionTokens || 0);
+
+            return (
+              <div
+                key={i}
+                className="rounded-2xl border border-[rgba(23,33,27,0.10)] bg-[rgba(255,248,220,0.72)] p-3 shadow-[0_10px_28px_-24px_rgba(23,33,27,0.28)] transition-colors hover:bg-[rgba(255,248,220,0.92)] dark:!border-[#334155] dark:!bg-[#111827] dark:!shadow-none dark:hover:!bg-[#1E293B]"
+              >
+                <div className="flex min-w-0 items-start gap-3">
+                  <div className="relative shrink-0">
+                    <div
+                      className="grid h-10 w-10 place-items-center rounded-xl border"
+                      style={{ background: `${providerColor}18`, borderColor: `${providerColor}38` }}
+                    >
+                      <ProviderIcon
+                        src={providerIconPath(r.provider)}
+                        alt={providerName}
+                        size={24}
+                        className="h-6 w-6 rounded-lg object-cover"
+                        fallbackText={providerName.slice(0, 2).toUpperCase()}
+                        fallbackColor={providerColor}
+                      />
+                    </div>
+                    <span className={`absolute -bottom-0.5 -right-0.5 block h-3 w-3 rounded-full ring-2 ring-[rgba(255,248,220,0.95)] dark:!ring-[#111827] ${ok ? "bg-emerald-500" : "bg-red-500"}`} />
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <div className="flex min-w-0 items-start justify-between gap-2">
+                      <div className="min-w-0">
+                        <div className="truncate font-mono text-[13px] font-semibold text-text-main dark:!text-white" title={r.model}>{r.model}</div>
+                        <div className="mt-1 inline-flex max-w-full items-center gap-1.5 rounded-full border px-2 py-0.5 text-[11px] font-semibold" style={{ color: providerColor, background: `${providerColor}14`, borderColor: `${providerColor}35` }}>
+                          <span className="h-1.5 w-1.5 rounded-full" style={{ background: providerColor }} />
+                          <span className="truncate">{providerName}</span>
+                        </div>
+                      </div>
+                      <div className="shrink-0 text-right text-[11px] text-text-muted dark:!text-[#CBD5E1]">
+                        <TimeAgo timestamp={r.timestamp} />
+                      </div>
+                    </div>
+
+                    <div className="mt-3 grid grid-cols-3 gap-2 text-[11px]">
+                      <div className="rounded-xl bg-white/55 px-2 py-1.5 dark:!bg-[#0B1220]">
+                        <div className="text-text-muted dark:!text-[#94A3B8]">In</div>
+                        <div className="font-semibold text-primary dark:!text-[#93C5FD]">{fmt(r.promptTokens)}</div>
+                      </div>
+                      <div className="rounded-xl bg-white/55 px-2 py-1.5 dark:!bg-[#0B1220]">
+                        <div className="text-text-muted dark:!text-[#94A3B8]">Out</div>
+                        <div className="font-semibold text-success dark:!text-emerald-400">{fmt(r.completionTokens)}</div>
+                      </div>
+                      <div className="rounded-xl bg-white/55 px-2 py-1.5 dark:!bg-[#0B1220]">
+                        <div className="text-text-muted dark:!text-[#94A3B8]">Total</div>
+                        <div className="font-semibold text-text-main dark:!text-white">{fmt(totalTokens)}</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
         </div>
       )}
     </Card>

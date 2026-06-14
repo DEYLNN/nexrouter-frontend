@@ -13,6 +13,7 @@ Object.assign(ALIASES, {
   cx: "codex",
   kr: "kiro",
   cwv: "canopywave",
+  zy: "zyloo",
   gh: "github",
   mms: "xiaomi-mimo-plan-sgp",
   "mimo-sgp": "xiaomi-mimo-plan-sgp",

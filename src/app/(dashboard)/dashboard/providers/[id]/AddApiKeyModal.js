@@ -47,6 +47,8 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
   const [cloudflareData, setCloudflareData] = useState({ accountId: "" });
   const [mimoData, setMimoData] = useState({ platformCookie: "" });
   const [generalComputeData, setGeneralComputeData] = useState({ cookie: "", sessionId: "", organizationId: "" });
+  const normalizedGeneralComputeData = normalizeGeneralComputeFields(generalComputeData);
+  const hasGeneralComputeCreds = provider === "general-compute" && normalizedGeneralComputeData.cookie && normalizedGeneralComputeData.sessionId && normalizedGeneralComputeData.organizationId;
   const [validating, setValidating] = useState(false);
   const [validationResult, setValidationResult] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -156,8 +158,6 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
 
   const handleSubmit = async () => {
     if (!provider) return;
-    const normalizedGeneralComputeData = normalizeGeneralComputeFields(generalComputeData);
-    const hasGeneralComputeCreds = provider === "general-compute" && normalizedGeneralComputeData.cookie && normalizedGeneralComputeData.sessionId && normalizedGeneralComputeData.organizationId;
     if (!isOllamaLocal && !isCustomAuth && !formData.apiKey) return;
     if (isCustomAuth && !hasGeneralComputeCreds) return;
     // API key names are generated uniquely to avoid backend upsert-by-name replacing existing keys.

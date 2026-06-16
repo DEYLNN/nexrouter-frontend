@@ -60,6 +60,7 @@ export default function ProviderDetailPage() {
     : (OAUTH_PROVIDERS[providerId] || APIKEY_PROVIDERS[providerId] || FREE_PROVIDERS[providerId] || FREE_TIER_PROVIDERS[providerId] || CUSTOM_PROVIDERS[providerId] || WEB_COOKIE_PROVIDERS[providerId]);
   const isOAuth = !!OAUTH_PROVIDERS[providerId] || !!FREE_PROVIDERS[providerId];
   const isFreeNoAuth = !!providerInfo?.noAuth;
+  const isCustomAuth = providerInfo?.authType === "custom";
   const models = getModelsByProviderId(providerId);
   const providerAlias = getProviderAlias(providerId);
   
@@ -906,7 +907,7 @@ export default function ProviderDetailPage() {
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div className="flex items-center gap-3">
                 <div className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-primary/10 text-primary shrink-0">
-                  <span className="material-symbols-outlined text-[18px]">{isOAuth ? "lock" : "key"}</span>
+                  <span className="material-symbols-outlined text-[18px]">{isOAuth ? "lock" : (isCustomAuth ? "account_tree" : "key")}</span>
                 </div>
                 <p className="text-sm text-text-muted dark:!text-[#E5E7EB]">No connections yet</p>
               </div>
@@ -928,7 +929,7 @@ export default function ProviderDetailPage() {
                     setShowAddApiKeyModal(true);
                   }}
                 >
-                  {isCompatible ? "Add API Key" : (providerId === "iflow" ? "OAuth" : "Add Connection")}
+                  {isCompatible ? "Add API Key" : (isCustomAuth ? "Add Session" : (providerId === "iflow" ? "OAuth" : "Add Connection"))}
                 </Button>
               </div>
             </div>
@@ -962,7 +963,7 @@ export default function ProviderDetailPage() {
                     }}
                     className="w-full sm:w-auto"
                   >
-                    Add
+                    {isCustomAuth ? "Add Session" : "Add"}
                   </Button>
                 </div>
               )}

@@ -9,7 +9,8 @@ const BULK_PLACEHOLDER = `name1|sk-key1\nname2|sk-key2\nsk-key-only-auto-named`;
 export default function AddApiKeyModal({ isOpen, provider, providerName, isCompatible, isAnthropic, authType, authHint, website, error, existingConnections = [], onSave, onBulkDone, onClose }) {
   const isOllamaLocal = provider === "ollama-local";
   const isCookie = authType === "cookie";
-  const credentialLabel = isCookie ? "Cookie Value" : "API Key";
+  const isCustomAuth = authType === "custom";
+  const credentialLabel = isCustomAuth ? "Clerk Session" : (isCookie ? "Cookie Value" : "API Key");
   const credentialPlaceholder = isCookie
     ? (provider === "grok-web" ? "sso=xxxxx... or just the raw value" : "eyJhbGciOi...")
     : "";
@@ -34,6 +35,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
   });
   const [cloudflareData, setCloudflareData] = useState({ accountId: "" });
   const [mimoData, setMimoData] = useState({ platformCookie: "" });
+  const [generalComputeData, setGeneralComputeData] = useState({ cookie: "", sessionId: "", organizationId: "" });
   const [validating, setValidating] = useState(false);
   const [validationResult, setValidationResult] = useState(null);
   const [saving, setSaving] = useState(false);
@@ -69,6 +71,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
     });
     setCloudflareData({ accountId: "" });
     setMimoData({ platformCookie: "" });
+    setGeneralComputeData({ cookie: "", sessionId: "", organizationId: "" });
     setValidating(false);
     setValidationResult(null);
     setSaving(false);
@@ -113,6 +116,13 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
     if (isMimoSgp && mimoData.platformCookie.trim()) {
       return { platformCookie: mimoData.platformCookie.trim() };
     }
+    if (provider === "general-compute") {
+      return {
+        cookie: generalComputeData.cookie.trim(),
+        sessionId: generalComputeData.sessionId.trim(),
+        organizationId: generalComputeData.organizationId.trim(),
+      };
+    }
     return undefined;
   };
 
@@ -139,7 +149,9 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
 
   const handleSubmit = async () => {
     if (!provider) return;
-    if (!isOllamaLocal && !formData.apiKey) return;
+    const hasGeneralComputeCreds = provider === "general-compute" && generalComputeData.cookie.trim() && generalComputeData.sessionId.trim() && generalComputeData.organizationId.trim();
+    if (!isOllamaLocal && !isCustomAuth && !formData.apiKey) return;
+    if (isCustomAuth && !hasGeneralComputeCreds) return;
     // API key names are generated uniquely to avoid backend upsert-by-name replacing existing keys.
     // Custom compatible providers route by provider prefix; default model is no longer required per key.
 
@@ -170,7 +182,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
 
       await onSave({
         name: makeUniqueName(formData.name || (isOllamaLocal ? "Ollama Local" : credentialLabel)),
-        apiKey: formData.apiKey,
+        apiKey: isCustomAuth ? "custom-session" : formData.apiKey,
         defaultModel: undefined,
         priority: Number.parseInt(formData.priority, 10) || nextPriority,
         testStatus: isValid ? "active" : "unknown",
@@ -274,7 +286,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
             </div>
           </div>
         )}
-        {!isOllamaLocal && (
+        {!isOllamaLocal && !isCustomAuth && (
           <div className="flex gap-2">
             <Input
               label={credentialLabel}
@@ -289,6 +301,33 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
                 {validating ? "Checking..." : "Check"}
               </Button>
             </div>
+          </div>
+        )}
+        {isCustomAuth && provider === "general-compute" && (
+          <div className="bg-sidebar/50 p-4 rounded-lg border border-accent/20">
+            <h3 className="font-semibold mb-3 text-sm">General Compute — Clerk Session</h3>
+            <div className="flex flex-col gap-3">
+              <Input
+                label="Cookie"
+                type="password"
+                value={generalComputeData.cookie}
+                onChange={(e) => setGeneralComputeData({ ...generalComputeData, cookie: e.target.value })}
+                placeholder="__client=...; __session=...; ..."
+              />
+              <Input
+                label="Session ID"
+                value={generalComputeData.sessionId}
+                onChange={(e) => setGeneralComputeData({ ...generalComputeData, sessionId: e.target.value })}
+                placeholder="sess_..."
+              />
+              <Input
+                label="Organization ID"
+                value={generalComputeData.organizationId}
+                onChange={(e) => setGeneralComputeData({ ...generalComputeData, organizationId: e.target.value })}
+                placeholder="org_..."
+              />
+            </div>
+            <p className="text-xs text-text-muted mt-2">{authHint}</p>
           </div>
         )}
         {isCookie && authHint && (
@@ -400,7 +439,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
         />
 
         <div className="flex gap-2">
-          <Button onClick={handleSubmit} fullWidth disabled={saving || (!isOllamaLocal && !formData.apiKey) || (isAzure && (!azureData.azureEndpoint || !azureData.deployment || !azureData.organization)) || (isCloudflareAi && !cloudflareData.accountId)}>
+          <Button onClick={handleSubmit} fullWidth disabled={saving || (!isOllamaLocal && !isCustomAuth && !formData.apiKey) || (isCustomAuth && provider === "general-compute" && (!generalComputeData.cookie.trim() || !generalComputeData.sessionId.trim() || !generalComputeData.organizationId.trim())) || (isAzure && (!azureData.azureEndpoint || !azureData.deployment || !azureData.organization)) || (isCloudflareAi && !cloudflareData.accountId)}>
             {saving ? "Saving..." : "Save"}
           </Button>
           <Button onClick={() => { resetForm(); onClose(); }} variant="ghost" fullWidth>

@@ -6,6 +6,17 @@ import { Button, Badge, Input, Modal } from "@/shared/components";
 
 const BULK_PLACEHOLDER = `name1|sk-key1\nname2|sk-key2\nsk-key-only-auto-named`;
 
+function normalizeGeneralComputeFields(fields) {
+  const combined = `${fields.sessionId || ""} ${fields.organizationId || ""}`;
+  const sessionMatch = combined.match(/sess_[A-Za-z0-9]+/);
+  const orgMatch = combined.match(/org_[A-Za-z0-9]+/);
+  return {
+    cookie: String(fields.cookie || "").trim(),
+    sessionId: sessionMatch?.[0] || String(fields.sessionId || "").trim(),
+    organizationId: orgMatch?.[0] || String(fields.organizationId || "").trim(),
+  };
+}
+
 export default function AddApiKeyModal({ isOpen, provider, providerName, isCompatible, isAnthropic, authType, authHint, website, error, existingConnections = [], onSave, onBulkDone, onClose }) {
   const isOllamaLocal = provider === "ollama-local";
   const isCookie = authType === "cookie";
@@ -117,11 +128,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
       return { platformCookie: mimoData.platformCookie.trim() };
     }
     if (provider === "general-compute") {
-      return {
-        cookie: generalComputeData.cookie.trim(),
-        sessionId: generalComputeData.sessionId.trim(),
-        organizationId: generalComputeData.organizationId.trim(),
-      };
+      return normalizeGeneralComputeFields(generalComputeData);
     }
     return undefined;
   };
@@ -149,7 +156,8 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
 
   const handleSubmit = async () => {
     if (!provider) return;
-    const hasGeneralComputeCreds = provider === "general-compute" && generalComputeData.cookie.trim() && generalComputeData.sessionId.trim() && generalComputeData.organizationId.trim();
+    const normalizedGeneralComputeData = normalizeGeneralComputeFields(generalComputeData);
+    const hasGeneralComputeCreds = provider === "general-compute" && normalizedGeneralComputeData.cookie && normalizedGeneralComputeData.sessionId && normalizedGeneralComputeData.organizationId;
     if (!isOllamaLocal && !isCustomAuth && !formData.apiKey) return;
     if (isCustomAuth && !hasGeneralComputeCreds) return;
     // API key names are generated uniquely to avoid backend upsert-by-name replacing existing keys.
@@ -443,7 +451,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
         />
 
         <div className="flex gap-2">
-          <Button onClick={handleSubmit} fullWidth disabled={saving || (!isOllamaLocal && !isCustomAuth && !formData.apiKey) || (isCustomAuth && provider === "general-compute" && (!generalComputeData.cookie.trim() || !generalComputeData.sessionId.trim() || !generalComputeData.organizationId.trim())) || (isAzure && (!azureData.azureEndpoint || !azureData.deployment || !azureData.organization)) || (isCloudflareAi && !cloudflareData.accountId)}>
+          <Button onClick={handleSubmit} fullWidth disabled={saving || (!isOllamaLocal && !isCustomAuth && !formData.apiKey) || (isCustomAuth && provider === "general-compute" && !hasGeneralComputeCreds) || (isAzure && (!azureData.azureEndpoint || !azureData.deployment || !azureData.organization)) || (isCloudflareAi && !cloudflareData.accountId)}>
             {saving ? "Saving..." : "Save"}
           </Button>
           <Button onClick={() => { resetForm(); onClose(); }} variant="ghost" fullWidth>

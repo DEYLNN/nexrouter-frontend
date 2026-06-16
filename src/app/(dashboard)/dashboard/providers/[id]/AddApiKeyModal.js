@@ -9,7 +9,7 @@ const BULK_PLACEHOLDER = `name1|sk-key1\nname2|sk-key2\nsk-key-only-auto-named`;
 export default function AddApiKeyModal({ isOpen, provider, providerName, isCompatible, isAnthropic, authType, authHint, website, error, existingConnections = [], onSave, onBulkDone, onClose }) {
   const isOllamaLocal = provider === "ollama-local";
   const isCookie = authType === "cookie";
-  const isCustomAuth = authType === "custom";
+  const isCustomAuth = authType === "custom" || provider === "general-compute";
   const credentialLabel = isCustomAuth ? "Clerk Session" : (isCookie ? "Cookie Value" : "API Key");
   const credentialPlaceholder = isCookie
     ? (provider === "grok-web" ? "sso=xxxxx... or just the raw value" : "eyJhbGciOi...")
@@ -18,7 +18,7 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
   const isAzure = provider === "azure";
   const isCloudflareAi = provider === "cloudflare-ai";
   const isMimoSgp = provider === "xiaomi-mimo-plan-sgp";
-  const isCustomProvider = isCompatible;
+  const isCustomProvider = isCompatible || isCustomAuth;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -230,8 +230,12 @@ export default function AddApiKeyModal({ isOpen, provider, providerName, isCompa
 
   if (!provider) return null;
 
+  const modalTitle = isCustomAuth
+    ? `Add ${providerName || provider} Session`
+    : `Add ${providerName || provider} ${credentialLabel}`;
+
   return (
-    <Modal isOpen={isOpen} title={`Add ${providerName || provider} ${credentialLabel}`} onClose={onClose}>
+    <Modal isOpen={isOpen} title={modalTitle} onClose={onClose}>
       <div className="flex flex-col gap-4">
         {/* Mode switcher */}
         <div className="flex gap-2">

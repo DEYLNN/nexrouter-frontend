@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.9] - 2026-06-17
+
+### Fixed
+- Keep ftstoresz frontend version/changelog in sync after backend add-key validation fix.
+
 ## [0.5.8] - 2026-06-17
 
 ### Added

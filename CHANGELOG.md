@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.8] - 2026-06-17
+
+### Added
+- Add ftstoresz provider to frontend catalog/OpenSSE mirrors with constant models `qwen3.7-max` and `claude-opus-4.7`.
+
 ## [0.5.7] - 2026-06-13
 
 ### Fixed

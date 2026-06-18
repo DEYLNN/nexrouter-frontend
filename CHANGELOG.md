@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.12] - 2026-06-18
+
+### Added
+- Add `minimax-m3` to B.AI static model list.
+
 ## [0.5.11] - 2026-06-18
 
 ### Removed

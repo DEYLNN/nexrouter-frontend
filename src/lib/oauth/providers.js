@@ -24,6 +24,7 @@ import {
   CLINE_CONFIG,
   GITLAB_CONFIG,
   CODEBUDDY_CONFIG,
+  ZCODE_CONFIG,
 } from "./constants/oauth";
 import { requestNousDeviceCode, pollNousToken, mintNousAgentKey } from "./nous.js";
 
@@ -65,6 +66,8 @@ export function extractCodexAccountInfo(idToken) {
     chatgptPlanType: chatgpt.chatgpt_plan_type,
   };
 }
+
+
 
 // Provider configurations
 const PROVIDERS = {

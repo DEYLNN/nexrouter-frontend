@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.10] - 2026-06-18
+
+### Added
+- Add ZCode OAuth provider catalog/modal support and OpenSSE mirror models.
+
 ## [0.5.9] - 2026-06-17
 
 ### Fixed

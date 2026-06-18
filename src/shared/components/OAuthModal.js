@@ -133,7 +133,7 @@ export default function OAuthModal({ isOpen, provider, providerInfo, onSuccess, 
       setError(null);
 
       // Device code flow providers
-      const deviceCodeProviders = ["github", "qwen", "qoder", "kiro", "kimi-coding", "kilocode", "codebuddy", "nous-portal", "freebuff"];
+      const deviceCodeProviders = ["github", "qwen", "qoder", "kiro", "kimi-coding", "kilocode", "codebuddy", "nous-portal", "freebuff", "zcode"];
       if (deviceCodeProviders.includes(provider)) {
         setIsDeviceCode(true);
         setStep("waiting");
@@ -178,6 +178,8 @@ export default function OAuthModal({ isOpen, provider, providerInfo, onSuccess, 
             _expiresAt: data._expiresAt,
             _loginUrl: data._loginUrl,
           };
+        } else if (provider === "zcode") {
+          extraData = { _zcodePollToken: data._zcodePollToken };
         }
         startPolling(data.device_code, data.codeVerifier, data.interval || 5, extraData);
         return;

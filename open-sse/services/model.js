@@ -90,6 +90,8 @@ const ALIAS_TO_PROVIDER_ID = {
   cloudflare: "cloudflare-ai",
   cwv: "canopywave",
   canopywave: "canopywave",
+  om: "openmodal",
+  openmodal: "openmodal",
   ftstoresz: "ftstoresz",
   // Image/video providers
   fal: "fal-ai",

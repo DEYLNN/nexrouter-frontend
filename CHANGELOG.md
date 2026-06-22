@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.14] - 2026-06-22
+
+### Added
+- Add Badtheory Labs provider (alias `btl`) with `deepseek-v4-flash` and `deepseek-v4-pro` models.
+
 ## [0.5.13] - 2026-06-18
 
 ### Added

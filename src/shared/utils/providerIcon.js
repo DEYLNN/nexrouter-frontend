@@ -4,6 +4,7 @@ const ALIASES = Object.fromEntries(
   Object.entries(AI_PROVIDERS).flatMap(([id, provider]) => {
     const entries = [[id.toLowerCase(), id]];
     if (provider?.alias) entries.push([String(provider.alias).toLowerCase(), id]);
+    if (provider?.name) entries.push([String(provider.name).toLowerCase(), id]); // display name → id
     return entries;
   })
 );

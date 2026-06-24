@@ -184,7 +184,7 @@ function LogRow({ entry, isDark = false }) {
         {/* Top row: model + time */}
         <div className="mb-1.5 flex items-center justify-between gap-2">
           <div className="min-w-0 flex-1">
-            <div className="truncate font-mono text-[13px] font-semibold text-text-main dark:!text-white"><span className="text-text-muted dark:!text-[#94A3B8]">{providerLabel(entry.provider)}/</span>{entry.model}</div>
+            <div className="truncate font-mono text-[13px] font-semibold text-text-main dark:!text-white">{entry.model}</div>
           </div>
           <div className="flex flex-shrink-0 items-center gap-1.5 text-[11px] text-text-subtle dark:!text-[#CBD5E1]">
             <IconClock />

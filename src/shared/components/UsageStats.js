@@ -65,7 +65,7 @@ function RecentRequests({ requests = [] }) {
                     <td className="py-1.5">
                       <span className={`block w-1.5 h-1.5 rounded-full ${ok ? "bg-success" : "bg-error"}`} />
                     </td>
-                    <td className="py-1.5 font-mono truncate max-w-[120px] dark:!text-white" title={r.model}>{r.model}</td>
+                    <td className="py-1.5 font-mono truncate max-w-[140px] dark:!text-white" title={`${r.provider}/${r.model}`}><span className="text-text-muted dark:!text-[#94A3B8]">{AI_PROVIDERS[r.provider]?.alias || r.provider}/</span>{r.model}</td>
                     <td className="py-1.5 text-right whitespace-nowrap">
                       <span className="text-primary">{fmt(r.promptTokens)}↑</span>
                       {" "}

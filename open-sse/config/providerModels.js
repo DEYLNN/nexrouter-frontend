@@ -313,9 +313,9 @@ export const PROVIDER_MODELS = {
     { id: "minimax-m3", name: "MiniMax M3" },
   ],
   zyloo: [
-    { id: "zyloo/claude-sonnet-4-6", name: "Claude Sonnet 4.6" },
-    { id: "zyloo/gpt-5.4", name: "GPT 5.4" },
-    { id: "zyloo/deepseek-v4-flash", name: "DeepSeek V4 Flash" },
+    { id: "claude-sonnet-4-6", name: "Claude Sonnet 4.6" },
+    { id: "gpt-5.4", name: "GPT 5.4" },
+    { id: "deepseek-v4-flash", name: "DeepSeek V4 Flash" },
   ],
   tr: [
     { id: "MiniMax-M3", name: "MiniMax M3" },

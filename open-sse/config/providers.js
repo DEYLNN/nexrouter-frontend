@@ -232,7 +232,7 @@ export const PROVIDERS = {
     format: "openai",
     noAuth: true
   },
-  kim: {
+  kimchi: {
     baseUrl: "https://llm.kimchi.dev/openai/v1/chat/completions",
     format: "openai"
   },

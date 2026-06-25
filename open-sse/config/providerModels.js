@@ -285,7 +285,7 @@ export const PROVIDER_MODELS = {
   "freemodel-dev": [
     { id: "gpt-5.5", name: "GPT-5.5" },
   ],
-  kim: [
+  kimchi: [
     { id: "kimi-k2.6", name: "Kimi K2.6" },
     { id: "kimi-k2.5", name: "Kimi K2.5" },
     { id: "minimax-m2.7", name: "MiniMax M2.7" },
@@ -1069,7 +1069,6 @@ const OAUTH_ALIASES = {
   ftstoresz: "ftstoresz",
   "badtheory-labs": "btl",
   evomap: "evo",
-  kimchi: "kim",
   ambient: "amb",
   "xiaomi-mimo-plan-sgp": "mimo-sgp",
   swiftrouter: "sr",

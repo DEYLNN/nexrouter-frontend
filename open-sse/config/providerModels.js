@@ -267,6 +267,14 @@ export const PROVIDER_MODELS = {
     { id: "xiaomi/mimo-v2.5", name: "Xiaomi: MiMo-V2.5" },
     { id: "xiaomi/mimo-v2-flash", name: "Xiaomi: MiMo-V2-Flash" },
   ],
+  evo: [
+    { id: "evomap-gemini-3.1-pro-preview", name: "Gemini 3.1 Pro Preview" },
+    { id: "evomap-deepseek-v4-flash", name: "DeepSeek V4 Flash" },
+    { id: "evomap-claude-opus-4-7", name: "Claude Opus 4.7" },
+    { id: "evomap-glm-5.1", name: "GLM 5.1" },
+    { id: "evomap-gpt-5.5", name: "GPT 5.5" },
+    { id: "evomap-kimi-k2.6", name: "Kimi K2.6" },
+  ],
   amb: [
     { id: "zai-org/GLM-5.1-FP8", name: "GLM 5.1" },
     { id: "ambient/large", name: "GLM 5.1" },
@@ -1060,6 +1068,7 @@ const OAUTH_ALIASES = {
   openmodal: "om",
   ftstoresz: "ftstoresz",
   "badtheory-labs": "btl",
+  evomap: "evo",
   ambient: "amb",
   "xiaomi-mimo-plan-sgp": "mimo-sgp",
   swiftrouter: "sr",

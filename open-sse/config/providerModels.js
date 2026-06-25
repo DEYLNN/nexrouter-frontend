@@ -1069,6 +1069,7 @@ const OAUTH_ALIASES = {
   ftstoresz: "ftstoresz",
   "badtheory-labs": "btl",
   evomap: "evo",
+  kimchi: "kim",
   ambient: "amb",
   "xiaomi-mimo-plan-sgp": "mimo-sgp",
   swiftrouter: "sr",

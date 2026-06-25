@@ -285,7 +285,7 @@ export const PROVIDER_MODELS = {
   "freemodel-dev": [
     { id: "gpt-5.5", name: "GPT-5.5" },
   ],
-  kimchi: [
+  kim: [
     { id: "kimi-k2.6", name: "Kimi K2.6" },
     { id: "kimi-k2.5", name: "Kimi K2.5" },
     { id: "minimax-m2.7", name: "MiniMax M2.7" },

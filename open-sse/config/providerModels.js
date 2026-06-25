@@ -290,6 +290,7 @@ export const PROVIDER_MODELS = {
     { id: "kimi-k2.5", name: "Kimi K2.5" },
     { id: "minimax-m2.7", name: "MiniMax M2.7" },
     { id: "nemotron-3-super-fp4", name: "Nemotron 3 Super FP4" },
+    { id: "minimax-m3", name: "MiniMax M3" },
   ],
   bai: [
     { id: "glm-5.1", name: "GLM 5.1" },

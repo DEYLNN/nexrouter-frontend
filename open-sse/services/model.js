@@ -96,7 +96,6 @@ const ALIAS_TO_PROVIDER_ID = {
   canopywave: "canopywave",
   om: "openmodal",
   openmodal: "openmodal",
-  ftstoresz: "ftstoresz",
   // Image/video providers
   fal: "fal-ai",
   "fal-ai": "fal-ai",

@@ -55,6 +55,8 @@ const ALIAS_TO_PROVIDER_ID = {
   gmi: "gmi-cloud",
   "gmi-cloud": "gmi-cloud",
   routeway: "routeway",
+  nry: "naraya-ai",
+  "naraya-ai": "naraya-ai",
   lc: "longcat",
   longcat: "longcat",
   husada: "husada",

@@ -267,6 +267,9 @@ export const PROVIDER_MODELS = {
     { id: "xiaomi/mimo-v2.5", name: "Xiaomi: MiMo-V2.5" },
     { id: "xiaomi/mimo-v2-flash", name: "Xiaomi: MiMo-V2-Flash" },
   ],
+  lc: [
+    { id: "LongCat-2.0-Preview", name: "LongCat 2.0 Preview" },
+  ],
   evo: [
     { id: "evomap-gemini-3.1-pro-preview", name: "Gemini 3.1 Pro Preview" },
     { id: "evomap-deepseek-v4-flash", name: "DeepSeek V4 Flash" },
@@ -1069,6 +1072,7 @@ const OAUTH_ALIASES = {
   openmodal: "om",
   ftstoresz: "ftstoresz",
   "badtheory-labs": "btl",
+  longcat: "lc",
   evomap: "evo",
   ambient: "amb",
   "xiaomi-mimo-plan-sgp": "mimo-sgp",

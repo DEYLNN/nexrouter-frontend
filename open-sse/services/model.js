@@ -61,6 +61,8 @@ const ALIAS_TO_PROVIDER_ID = {
   longcat: "longcat",
   vk: "vikey",
   vikey: "vikey",
+  qc: "qwen-cloud",
+  "qwen-cloud": "qwen-cloud",
   husada: "husada",
   "mimo-sgp": "xiaomi-mimo-plan-sgp",
   "general-compute": "general-compute",

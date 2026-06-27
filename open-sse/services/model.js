@@ -59,6 +59,8 @@ const ALIAS_TO_PROVIDER_ID = {
   "naraya-ai": "naraya-ai",
   lc: "longcat",
   longcat: "longcat",
+  vk: "vikey",
+  vikey: "vikey",
   husada: "husada",
   "mimo-sgp": "xiaomi-mimo-plan-sgp",
   "general-compute": "general-compute",

@@ -795,6 +795,9 @@ export const PROVIDER_MODELS = {
     { id: "gpt-oss-120b", name: "GPT OSS 120B" },
     { id: "step-3.5-flash-2603", name: "Step 3.5 Flash 2603" },
   ],
+  vikey: [
+    { id: "vikey/vclaw", name: "Vikey VCLaw" },
+  ],
   anuma: [
     { id: "openai/gpt-5.4", name: "ChatGPT 5.4" },
     { id: "anthropic/claude-sonnet-4-6", name: "Claude Sonnet 4.6" },

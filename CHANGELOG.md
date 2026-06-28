@@ -1,6 +1,13 @@
 # Changelog
 
-## [0.5.14] - 2026-06-22
+## [0.5.16] - 2026-06-28
+
+### Added
+- Add Babel Town provider (alias `bt`) — OpenAI-compatible inference API.
+  - Base URL: `https://api.babel.town/v1`
+  - Models: `glm-5.2`
+
+## [0.5.15] - 2026-06-22
 
 ### Added
 - Add Badtheory Labs provider (alias `btl`) with `deepseek-v4-flash` and `deepseek-v4-pro` models.

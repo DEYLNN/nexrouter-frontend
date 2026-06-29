@@ -1,13 +1,12 @@
 # Changelog
 
-## [0.5.17] - 2026-06-29
+## [0.5.18] - 2026-06-29
 
 ### Added
 - Add Unimodel provider (alias `um`) — OpenAI-compatible inference API via unimodel.ai/v1.
-  - Base URL: `https://unimodel.ai/v1`
-  - Dynamic model fetch via /v1/models
+  - Models: deepseek-v4-pro, deepseek-v4-flash, glm-5.2, glm-5.1
 
-## [0.5.16] - 2026-06-28
+## [0.5.17] - 2026-06-29
 
 ### Added
 - Add Babel Town provider (alias `bt`) — OpenAI-compatible inference API.

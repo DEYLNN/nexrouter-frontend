@@ -1,12 +1,12 @@
 # Changelog
 
-## [0.5.18] - 2026-06-29
+## [0.5.19] - 2026-06-29
 
 ### Added
-- Add Unimodel provider (alias `um`) — OpenAI-compatible inference API via unimodel.ai/v1.
-  - Models: deepseek-v4-pro, deepseek-v4-flash, glm-5.2, glm-5.1
+- Add Nabz Clan provider (alias `nzc`) — OpenAI-compatible inference API via lumyx-ai.site.
+  - Models: minimax-m3
 
-## [0.5.17] - 2026-06-29
+## [0.5.18] - 2026-06-29
 
 ### Added
 - Add Babel Town provider (alias `bt`) — OpenAI-compatible inference API.

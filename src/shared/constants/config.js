@@ -92,6 +92,8 @@ export const PROVIDER_ENDPOINTS = {
   "nabz-clan": "https://lumyx-ai.site/api/v1/chat/completions",
   nzc: "https://lumyx-ai.site/api/v1/chat/completions",
   cavoti: "https://cavoti.com/v1",
+  questflow: "https://app.questflow.ai/openapi/v1",
+  qf: "https://app.questflow.ai/openapi/v1",
   cv: "https://cavoti.com/v1",
   conduit: "https://conduit.ozdoev.net/api/v1/chat/completions",
   co: "https://conduit.ozdoev.net/api/v1/chat/completions",

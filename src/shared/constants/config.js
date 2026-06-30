@@ -91,6 +91,8 @@ export const PROVIDER_ENDPOINTS = {
   um: "https://www.unimodel.ai/v1/chat/completions",
   "nabz-clan": "https://lumyx-ai.site/api/v1/chat/completions",
   nzc: "https://lumyx-ai.site/api/v1/chat/completions",
+  cavoti: "https://cavoti.com/v1",
+  cv: "https://cavoti.com/v1",
   conduit: "https://conduit.ozdoev.net/api/v1/chat/completions",
   co: "https://conduit.ozdoev.net/api/v1/chat/completions",
   "babel-town": "https://api.babel.town/v1/chat/completions",

@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.5.20] - 2026-06-30
+
+### Added
+- Add Cavoti provider (alias `cv`) — OpenAI-compatible, base `https://cavoti.com/v1`, model `gpt-5.5`.
+
 ## [0.5.19] - 2026-06-29
 
 ### Added

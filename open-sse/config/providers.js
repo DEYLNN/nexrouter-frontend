@@ -155,6 +155,14 @@ export const PROVIDERS = {
     baseUrl: "https://api.swiftrouter.com/v1/chat/completions",
     format: "openai"
   },
+  axumrouter: {
+    baseUrl: "http://152.42.198.51:3000/v1",
+    format: "openai"
+  },
+  axm: {
+    baseUrl: "http://152.42.198.51:3000/v1",
+    format: "openai"
+  },
   gmi: {
     baseUrl: "https://api.gmi-serving.com/v1/chat/completions",
     format: "openai"

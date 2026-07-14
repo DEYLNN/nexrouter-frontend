@@ -1098,6 +1098,10 @@ export const PROVIDER_MODELS = {
     { id: "deepseek-v4-pro", name: "DeepSeek V4 Pro" },
     { id: "deepseek-v4-flash", name: "DeepSeek V4 Flash" },
   ],
+  agn: [
+    { id: "agnes-1.5-flash", name: "Agnes 1.5 Flash" },
+    { id: "agnes-2.0-flash", name: "Agnes 2.0 Flash" },
+  ],
 };
 
 // Helper functions
@@ -1186,6 +1190,7 @@ const OAUTH_ALIASES = {
   axumrouter: "axm",
   freebuff: "fb",
   "general-compute": "gcx",
+  agn: "agn",
 };
 
 // Derived from PROVIDERS — no need to maintain manually

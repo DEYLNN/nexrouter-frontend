@@ -63,13 +63,13 @@ OpenAI, Anthropic, xAI, Mistral, Groq, DeepSeek, OpenRouter, Perplexity, Togethe
 ### Prerequisites
 
 - **Node.js** 18+ or **Bun** 1.1+
-- **Hono backend** running (see [ai-gateway-hono-backend](https://github.com/DEYLNN/ai-gateway-hono-backend))
+- **Hono backend** running (see [nexrouter-backend](https://github.com/DEYLNN/nexrouter-backend))
 
 ### Setup
 
 ```bash
-git clone https://github.com/DEYLNN/ai-gateway-next-frontend.git
-cd ai-gateway-next-frontend
+git clone https://github.com/DEYLNN/nexrouter-frontend.git
+cd nexrouter-frontend
 npm install
 cp .env.example .env.local
 ```

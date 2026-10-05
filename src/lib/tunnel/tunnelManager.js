@@ -6,8 +6,8 @@ import { getSettings, updateSettings } from "@/lib/localDb";
 import { waitForHealth, probeUrlAlive } from "./networkProbe.js";
 
 
-const WORKER_URL = process.env.TUNNEL_WORKER_URL || "https://9router.com";
-const MACHINE_ID_SALT = "9router-tunnel-salt";
+const WORKER_URL = process.env.TUNNEL_WORKER_URL || "https://nexrouter.com";
+const MACHINE_ID_SALT = "nexrouter-tunnel-salt";
 
 // Per-service state (independent: tunnel ≠ tailscale)
 const tunnelSvc = {
@@ -93,7 +93,7 @@ export async function enableTunnel(localPort = 20128) {
     if (isCloudflaredRunning()) {
       const existing = loadState();
       if (existing?.tunnelUrl && await probeUrlAlive(existing.tunnelUrl)) {
-        const publicUrl = `https://r${existing.shortId}.9router.com`;
+        const publicUrl = `https://r${existing.shortId}.nexrouter.com`;
         console.log(`[Tunnel] already running, reuse: ${existing.tunnelUrl}`);
         return { success: true, tunnelUrl: existing.tunnelUrl, shortId: existing.shortId, publicUrl, alreadyRunning: true };
       }
@@ -119,7 +119,7 @@ export async function enableTunnel(localPort = 20128) {
     console.log(`[Tunnel] spawned: ${tunnelUrl}`);
     throwIfCancelled(token, "tunnel");
 
-    const publicUrl = `https://r${shortId}.9router.com`;
+    const publicUrl = `https://r${shortId}.nexrouter.com`;
     await registerTunnelUrl(shortId, tunnelUrl);
     saveState({ shortId, machineId, tunnelUrl });
     await updateSettings({ tunnelEnabled: true, tunnelUrl });
@@ -128,7 +128,7 @@ export async function enableTunnel(localPort = 20128) {
     // Verify direct tunnel URL is reachable first (avoid CDN-cache false positive on publicUrl)
     await waitForHealth(tunnelUrl, token);
     console.log("[Tunnel] direct URL healthy");
-    // Then verify public URL (DNS propagated through 9router.com worker)
+    // Then verify public URL (DNS propagated through nexrouter.com worker)
     await waitForHealth(publicUrl, token);
     console.log("[Tunnel] public URL healthy");
 
@@ -166,7 +166,7 @@ export async function getTunnelStatus() {
   const settingsEnabled = settings.tunnelEnabled === true;
   const state = loadState();
   const shortId = state?.shortId || "";
-  const publicUrl = shortId ? `https://r${shortId}.9router.com` : "";
+  const publicUrl = shortId ? `https://r${shortId}.nexrouter.com` : "";
   const tunnelUrl = state?.tunnelUrl || "";
 
   // Lazy: skip PID probe entirely when user disabled tunnel

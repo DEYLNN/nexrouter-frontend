@@ -299,7 +299,7 @@ export default function ProfilePage() {
       const anchor = document.createElement("a");
       const stamp = new Date().toISOString().replace(/[.:]/g, "-");
       anchor.href = url;
-      anchor.download = `9router-backup-${stamp}.json`;
+      anchor.download = `nexrouter-backup-${stamp}.json`;
       document.body.appendChild(anchor);
       anchor.click();
       document.body.removeChild(anchor);
@@ -378,7 +378,7 @@ export default function ProfilePage() {
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 rounded-lg bg-bg border border-border gap-2 dark:!bg-[#111827] dark:!border-[#334155]">
               <div>
                 <p className="font-medium text-sm sm:text-base dark:!text-white">Database Location</p>
-                <p className="text-xs sm:text-sm text-text-muted font-mono break-all dark:!text-[#CBD5E1]">~/.9router/db/data.sqlite</p>
+                <p className="text-xs sm:text-sm text-text-muted font-mono break-all dark:!text-[#CBD5E1]">~/.nexrouter/db/data.sqlite</p>
               </div>
             </div>
             <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">

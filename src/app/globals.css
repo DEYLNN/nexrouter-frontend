@@ -7,7 +7,7 @@
 .fonts-loaded .material-symbols-outlined { visibility: visible; }
 
 /* ============================================================
-   9Router palette — adopted from 9remote_private/web
+   nexrouter palette — adopted from 9remote_private/web
    Brand orange (dark) / soft coral (light), neutral warm bases
    ============================================================ */
 :root {
@@ -680,7 +680,7 @@ code, kbd, pre, samp,
   letter-spacing: 0;
 }
 
-/* Model IDs, endpoints, keys — common in 9router UI */
+/* Model IDs, endpoints, keys — common in nexrouter UI */
 .mono-strong {
   font-family: var(--font-mono);
   font-feature-settings: "zero";

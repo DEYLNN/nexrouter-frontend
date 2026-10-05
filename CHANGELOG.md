@@ -156,7 +156,7 @@
 - Tighten project rules: every change must bump package version and CHANGELOG.md together
 - Add repository rule requiring CHANGELOG.md updates for every future frontend change
 - Add changelog generation helper script
-- Rebrand frontend UI and metadata from AI Gateway/9Router to NexRouter
+- Rebrand frontend UI and metadata from AI Gateway/nexrouter to NexRouter
 - Point dashboard changelog fetch URLs to the renamed NexRouter frontend repository
 - Bump frontend package version to 0.5.37 so UI version matches changelog
 
@@ -395,4 +395,4 @@
 ## [0.4.29] - 2026-05-13
 
 - Initial split from monorepo into separate frontend/backend repos
-- Backend running on port 18323 with `DATA_DIR=/root/.9router`
+- Backend running on port 18323 with `DATA_DIR=/root/.nexrouter`
